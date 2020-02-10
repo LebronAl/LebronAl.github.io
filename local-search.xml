@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>我的高效Macbook工作环境配置</title>
+    <link href="/2020/02/10/mac-configuration/"/>
+    <url>/2020/02/10/mac-configuration/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。</p><p>我呢，在使用了Windows，Ubuntu和MacOS三种操作系统之后。结合种种体验和踩坑，最终还是觉得MacOS更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS恰好捏住了我的舒适点。因此，我之后都将从MacOS上工作学习。</p><p>前一段时间我从公司实习离职，上交了公司发给我的MacBook(<del>停止薅羊毛</del>)，然而我又不想回到Windows，于是打算自己买一台MacBook。但是MacBook从2016年开始更换的蝶式键盘很让我恶心，姑且不说故障率高，触感实在太差劲了。尽管2020年新出的16寸Pro已经重回剪刀脚键盘了，但是我的需求是轻薄的13寸而不是16寸(<del>只是没钱而已</del>)。尽管听到业界的呼声说2020年的MacBook应该都会回到剪刀脚键盘，但由于2020年会换新模具，我也不想踩第一代模具的坑，因而暂且将目标定为2021年的MacBook，目前一年多买个二手过渡下就可以了。</p><p>1月份我在某宝平台上买了一台2014款8+256的二手MacBook Pro，即使前期做了许多选店和辨伪的功课，拿到手之后却依然中招，总是无理由黑屏然后再无法开机一天，十分坑爹。所幸可以十五天无理由退换货，就赶快退了。之前早就听说二手Mac的水很深，被坑一次之后更加确信。接着我做了更多的功课，学到了许多辨伪技巧，浏览了许多店铺，也算有点心得，之后要是有时间可以写出来分享给大家。</p><p>前几天经过慎重选择我又在某东平台上入手了一台2015款8+128的二手MacBook Pro。这次总算没什么问题，但比较有趣的一点是我买的8+128的，老板发给我的是8+256的，平白无故赚了128G的固态，只能说真的舒服了。</p><p><img src="/img/home.jpeg" srcset="/img/loading.gif" alt=""></p><p>这是一个新的MacBook刚打开后的主页，接下来我要通过一系列的配置使其成为一个十分符合我开发习惯的机器，可供大家参考。</p><h2 id="系统篇"><a href="#系统篇" class="headerlink" title="系统篇"></a>系统篇</h2><h3 id="触屏板"><a href="#触屏板" class="headerlink" title="触屏板"></a>触屏板</h3><ul><li>2016年及之后的MacBook触屏板都有force touch的功能，即可以按压两次来实现更多的功能，但是我一直用不来这个功能，因此我的第一件事就是调整触摸屏板，首先先关掉force touch的功能，然后开启轻点来点按的点击方式，个人觉得这样才符合MacBook轻巧的特性嘛，每次都按下去多麻烦啊，现在手指轻轻一碰触摸板，就达到鼠标单击的顺滑效果。</li><li>除此以外，可以根据自己的习惯开启或关闭一些手势。</li></ul><p><img src="/img/touch_1.png" srcset="/img/loading.gif" alt=""><br><img src="/img/touch_2.png" srcset="/img/loading.gif" alt=""><br><img src="/img/touch_3.png" srcset="/img/loading.gif" alt=""></p><h3 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h3><ul><li>由于MacBook默认的重复前延迟和按键重复配置太慢，限制了程序员们优秀的打字速度，所以建议都调整到最快的速度。</li><li>可以在闲置5分钟后关闭键盘背光灯来省点电。</li></ul><p><img src="/img/keyboard.png" srcset="/img/loading.gif" alt=""></p><h3 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h3><ul><li>由于MacBook默认的切换大小写的方式是长按Caps键，时间较慢需要等待，较为影响开发效率，建议关闭长按改为短按，配合极低的按键延迟会十分舒爽。</li></ul><p><img src="/img/input.png" srcset="/img/loading.gif" alt=""></p><h3 id="快速锁定屏幕"><a href="#快速锁定屏幕" class="headerlink" title="快速锁定屏幕"></a>快速锁定屏幕</h3><ul><li><p>如果你长时间离开电脑，最好锁定你的屏幕，以防止数据泄露。 那如何快速的锁定你的MacBook呢？ 答案是只需要一摸触摸板就可以了。</p><ul><li><p>打开系统偏好设置，点击桌面与屏幕保护程序图标，选择屏幕保护程序这个Tab，再点击触发角，在弹出的如下界面里面，右下角选择将显示器置入睡眠状态，再确定即可。</p><p><img src="/img/screen_saver.png" srcset="/img/loading.gif" alt=""></p></li><li><p>再打开系统偏好设置，点击安全性与隐私图标，在通用Tab内，勾选为进入睡眠或开始屏幕保护程序立即要求输入密码。</p><p><img src="/img/screen_security.png" srcset="/img/loading.gif" alt=""></p></li></ul></li></ul><h2 id="开发环境篇"><a href="#开发环境篇" class="headerlink" title="开发环境篇"></a>开发环境篇</h2><h3 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h3><ul><li>首先安装Xcode，然后使用下面的命令安装Xcode command line tools，这将为我们安装很多终端下面常用的命令，将来很可能会使用到。<pre><code>  xcode-select --install</code></pre></li></ul><h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h3><ul><li>Homebrew是一款终端下的命令程序包管理器，安装非常简单，复制如下命令在终端下运行，按回车并输入密码后等待安装成功：<pre><code>  ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre></li></ul><h3 id="Item2-zsh-z"><a href="#Item2-zsh-z" class="headerlink" title="Item2+zsh+z"></a>Item2+zsh+z</h3><ul><li>常用终端Item2+优秀Shell zsh+扁平目录跳转命令z，安装好之后开发十分舒适。具体安装可参考以下博客。<ul><li><a href="https://www.jianshu.com/p/a5f478a143dc" target="_blank" rel="noopener">Mac OS 终端 iTerm2 并配置 zsh</a> </li></ul></li></ul><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><ul><li>创建新的公钥私钥并与自己的Github账户连起来，这样就可以开始在Github遨游啦。</li></ul><h2 id="常用软件"><a href="#常用软件" class="headerlink" title="常用软件"></a>常用软件</h2><ul><li>网易云音乐</li><li>微信</li><li>QQ</li><li>SSR</li><li>Chrome</li><li>VScode</li><li>IDEA</li><li>Docker</li><li>…</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>电脑环境配置</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Mac</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
