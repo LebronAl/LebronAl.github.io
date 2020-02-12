@@ -16,7 +16,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>我的高效Macbook工作环境配置 ~ 谭新宇的博客</title>
+  <title>Raft协议介绍 ~ 谭新宇的博客</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.10.2/css/all.min.css"  >
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css"  >
@@ -122,7 +122,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期一, 二月 10日 2020, 10:16 晚上
+                  星期三, 二月 12日 2020, 9:42 上午
                 </p>
               
 
@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.3k 字
+                    2.1k 字
                   </span>&nbsp;
                 
 
@@ -139,7 +139,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      7 分钟
                   </span>&nbsp;
                 
 
@@ -172,64 +172,65 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。</p>
-<p>我呢，在使用了Windows，Ubuntu和MacOS三种操作系统之后。结合种种体验和踩坑，最终还是觉得MacOS更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS恰好捏住了我的舒适点。因此，我之后都将从MacOS上工作学习。</p>
-<p>前一段时间我从公司实习离职，上交了公司发给我的MacBook(<del>停止薅羊毛</del>)，然而我又不想回到Windows，于是打算自己买一台MacBook。但是MacBook从2016年开始更换的蝶式键盘很让我恶心，姑且不说故障率高，触感实在太差劲了。尽管2020年新出的16寸Pro已经重回剪刀脚键盘了，但是我的需求是轻薄的13寸而不是16寸(<del>只是没钱而已</del>)。尽管听到业界的呼声说2020年的MacBook应该都会回到剪刀脚键盘，但由于2020年会换新模具，我也不想踩第一代模具的坑，因而暂且将目标定为2021年的MacBook，目前一年多买个二手过渡下就可以了。</p>
-<p>1月份我在某宝平台上买了一台2014款8+256的二手MacBook Pro，即使前期做了许多选店和辨伪的功课，拿到手之后却依然中招，总是无理由黑屏然后再无法开机一天，十分坑爹。所幸可以十五天无理由退换货，就赶快退了。之前早就听说二手Mac的水很深，被坑一次之后更加确信。接着我做了更多的功课，学到了许多辨伪技巧，浏览了许多店铺，也算有点心得，之后要是有时间可以写出来分享给大家。</p>
-<p>前几天经过慎重选择我又在某东平台上入手了一台2015款8+128的二手MacBook Pro。这次总算没什么问题，但比较有趣的一点是我买的8+128的，老板发给我的是8+256的，平白无故赚了128G的固态，只能说真的舒服了。</p>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/home.jpeg" srcset="/img/loading.gif" alt=""></p>
-<p>这是一个新的MacBook刚打开后的主页，接下来我要通过一系列的配置使其成为一个十分符合我开发习惯的机器，可供大家参考。</p>
-<h2 id="系统篇"><a href="#系统篇" class="headerlink" title="系统篇"></a>系统篇</h2><h3 id="触屏板"><a href="#触屏板" class="headerlink" title="触屏板"></a>触屏板</h3><ul>
-<li>2016年及之后的MacBook触屏板都有force touch的功能，即可以按压两次来实现更多的功能，但是我一直用不来这个功能，因此我的第一件事就是调整触摸屏板，首先先关掉force touch的功能，然后开启轻点来点按的点击方式，个人觉得这样才符合MacBook轻巧的特性嘛，每次都按下去多麻烦啊，现在手指轻轻一碰触摸板，就达到鼠标单击的顺滑效果。</li>
-<li>除此以外，可以根据自己的习惯开启或关闭一些手势。</li>
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>Paxos一直是分布式协议的标准，但是Paxos难于理解，更难以实现。</li>
+<li>Google的分布式锁系统Chubby作为Paxos实现曾经遭遇到很多坑。</li>
+<li>Raft，它是一个为真实世界应用建立的协议，相比Paxos主要注重协议的落地性和可理解性。</li>
 </ul>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/touch_1.png" srcset="/img/loading.gif" alt=""><br><img src="http://q5ijnj5w7.bkt.clouddn.com/touch_2.png" srcset="/img/loading.gif" alt=""><br><img src="http://q5ijnj5w7.bkt.clouddn.com/touch_3.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h3><ul>
-<li>由于MacBook默认的重复前延迟和按键重复配置太慢，限制了程序员们优秀的打字速度，所以建议都调整到最快的速度。</li>
-<li>可以在闲置5分钟后关闭键盘背光灯来省点电。</li>
-</ul>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/input.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h3><ul>
-<li>由于MacBook默认的切换大小写的方式是长按Caps键，时间较慢需要等待，较为影响开发效率，建议关闭长按改为短按，配合极低的按键延迟会十分舒爽。</li>
-</ul>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/input.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="快速锁定屏幕"><a href="#快速锁定屏幕" class="headerlink" title="快速锁定屏幕"></a>快速锁定屏幕</h3><ul>
-<li><p>如果你长时间离开电脑，最好锁定你的屏幕，以防止数据泄露。 那如何快速的锁定你的MacBook呢？ 答案是只需要一摸触摸板就可以了。</p>
+<h2 id="Raft选主"><a href="#Raft选主" class="headerlink" title="Raft选主"></a>Raft选主</h2><h3 id="选主过程"><a href="#选主过程" class="headerlink" title="选主过程"></a>选主过程</h3><p>Raft 使用心跳（heartbeat）触发Leader选举。当服务器启动时，初始化为Follower。Leader向所有Followers周期性发送heartbeat。如果Follower在选举超时时间内没有收到Leader的heartbeat，就会等待一段随机的时间后发起一次Leader选举。</p>
+<p>每一个follower都有一个时钟，是一个随机的值，表示的是follower等待成为leader的时间，谁的时钟先跑完，则发起leader选举。</p>
+<p>Follower将其当前term加一然后转换为Candidate。它首先给自己投票并且给集群中的其他服务器发送 RequestVote RPC。结果有以下三种情况：</p>
 <ul>
-<li><p>打开系统偏好设置，点击桌面与屏幕保护程序图标，选择屏幕保护程序这个Tab，再点击触发角，在弹出的如下界面里面，右下角选择将显示器置入睡眠状态，再确定即可。</p>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/screen_saver.png" srcset="/img/loading.gif" alt=""></p>
+<li>赢得了多数的选票，成功选举为Leader；</li>
+<li>收到了Leader的消息，表示有其它服务器已经抢先当选了Leader；</li>
+<li>没有服务器赢得多数的选票，Leader选举失败，等待选举时间超时后发起下一次选举。</li>
+</ul>
+<h3 id="选主限制"><a href="#选主限制" class="headerlink" title="选主限制"></a>选主限制</h3><p>在Raft协议中，所有的日志条目都只会从Leader节点往Follower节点写入，且Leader节点上的日志只会增加，绝对不会删除或者覆盖。</p>
+<p>这意味着Leader节点必须包含所有已经提交的日志，即能被选举为Leader的节点一定需要包含所有的已经提交的日志。因为日志只会从Leader向Follower传输，所以如果被选举出的Leader缺少已经Commit的日志，那么这些已经提交的日志就会丢失，显然这是不符合要求的。</p>
+<p>即能被选举成为Leader的节点，一定包含了所有已经提交的日志条目。</p>
+<h2 id="Raft日志同步"><a href="#Raft日志同步" class="headerlink" title="Raft日志同步"></a>Raft日志同步</h2><h3 id="日志同步过程"><a href="#日志同步过程" class="headerlink" title="日志同步过程"></a>日志同步过程</h3><p>Leader选出后，就开始接收客户端的请求。Leader把请求作为日志条目（Log entries）加入到它的日志中，然后并行的向其他服务器发起 AppendEntries RPC复制日志条目。当这条日志被复制到大多数服务器上，Leader将这条日志应用到它的状态机并向客户端返回执行结果。</p>
+<ul>
+<li>客户端的每一个请求都包含被复制状态机执行的指令。</li>
+<li>leader把这个指令作为一条新的日志条目添加到日志中，然后并行发起 RPC 给其他的服务器，让他们复制这条信息。</li>
+<li>假如这条日志被安全的复制，领导人就应用这条日志到自己的状态机中，并返回给客户端。</li>
+<li>如果 follower 宕机或者运行缓慢或者丢包，leader会不断的重试，直到所有的 follower 最终都复制了所有的日志条目。</li>
+</ul>
+<h3 id="日志组成"><a href="#日志组成" class="headerlink" title="日志组成"></a>日志组成</h3><p>日志由有序编号（log index）的日志条目组成。每个日志条目包含它被创建时的任期号（term）和用于状态机执行的命令。如果一个日志条目被复制到大多数服务器上，就被认为可以提交（commit）了。</p>
+<h3 id="日志一致性"><a href="#日志一致性" class="headerlink" title="日志一致性"></a>日志一致性</h3><h4 id="日志复制的两条保证"><a href="#日志复制的两条保证" class="headerlink" title="日志复制的两条保证"></a>日志复制的两条保证</h4><ul>
+<li><p>如果不同日志中的两个条目有着相同的索引和任期号，则它们所存储的命令是相同的（原因：leader 最多在一个任期里的一个日志索引位置创建一条日志条目，日志条目在日志的位置从来不会改变）。</p>
 </li>
-<li><p>再打开系统偏好设置，点击安全性与隐私图标，在通用Tab内，勾选为进入睡眠或开始屏幕保护程序立即要求输入密码。</p>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/screen_saver.png" srcset="/img/loading.gif" alt=""></p>
+<li><p>如果不同日志中的两个条目有着相同的索引和任期号，则它们之前的所有条目都是完全一样的（原因：每次 RPC 发送附加日志时，leader 会把这条日志条目的前面的日志的下标和任期号一起发送给 follower，如果 follower 发现和自己的日志不匹配，那么就拒绝接受这条日志，这个称之为一致性检查）。</p>
 </li>
 </ul>
+<h4 id="日志的不正常情况"><a href="#日志的不正常情况" class="headerlink" title="日志的不正常情况"></a>日志的不正常情况</h4><p>一般情况下，Leader和Followers的日志保持一致，因此 AppendEntries 一致性检查通常不会失败。然而，Leader崩溃可能会导致日志不一致：旧的Leader可能没有完全复制完日志中的所有条目。</p>
+<h4 id="如何保证日志的正常复制"><a href="#如何保证日志的正常复制" class="headerlink" title="如何保证日志的正常复制"></a>如何保证日志的正常复制</h4><p>Leader通过强制Followers复制它的日志来处理日志的不一致，Followers上的不一致的日志会被Leader的日志覆盖。Leader为了使Followers的日志同自己的一致，Leader需要找到Followers同它的日志一致的地方，然后覆盖Followers在该位置之后的条目。</p>
+<p>具体的操作是：Leader会从后往前试，每次AppendEntries失败后尝试前一个日志条目，直到成功找到每个Follower的日志一致位置点（基于上述的两条保证），然后向后逐条覆盖Followers在该位置之后的条目。</p>
+<p>总结一下就是：当 leader 和 follower 日志冲突的时候，leader 将校验 follower 最后一条日志是否和 leader 匹配，如果不匹配，将递减查询，直到匹配，匹配后，删除冲突的日志。这样就实现了主从日志的一致性。</p>
+<h2 id="Raft安全性"><a href="#Raft安全性" class="headerlink" title="Raft安全性"></a>Raft安全性</h2><p>Raft增加了如下两条限制以保证安全性：</p>
+<ul>
+<li>拥有最新的已提交的log entry的Follower才有资格成为leader。</li>
+<li>Leader只能推进commit index来提交当前term的已经复制到大多数服务器上的日志，旧term日志的提交要等到提交当前term的日志来间接提交（log index 小于 commit index的日志被间接提交）。</li>
+</ul>
+<h2 id="Raft日志压缩"><a href="#Raft日志压缩" class="headerlink" title="Raft日志压缩"></a>Raft日志压缩</h2><p>在实际的系统中，不能让日志无限增长，否则系统重启时需要花很长的时间进行回放，从而影响可用性。Raft采用对整个系统进行snapshot来解决，snapshot之前的日志都可以丢弃（以前的数据已经落盘了）。</p>
+<p>每个副本独立的对自己的系统状态进行snapshot，并且只能对已经提交的日志记录进行snapshot。</p>
+<p>Snapshot中包含以下内容：</p>
+<ul>
+<li>日志元数据，最后一条已提交的 log entry的 log index和term。这两个值在snapshot之后的第一条log entry的AppendEntries RPC的完整性检查的时候会被用上。</li>
+<li>系统当前状态。</li>
+</ul>
+<p>当Leader要发给某个日志落后太多的Follower的log entry被丢弃，Leader会将snapshot发给Follower。或者当新加进一台机器时，也会发送snapshot给它。发送snapshot使用InstalledSnapshot RPC。</p>
+<p>做snapshot既不要做的太频繁，否则消耗磁盘带宽， 也不要做的太不频繁，否则一旦节点重启需要回放大量日志，影响可用性。推荐当日志达到某个固定的大小做一次snapshot。</p>
+<p>做一次snapshot可能耗时过长，会影响正常日志同步。可以通过使用copy-on-write技术避免snapshot过程影响正常日志同步。</p>
+<h2 id="Raft成员变更"><a href="#Raft成员变更" class="headerlink" title="Raft成员变更"></a>Raft成员变更</h2><h3 id="常规处理成员变更存在的问题"><a href="#常规处理成员变更存在的问题" class="headerlink" title="常规处理成员变更存在的问题"></a>常规处理成员变更存在的问题</h3><p>我们先将成员变更请求当成普通的写请求，由领导者得到多数节点响应后，每个节点提交成员变更日志，将从旧成员配置（Cold）切换到新成员配置（Cnew）。但每个节点提交成员变更日志的时刻可能不同，这将造成各个服务器切换配置的时刻也不同，这就有可能选出两个领导者，破坏安全性。</p>
+<p>考虑以下这种情况：集群配额从 3 台机器变成了 5 台，可能存在这样的一个时间点，两个不同的领导者在同一个任期里都可以被选举成功（双主问题），一个是通过旧的配置，一个通过新的配置。</p>
+<p>简而言之，成员变更存在的问题是增加或者减少的成员太多了，导致旧成员组和新成员组没有交集，因此出现了双主。</p>
+<h2 id="Raft节点接口"><a href="#Raft节点接口" class="headerlink" title="Raft节点接口"></a>Raft节点接口</h2><h2 id="Raft-Corner-Case"><a href="#Raft-Corner-Case" class="headerlink" title="Raft Corner Case"></a>Raft Corner Case</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a href="https://ramcloud.atlassian.net/wiki/download/attachments/6586375/raft.pdf" target="_blank" rel="noopener">Raft论文</a></p>
 </li>
-</ul>
-<h2 id="开发环境篇"><a href="#开发环境篇" class="headerlink" title="开发环境篇"></a>开发环境篇</h2><h3 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h3><ul>
-<li>首先安装Xcode，然后使用下面的命令安装Xcode command line tools，这将为我们安装很多终端下面常用的命令，将来很可能会使用到。<pre><code>  xcode-select --install</code></pre></li>
-</ul>
-<h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h3><ul>
-<li>Homebrew是一款终端下的命令程序包管理器，安装非常简单，复制如下命令在终端下运行，按回车并输入密码后等待安装成功：<pre><code>  ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre></li>
-</ul>
-<h3 id="Item2-zsh-z"><a href="#Item2-zsh-z" class="headerlink" title="Item2+zsh+z"></a>Item2+zsh+z</h3><ul>
-<li>常用终端Item2+优秀Shell zsh+扁平目录跳转命令z，安装好之后开发十分舒适。具体安装可参考以下博客。<ul>
-<li><a href="https://www.jianshu.com/p/a5f478a143dc" target="_blank" rel="noopener">Mac OS 终端 iTerm2 并配置 zsh</a> </li>
-</ul>
+<li><p><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="noopener">Raft动画</a></p>
 </li>
-</ul>
-<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><ul>
-<li>创建新的公钥私钥并与自己的Github账户连起来，这样就可以开始在Github遨游啦。</li>
-</ul>
-<h2 id="常用软件"><a href="#常用软件" class="headerlink" title="常用软件"></a>常用软件</h2><ul>
-<li>网易云音乐</li>
-<li>微信</li>
-<li>QQ</li>
-<li>SSR</li>
-<li>Chrome</li>
-<li>VScode</li>
-<li>IDEA</li>
-<li>Docker</li>
-<li>…</li>
+<li><p><a href="https://network.fasionchan.com/zh_CN/latest/translations/raft-paper.html" target="_blank" rel="noopener">博客：寻找好理解的共识算法</a></p>
+</li>
 </ul>
 
             <hr>
@@ -241,7 +242,7 @@
               <span>
                 <i class="iconfont icon-inbox"></i>
                 
-                  <a class="hover-with-bg" href="/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">环境配置</a>
+                  <a class="hover-with-bg" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -250,7 +251,7 @@
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/MacOS">MacOS</a>
+                  <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE">分布式一致性协议</a>
                 
               </span>
             
@@ -406,7 +407,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "我的高效Macbook工作环境配置&nbsp;",
+        "Raft协议介绍&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
