@@ -267,7 +267,7 @@
 <p>对于某些安全性要求极高的项目，比如银行的转账系统，涉及到金钱的对于数据一致性不能做出一丝的让步，C必须保证，出现网络故障的话，宁可停止服务，也不能冒着出错误的风险继续提供服务。</p>
 <p>对于网站，DNS服务等，其内容的实时性不是特别严格，则可以牺牲一定的一致性，保证最高的可用性是最好的选择。</p>
 <p>个人认为，CAP定理的核心在于，在网络分区的情况下，我们需要对C和A做出相应的妥协，我们不可能完全满足CA，但是我们可以合理控制C和A之间的比例让我们的应用/中间件正常提供服务，同时也尽量提升基础设施的稳定性来保障P。</p>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>Google VP，CAP理论之父在情人节当天撰写的，主要介绍了Google的Spanner数据库的真时（TrueTime）服务和CA特性，以及结合CAP理论的一些思考，建议阅读。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>《Spanner，真时，CAP理论》是 Google VP，CAP理论之父在情人节当天撰写的，主要介绍了Google的Spanner数据库的真时（TrueTime）服务和CA特性，以及结合CAP理论的一些思考，建议阅读，阅读Spanner论文后阅读更佳。</p>
 <ul>
 <li><p><a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/45855.pdf" target="_blank" rel="noopener">《Spanner，真时，CAP理论》</a></p>
 </li>
