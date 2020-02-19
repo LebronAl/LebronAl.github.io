@@ -145,6 +145,109 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/raft/" target="_self">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft_cover.jpeg" srcset="/img/loading.gif" alt="Raft协议介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/raft/">
+        <p class="h4 index-header">Raft协议介绍</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">背景
+Paxos一直是分布式协议的标准，但是Paxos难于理解，更难以实现。
+Google的分布式锁系统Chubby作为Paxos实现曾经遭遇到很多坑。
+Raft，它是一个为真实世界应用建立的协议，相比Paxos主要注重协议的落地性和可理解性。
+
+Raft选主选主过程Raft 使用心跳（heartbeat）触发Leader选举。当服务器启动时，初始化为Follower。Leader向所有Followers周期性发送heartbeat。如果Follower在选举超时时间内没有收到Leader的heartbeat，就会等待一段随机的时间后发起一次Leader选举。
+每一个follower都有一个时钟，是一个随机的值，表示的是follower等待成为leader的时间，谁的时钟先跑完，则发起leader选举。
+Follower将其当前term加一然后转换为Candidate。它首先给自己投票并且给集群中的其他服务器发送 RequestVote RPC。结果有以下三种情况：
+
+赢得了多数的选票，成功选举为Leader；
+收到了Leader的消息，表示有其它服务器已经抢先当选了Leader；
+没</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-19&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%90%86%E8%AE%BA">理论</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/cap-theory/" target="_self">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/cap.jpeg" srcset="/img/loading.gif" alt="CAP 定理介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/cap-theory/">
+        <p class="h4 index-header">CAP 定理介绍</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">前言分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此学习好分布式系统对于程序员有非常重要的意义。
+CAP定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可以作为理解分布式系统的起点。这篇博客将详细介绍CAP定理并简单证明，最后谈一谈CAP定理在工业界的应用。
+历史2000年，柏克莱加州大学(University of California, Berkeley)的计算机科学家Eric Brewer在2000年的分布式计算原则研讨会(Symposium on Principles of Distributed Computing)提出，分布式系统有三个指标。
+
+Consistency
+Availability
+Partition tolerance
+
+它们的第一个字母分别是C、A、P。
+Eric Brewer说，这三个指标不可能同时做到。这个结论就叫做CAP定理。
+定义Consistency即</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-15&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%90%86%E8%AE%BA">理论</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/iTerm2-hotkeys/" target="_self">
           <img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2.png" srcset="/img/loading.gif" alt="iTerm2快捷键介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -191,7 +294,7 @@
 
       <div>
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-14&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-12&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -202,59 +305,7 @@
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/MacOS">MacOS</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/raft/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft_cover.jpeg" srcset="/img/loading.gif" alt="Raft协议介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/raft/">
-        <p class="h4 index-header">Raft协议介绍</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">背景
-Paxos一直是分布式协议的标准，但是Paxos难于理解，更难以实现。
-Google的分布式锁系统Chubby作为Paxos实现曾经遭遇到很多坑。
-Raft，它是一个为真实世界应用建立的协议，相比Paxos主要注重协议的落地性和可理解性。
-
-Raft选主选主过程Raft 使用心跳（heartbeat）触发Leader选举。当服务器启动时，初始化为Follower。Leader向所有Followers周期性发送heartbeat。如果Follower在选举超时时间内没有收到Leader的heartbeat，就会等待一段随机的时间后发起一次Leader选举。
-每一个follower都有一个时钟，是一个随机的值，表示的是follower等待成为leader的时间，谁的时钟先跑完，则发起leader选举。
-Follower将其当前term加一然后转换为Candidate。它首先给自己投票并且给集群中的其他服务器发送 RequestVote RPC。结果有以下三种情况：
-
-赢得了多数的选票，成功选举为Leader；
-收到了Leader的消息，表示有其它服务器已经抢先当选了Leader；
-没</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE">分布式一致性协议</a>&nbsp;
+            <a href="/tags/%E9%85%8D%E7%BD%AE">配置</a>&nbsp;
           
         
       </div>
@@ -298,7 +349,7 @@ Follower将其当前term加一然后转换为Candidate。它首先给自己投�
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/tags/MacOS">MacOS</a>&nbsp;
+            <a href="/tags/%E9%85%8D%E7%BD%AE">配置</a>&nbsp;
           
         
       </div>
@@ -420,7 +471,7 @@ Follower将其当前term加一然后转换为Candidate。它首先给自己投�
   <script src="https://cdn.staticfile.org/prettify/r298/prettify.min.js" ></script>
   <script>
     $(document).ready(function () {
-      $('pre').addClass('prettyprint  linenums');
+      $('pre').addClass('prettyprint  ');
       prettyPrint();
     })
   </script>
