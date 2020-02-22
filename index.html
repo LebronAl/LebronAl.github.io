@@ -158,18 +158,12 @@
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">背景
-Paxos一直是分布式协议的标准，但是Paxos难于理解，更难以实现。
-Google的分布式锁系统Chubby作为Paxos实现曾经遭遇到很多坑。
-Raft，它是一个为真实世界应用建立的协议，相比Paxos主要注重协议的落地性和可理解性。
-
-Raft选主选主过程Raft 使用心跳（heartbeat）触发Leader选举。当服务器启动时，初始化为Follower。Leader向所有Followers周期性发送heartbeat。如果Follower在选举超时时间内没有收到Leader的heartbeat，就会等待一段随机的时间后发起一次Leader选举。
-每一个follower都有一个时钟，是一个随机的值，表示的是follower等待成为leader的时间，谁的时钟先跑完，则发起leader选举。
-Follower将其当前term加一然后转换为Candidate。它首先给自己投票并且给集群中的其他服务器发送 RequestVote RPC。结果有以下三种情况：
-
-赢得了多数的选票，成功选举为Leader；
-收到了Leader的消息，表示有其它服务器已经抢先当选了Leader；
-没</div>
+          <div class="index-text mb-1">Backgorund(背景)众所周知，Paxos 是一个非常划时代的分布式一致性协议，它统治了分布式一致性协议数十年，但是它同时也以“难以理解”和”难以实现“而闻名。
+Diego Ongaro 在就读博士期间，深入研究 paxos 后提出了 Raft 协议， 旨在提供更为易于理解的共识算法。 Raft 的宗旨在于可理解性，为此牺牲了部分性能。
+趣闻：Raft 名字的来源， 简而言之，其名字即来自于 R{eliable|plicated|dundant} And Fault-Tolerant， 也来自于这是一艘可以帮助你逃离 paxos 小岛的救生筏（raft）。
+Raft 主要的特点在于：强 leader &amp; 单向数据流。
+首先需要选举一个 leader，leader 负责所有的事务，数据只会由 leader 单向流向 follower。
+Concept(概述)Leader Election(选主)Log Replication(日志同步)Configuration Change(配置更改)Leadership Transfer(禅让)PreVote(提前投票)Client(客</div>
         </div>
       </a>
 
@@ -210,17 +204,16 @@ Follower将其当前term加一然后转换为Candidate。它首先给自己投�
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">前言在互联网行业飞速发展的21世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。
-CAP定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可以作为理解分布式系统的起点。这篇博客将详细介绍CAP定理并简单证明，最后谈一谈CAP定理在工业界的应用。
-历史2000年，柏克莱加州大学(University of California, Berkeley)的计算机科学家Eric Brewer在分布式计算原则研讨会(Symposium on Principles of Distributed Computing)提出，分布式系统有三个指标。
+          <div class="index-text mb-1">前言在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。
+CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可以作为理解分布式系统的起点。这篇博客将详细介绍 CAP 定理并简单证明，最后谈一谈 CAP 定理在工业界的应用。
+历史2000年，柏克莱加州大学（University of California, Berkeley）的计算机科学家 Eric Brewer 在分布式计算原则研讨会（Symposium on Principles of Distributed Computing）提出，分布式系统有三个指标。
 
 Consistency
 Availability
 Partition tolerance
 
 它们的第一个字母分别是C、A、P。
-Eric Brewer说，这三个指标不可能同时做到。这个结论就叫做CAP定理。
-</div>
+Eric Brewer 说，这三个指标不可能同时做到。这个结论</div>
         </div>
       </a>
 
@@ -249,19 +242,19 @@ Eric Brewer说，这三个指标不可能同时做到。这个结论就叫做CAP
     
       <div class="col-12 col-md-4 m-auto">
         <a href="/iTerm2-hotkeys/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2.png" srcset="/img/loading.gif" alt="iTerm2快捷键介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2.png" srcset="/img/loading.gif" alt="iTerm2 快捷键介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
       </div>
     
     <div class="col-12 col-md-8 m-auto">
       <a href="/iTerm2-hotkeys/">
-        <p class="h4 index-header">iTerm2快捷键介绍</p>
+        <p class="h4 index-header">iTerm2 快捷键介绍</p>
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">前言iTerm2是MacOS独有的终端工具，其有许多快捷键可以使用。为了便于开发并节约之后再次在搜索引擎上查询的时间成本，特写此博客以供自己日后查看。
+          <div class="index-text mb-1">前言iTerm2 是 MacOS 独有的终端工具，其有许多快捷键可以使用。为了便于开发并节约之后再次在搜索引擎上查询的时间成本，特写此博客以供自己日后查看。
 快捷键介绍标签
 新建标签：Command + T
 关闭标签：Command + W
@@ -288,7 +281,7 @@ Eric Brewer说，这三个指标不可能同时做到。这个结论就叫做CAP
 删除当前行：Ctrl + U
 删除当前光标的字符：Ctrl + D
 删除光标之前的字符：Ctrl + H
-删除光标之前的单词：Ctrl</div>
+删除光标之前的单词：C</div>
         </div>
       </a>
 
@@ -317,22 +310,21 @@ Eric Brewer说，这三个指标不可能同时做到。这个结论就叫做CAP
     
       <div class="col-12 col-md-4 m-auto">
         <a href="/mac-configuration/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/home.jpeg" srcset="/img/loading.gif" alt="我的高效Macbook工作环境配置" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/home.jpeg" srcset="/img/loading.gif" alt="我的高效 Macbook 工作环境配置" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
       </div>
     
     <div class="col-12 col-md-8 m-auto">
       <a href="/mac-configuration/">
-        <p class="h4 index-header">我的高效Macbook工作环境配置</p>
+        <p class="h4 index-header">我的高效 Macbook 工作环境配置</p>
         
         
           
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">前言工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。
-我呢，在使用了Windows，Ubuntu和MacOS三种操作系统之后。结合种种体验和踩坑，最终还是觉得MacOS更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS恰好捏住了我的舒适点。因此，我之后都将从MacOS上工作学习。
-前一段时间我从公司实习离职，上交了公司发给我的MacBook(停止薅羊毛)，然而我又不想回到Windows，于是打算自己买一台MacBook。但是MacBook从2016年开始更换的蝶式键盘很让我恶心，姑且不说故障率高，触感实在太差劲了。尽管2020年新出的16寸Pro已经重回剪刀脚键盘了，但是我的需求是轻薄的13寸而不是16寸(只是没钱而已)。尽管听到业界的呼声说2020年的MacBook应该都会回到剪刀脚键盘，但由于2020年会换新模具，我也不想踩第一代模具的坑，因而暂且将目标定为2021年的MacBook，目前一年多买个二手过渡下就可以了。
-1月份我在某宝平台上买了一台2014款8+256的二手MacB</div>
+我呢，在使用了 Windows，Ubuntu 和 MacOS 三种操作系统之后。结合种种体验和踩坑，最终还是觉得 MacOS 更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS 恰好捏住了我的舒适点。因此，我之后都将从 MacOS 上工作学习。
+前一段时间我从公司实习离职，上交了公司发给我的 MacBook（停止薅羊毛），然而我又不想回到 Windows，于是打算自己买一台 MacBook。但是 MacBook 从 2016 年开始更换的蝶式键盘很让我恶心，姑且不说故障率高，触感实在太差劲了。尽管 2020 年新出的 16 寸 Pro 已经重回剪刀脚键盘了，但是我的需求是轻薄的 13 寸而不是 16 寸（只是没钱而已）。尽管听到业界的呼声说 2020 年的 MacBook 应该都会回到剪刀脚键盘，但由于 2020 年会换新模具，我也不想踩第一代模具的坑，因而暂且将目标定为 2021 年的 MacBook，目前一年多买个二手过渡下就可</div>
         </div>
       </a>
 
