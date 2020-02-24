@@ -27,7 +27,7 @@
 
 
 
-  <link rel="stylesheet" href="/lib/prettify/tomorrow-night.min.css"  >
+  <link rel="stylesheet" href="/lib/prettify/atelier.min.css"  >
 
 <link rel="stylesheet" href="/css/main.css"  >
 
@@ -158,12 +158,15 @@
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">Backgorund(背景)众所周知，Paxos 是一个非常划时代的分布式一致性协议，它统治了分布式一致性协议数十年，但是它同时也以“难以理解”和”难以实现“而闻名。
-Diego Ongaro 在就读博士期间，深入研究 paxos 后提出了 Raft 协议， 旨在提供更为易于理解的共识算法。 Raft 的宗旨在于可理解性，为此牺牲了部分性能。
-趣闻：Raft 名字的来源， 简而言之，其名字即来自于 R{eliable|plicated|dundant} And Fault-Tolerant， 也来自于这是一艘可以帮助你逃离 paxos 小岛的救生筏（raft）。
-Raft 主要的特点在于：强 leader &amp; 单向数据流。
-首先需要选举一个 leader，leader 负责所有的事务，数据只会由 leader 单向流向 follower。
-Concept(概述)Leader Election(选主)Log Replication(日志同步)Configuration Change(配置更改)Leadership Transfer(禅让)PreVote(提前投票)Client(客</div>
+          <div class="index-text mb-1">背景共识算法共识算法允许一组节点像一个整体一样一起工作，即使其中一些节点出现故障也能够继续工作下去。更详细点，可以认为每一个节点上都运行着一个状态机和一组日志。在客户端提交命令后，状态机负责执行命令并返回结果，同时还可能改变自己的状态；日志则记录了所有可能会影响到状态机的命令。任何一个处于初始状态的状态机都可以通过重新按顺序执行这组日志，来让自己恢复到最终状态。
+共识算法常被用来确保每一个节点上的状态机一定都会按相同的顺序执行相同的命令， 并且最终会处于相同的状态。换句话说，可以理解为共识算法就是用来确保每个节点上的日志顺序都是一致的。（不过需要注意的是，只确保“提交给状态机的日志”顺序是一致的，而有些日志项可能只是暂时添加，尚未决定要提交给状态机）。正因为如此，共识算法在构建可容错的大规模分布式系统中扮演着重要的角色。
+
+上图就是每个节点上的状态机，日志和同步模块与客户端交互的过程。
+当然，实际使用系统中的共识算法一般满足以下特性：
+
+在非拜占庭条件（无恶意欺骗）下保证共识的一致性；
+在多数节点存活时，保持可用性；
+不依赖于时间，错误的时钟和高延迟只会导致可用性问题，而不会导致一致性</div>
         </div>
       </a>
 
