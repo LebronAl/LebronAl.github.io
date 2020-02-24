@@ -263,31 +263,33 @@
       <br><br>
       
       
-  <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
-  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <section class="vcomments" id="vcomments" style="width: 100%; padding:15px 15px 15px 15px;background-color:rgba(255,255,255,0.7);box-shadow: 0px 0px 20px #bbbbbb;border-radius: 5px;">
 
-  <script>
-    var notify = 'false' === true;
-    var verify = 'false' === true;
-    var oldLoad = window.onload;
-    window.onload = function () {
-      new Valine({
-        el: '#vcomments',
-        notify: notify,
-        verify: verify,
-        app_id: "2MDNHupHBJJGDzuzl7OJfBSk-gzGzoHsz",
-        app_key: "SPxv4rnqQEhTBn2BMGkp6dn1",
-        placeholder: "说点什么",
-        avatar: "retro",
-        meta: ['nick', 'mail', 'link'],
-        pageSize: "10",
-      });
-      oldLoad && oldLoad();
-    };
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
-      powered by Valine.</a></noscript>
+    <div id="vcomments" style="width: 90%; margin: 0 auto;"></div>
+    
+    <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+    <script>
+      var notify = 'false' === true;
+      var verify = 'true' === true;
+      var oldLoad = window.onload;
+      window.onload = function () {
+        new Valine({
+          el: '#vcomments',
+          notify: notify,
+          verify: verify,
+          app_id: "2MDNHupHBJJGDzuzl7OJfBSk-gzGzoHsz",
+          app_key: "SPxv4rnqQEhTBn2BMGkp6dn1",
+          placeholder: "说点什么吧~",
+          avatar: "retro",
+          meta: ['nick', 'mail'],
+          pageSize: "10",
+        });
+        oldLoad && oldLoad();
+      };
+    </script>
+  </section>
 
 
     
