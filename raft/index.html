@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    7.6k 字
+                    7.7k 字
                   </span>&nbsp;
                 
 
@@ -455,7 +455,7 @@ canVote := r.Vote == m.From ||
 </ul>
 <p>实现细节：</p>
 <ol>
-<li>如果 <code>term &lt; currentterm</code>，立刻返回 false</li>
+<li>如果 <code>term &lt; currentTerm</code>，立刻返回 false</li>
 <li>如果 prevLogIndex 不匹配，返回 false</li>
 <li>如果自己有块 entry 和新的 entry 不匹配（在相同的 index 上有不同的 term）， 删除自己的那一块以及之后的所有 entry；</li>
 <li>把新的 entries 添加到自己的 log；<br>5 。如果 <code>leaderCommit &gt; commitindex</code>，将 commitIndex 设置为 <code>min(leaderCommit, last index)</code>， 并且提交相应的 entries。</li>
@@ -476,7 +476,7 @@ canVote := r.Vote == m.From ||
 </ul>
 <p>实现细节：</p>
 <ol>
-<li>如果 <code>term &lt; currentterm</code>，返回 false；</li>
+<li>如果 <code>term &lt; currentTerm</code>，返回 false；</li>
 <li>如果 votedFor 为空或者为该 <code>candidated id</code>，且日志项不落后于自己，则同意投票。</li>
 </ol>
 <h3 id="InstallsnapshotRPC"><a href="#InstallsnapshotRPC" class="headerlink" title="InstallsnapshotRPC"></a>InstallsnapshotRPC</h3><p>参数：</p>
@@ -493,6 +493,17 @@ canVote := r.Vote == m.From ||
 <ul>
 <li><code>term</code>：follower 当前的 term</li>
 </ul>
+<p>实现细节：</p>
+<ol>
+<li>如果 <code>term &lt; currentTerm</code> 就立即回复</li>
+<li>如果是第一个分块（offset 为 0）就创建一个新的快照</li>
+<li>在指定偏移量写入数据</li>
+<li>如果 done 是 false，则继续等待更多的数据</li>
+<li>保存快照文件，丢弃索引值小于快照的日志</li>
+<li>如果现存的日志拥有相同的最后任期号和索引值，则后面的数据继续保持</li>
+<li>丢弃整个日志</li>
+<li>使用快照重置状态机</li>
+</ol>
 <h3 id="AddServerRPC"><a href="#AddServerRPC" class="headerlink" title="AddServerRPC"></a>AddServerRPC</h3><p>参数：</p>
 <ul>
 <li><code>newServer</code>：新节点地址</li>
