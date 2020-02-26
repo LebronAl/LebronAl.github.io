@@ -139,7 +139,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      5 分钟
                   </span>&nbsp;
                 
 
@@ -188,39 +188,51 @@
 <li>由于 MacBook 默认的重复前延迟和按键重复配置太慢，限制了程序员们优秀的打字速度，所以建议都调整到最快的速度。</li>
 <li>可以在闲置 5 分钟后关闭键盘背光灯来省点电。</li>
 </ul>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/input.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="http://q5ijnj5w7.bkt.clouddn.com/keyboard.png" srcset="/img/loading.gif" alt=""></p>
 <h3 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h3><ul>
 <li>由于 MacBook 默认的切换大小写的方式是长按 Caps 键，时间较慢需要等待，较为影响开发效率，建议关闭长按改为短按，配合极低的按键延迟会十分舒爽。</li>
 </ul>
 <p><img src="http://q5ijnj5w7.bkt.clouddn.com/input.png" srcset="/img/loading.gif" alt=""></p>
+<ul>
+<li>建议安装搜狗输入法 Mac 版替代系统自带输入法。</li>
+</ul>
 <h3 id="快速锁定屏幕"><a href="#快速锁定屏幕" class="headerlink" title="快速锁定屏幕"></a>快速锁定屏幕</h3><ul>
 <li><p>如果你长时间离开电脑，最好锁定你的屏幕，以防止数据泄露。 那如何快速的锁定你的 MacBook 呢？ 答案是只需要一摸触摸板就可以了。</p>
 <ul>
 <li><p>打开系统偏好设置，点击桌面与屏幕保护程序图标，选择屏幕保护程序这个 Tab，再点击触发角，在弹出的如下界面里面，右下角选择将显示器置入睡眠状态，再确定即可。</p>
 <p><img src="http://q5ijnj5w7.bkt.clouddn.com/screen_saver.png" srcset="/img/loading.gif" alt=""></p>
 </li>
-<li><p>再打开系统偏好设置，点击安全性与隐私图标，在通用 Tab 内，勾选为进入睡眠或开始屏幕保护程序立即要求输入密码。</p>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/screen_saver.png" srcset="/img/loading.gif" alt=""></p>
+<li><p>再打开系统偏好设置，点击安全性与隐私图标，在通用 Tab 内，勾选为进入睡眠或开始屏幕保护程序<strong>立即</strong>要求输入密码。</p>
+<p><img src="http://q5ijnj5w7.bkt.clouddn.com/screen_security.png" srcset="/img/loading.gif" alt=""></p>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="开发环境篇"><a href="#开发环境篇" class="headerlink" title="开发环境篇"></a>开发环境篇</h2><h3 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h3><ul>
-<li>首先安装 Xcode，然后使用下面的命令安装 Xcode command line tools，这将为我们安装很多终端下面常用的命令，将来很可能会使用到。<pre><code>  xcode-select --install</code></pre></li>
-</ul>
-<h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h3><ul>
-<li>Homebrew 是一款终端下的命令程序包管理器，安装非常简单，复制如下命令在终端下运行，按回车并输入密码后等待安装成功：<pre><code>  ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre></li>
-</ul>
-<h3 id="iTerm2-Zsh-Z"><a href="#iTerm2-Zsh-Z" class="headerlink" title="iTerm2 + Zsh + Z"></a>iTerm2 + Zsh + Z</h3><ul>
-<li>常用终端 iTerm2 + 优秀 Shell Zsh + 扁平目录跳转命令 Z，安装好之后开发十分舒适。具体安装可参考以下博客。<ul>
-<li><a href="https://www.jianshu.com/p/a5f478a143dc" target="_blank" rel="noopener">MacOS 终端 iTerm2 并配置 Zsh</a></li>
-</ul>
+<li><p>首先安装 Xcode，然后使用下面的命令安装 Xcode command line tools，这将为我们安装很多终端下面常用的命令，将来很可能会使用到。</p>
+<pre><code class="Shell">  xcode-select --install</code></pre>
 </li>
 </ul>
-<h3 id="快捷键迅速打开-iTerm2"><a href="#快捷键迅速打开-iTerm2" class="headerlink" title="快捷键迅速打开 iTerm2"></a>快捷键迅速打开 iTerm2</h3><ul>
-<li>可以设置快捷键再 Home 页面输入 Command + , 直接打开 iTerm2，这样就不用再去点击 iTerm2 了。<br><img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2_hotkey.png" srcset="/img/loading.gif" alt=""></li>
-<li>可以设置 iTerm2 默认占满全屏，这样子快捷键打开之后就直接是一个全屏的 iTerm2 可以使用了<br><img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2_screen.png" srcset="/img/loading.gif" alt=""> </li>
+<h3 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h3><ul>
+<li><p>Homebrew 是一款终端下的命令程序包管理器，安装非常简单，复制如下命令在终端下运行，按回车并输入密码后等待安装成功：</p>
+<pre><code class="Shell">  ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre>
+</li>
 </ul>
+<h3 id="iTerm2-Zsh-Z"><a href="#iTerm2-Zsh-Z" class="headerlink" title="iTerm2 + Zsh + Z"></a>iTerm2 + Zsh + Z</h3><ul>
+<li>常用终端 iTerm2 + 优秀 Shell Zsh + 扁平目录跳转命令 Z，安装好之后开发十分舒适。具体安装可参考这个<a href="https://www.jianshu.com/p/a5f478a143dc" target="_blank" rel="noopener">博客</a>。</li>
+</ul>
+<h3 id="快捷键迅速打开-iTerm2"><a href="#快捷键迅速打开-iTerm2" class="headerlink" title="快捷键迅速打开 iTerm2"></a>快捷键迅速打开 iTerm2</h3><ul>
+<li>可以设置快捷键再 Home 页面输入 Command + , 直接打开 iTerm2，这样就不用再去点击 iTerm2 了。</li>
+</ul>
+<p><img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2_hotkey.png" srcset="/img/loading.gif" alt=""></p>
+<ul>
+<li>可以设置 iTerm2 默认占满全屏，这样子快捷键打开之后就直接是一个全屏的 iTerm2 可以使用了</li>
+</ul>
+<p><img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2_screen.png" srcset="/img/loading.gif" alt=""> </p>
+<h3 id="VScode命令行迅速打开"><a href="#VScode命令行迅速打开" class="headerlink" title="VScode命令行迅速打开"></a>VScode命令行迅速打开</h3><ul>
+<li>打开VScode后输入 Command + Shift + P 打开命令面板，再输入 code，再确定</li>
+</ul>
+<p><img src="http://q5ijnj5w7.bkt.clouddn.com/vscode_code.png" srcset="/img/loading.gif" alt=""></p>
 <h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><ul>
 <li>创建新的公钥私钥并与自己的 Github 账户连起来，这样就可以开始在 Github 遨游啦。</li>
 </ul>
