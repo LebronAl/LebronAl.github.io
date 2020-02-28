@@ -145,6 +145,55 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/raft-translate/" target="_self">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft_cover.jpeg" srcset="/img/loading.gif" alt="Raft 博士论文翻译" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/raft-translate/">
+        <p class="h4 index-header">Raft 博士论文翻译</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">4 集群成员变更到目前为止，我们一直假设集群配置(参与共识算法的服务器集合)是固定的。实际上，在生产环境中偶尔需要变更配置，例如在服务器出现故障替换服务器时或者变更副本数时。这时可以使用以下两种方法手动完成：
+
+可以通过使整个集群下线，更新配置文件，然后重启集群来变更配置。但是这将导致整个集群在配置变更期间不可用。
+或者，新的服务器可以通过获取某个集群成员的网络地址来替换它。然而，管理员必须保证被替换的服务器永远不会恢复，否则系统将失去其安全属性(例如，将有一个额外的投票)。
+
+这两种成员变更的方法都有显著的缺点，而且如果有任何手动步骤都会有操作错误的风险。
+为了避免这些问题，我们决定将配置变更自动化，并将它们合并 Raft 共识算法中。Raft 允许集群在配置变更期间继续正常运行，并且只需对基本共识算法进行少量扩展即可实现成员变更。图 4.1 总结了用于集群成员变更的 RPC，本章其余部分将描述其元素。
+
+图 4.1：用于变更集群成员的 RPC。AddServer RPC 用于向当前配置添加新服务器，RemoveServer RPC 用于从当前配置中删除服务器。诸如 4.1 之类的节</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%90%86%E8%AE%BA">理论</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/raft/" target="_self">
           <img src="http://q5ijnj5w7.bkt.clouddn.com/raft_cover.jpeg" srcset="/img/loading.gif" alt="Raft 协议介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
