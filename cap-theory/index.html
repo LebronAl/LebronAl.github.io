@@ -199,9 +199,11 @@
 <p>我们现在有两个网络 N1 和 N2，每个网络中都存在一个服务用于从 db 获取数据，初始状态下，db 中存储的数据都是 V0。</p>
 <p><img src="http://q5ijnj5w7.bkt.clouddn.com/cap_p.png" srcset="/img/loading.gif" alt></p>
 <p>正常情况下，在网络 N1 通过服务 A 更新 V0 到 V1，更新成功后发送消息 M 使 N2 的 db 中的 V0 变为 V1，此时我们通过服务 B 获取数据时，获取到 V1。</p>
-<pre><code>此时满足 CA，没有分区故不满足 P。</code></pre><p><img src="http://q5ijnj5w7.bkt.clouddn.com/cap_withoutp.png" srcset="/img/loading.gif" alt></p>
+<pre><code>此时满足 CA，没有分区故不满足 P。
+</code></pre><p><img src="http://q5ijnj5w7.bkt.clouddn.com/cap_withoutp.png" srcset="/img/loading.gif" alt></p>
 <p>但是一旦发生了网络分区，此时我们通过服务 A 更新数据到 V1 后，由于网络错误，V1 值同步不到 N2 网络中去，此时我们调用服务 B 去请求数据的时候，我们必须从 C 和 A 选一个，如果选择 C，我们需要等到数据同步到 N2，但是从服务 B 获取数据肯定是失败了，失去了 A。如果选择 A，那么从 B 我们获取到的数据不是最新的，失去了 C。</p>
-<pre><code>此时有分区故满足 P，CA 只能满足一个。</code></pre><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="取舍策略"><a href="#取舍策略" class="headerlink" title="取舍策略"></a>取舍策略</h3><h4 id="CP-without-A"><a href="#CP-without-A" class="headerlink" title="CP without A"></a>CP without A</h4><p>如果一个分布式系统不要求强的可用性，即容许系统停机或者长时间无响应的话，就可以在 CAP 三者中保障 CP 而舍弃 A。</p>
+<pre><code>此时有分区故满足 P，CA 只能满足一个。
+</code></pre><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="取舍策略"><a href="#取舍策略" class="headerlink" title="取舍策略"></a>取舍策略</h3><h4 id="CP-without-A"><a href="#CP-without-A" class="headerlink" title="CP without A"></a>CP without A</h4><p>如果一个分布式系统不要求强的可用性，即容许系统停机或者长时间无响应的话，就可以在 CAP 三者中保障 CP 而舍弃 A。</p>
 <p>一个保证了 CP 而一个舍弃了 A 的分布式系统，一旦发生网络故障或者消息丢失等情况，就要牺牲用户的体验，等待所有数据全部一致了之后再让用户访问系统。</p>
 <p>设计成 CP 的系统其实也不少，其中最典型的就是很多分布式数据库，他们都是设计成 CP 的。在发生极端情况时，优先保证数据的强一致性，代价就是舍弃系统的可用性。如 Redis、HBase 等，还有分布式系统中常用的 Zookeeper 也是在 CAP 三者之中选择优先保证 CP 的。</p>
 <p>无论是像 Redis、HBase 这种分布式存储系统，还是像 Zookeeper 这种分布式协调组件。数据的一致性是他们最最基本的要求。一个连数据一致性都保证不了的分布式存储要他有何用？</p>
@@ -219,7 +221,8 @@
 </blockquote>
 <p>从 Google 的经验中可以得到的结论是，一直以来我们可能被 CAP 理论蒙蔽了双眼，CAP 三者之间并不对称，C 和 A 不是 P 的原因（P 不能和 CA trade-off，CP 和 AP 中不存在 trade-off，trade-off 在 CA 之间）。提高一个系统的抗毁能力或者说提高 P（分区容忍能力）是通过提高基础设施的稳定性来获得的，而不是通过降低 C 和 A 来获得的。也就说牺牲 C 和 A 也不能提高 P。</p>
 <p>所以，对于一个分布式系统来说。P 是一个基本要求，CAP 三者中，只能在 CA 两者之间做权衡，并且要想尽办法提升 P。P 提升的越好，CA 同时满足就越有可能。</p>
-<h3 id="业界应用分析"><a href="#业界应用分析" class="headerlink" title="业界应用分析"></a>业界应用分析</h3><table>
+<h3 id="业界应用分析"><a href="#业界应用分析" class="headerlink" title="业界应用分析"></a>业界应用分析</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>应用</th>
@@ -227,7 +230,8 @@
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>MySQL</td>
 <td>CA</td>
 <td>主从模式为 AP</td>
@@ -262,7 +266,9 @@
 <td>AP</td>
 <td>最终一致性</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于多数大型互联网应用的场景，主机众多、部署分散，而且现在的集群规模越来越大，所以节点故障、网络故障是常态，因此分区容错性也就成为了一个分布式系统必然要面对的问题，那么就只能在 C 和 A 之间进行取舍。</p>
 <p>对于某些安全性要求极高的项目，比如银行的转账系统，涉及到金钱的对于数据一致性不能做出一丝的让步，C 必须保证，出现网络故障的话，宁可停止服务，也不能冒着出错误的风险继续提供服务。</p>
 <p>对于网站，DNS 服务等，其内容的实时性不是特别严格，则可以牺牲一定的一致性，保证最高的可用性是最好的选择。</p>
@@ -598,5 +604,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

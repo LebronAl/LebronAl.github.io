@@ -241,8 +241,6 @@
 <h3 id="3-2-Raft-概述"><a href="#3-2-Raft-概述" class="headerlink" title="3.2 Raft 概述"></a>3.2 Raft 概述</h3><p>Raft 是一种用于管理第 2.1 节中所述形式的复制日志的算法。图 3.1 概要地总结了算法以供参考，图 3.2 列举了该算法的关键属性；在本章的剩余部分将对这些图形中的元素进行分段讨论。</p>
 <blockquote>
 <p><img src="/raft-thesis-translate/3_1.png" srcset="/img/loading.gif" alt><br>图 3.1：Raft 共识算法的精简摘要（不包括成员资格更改，日志压缩和客户端交互）。 右下角框中的服务器行为被描述为一组独立且重复触发的规则。 诸如 3.4 之类的节号指出了讨论特殊功能的地方。附录 B 中的正式规范更精确地描述了该算法。</p>
-</blockquote>
-<blockquote>
 <p><img src="/raft-thesis-translate/3_2.png" srcset="/img/loading.gif" alt><br>图 3.2：Raft 保证所有这些属性在任何时候都是正确的。节号指示了每个属性的讨论位置。</p>
 </blockquote>
 <p>Raft通过首先选举一个领导者，然后让领导者完全负责管理复制的日志来实现一致性。领导者从客户端接收日志条目，再把其复制到其他服务器上，并告诉服务器何时可以安全地将日志条目应用于其状态机。拥有领导者大大简化了复制日志的管理。例如，领导者可以决定新的日志条目需要放在日志中的什么位置而不需要和其他服务器商议，并且数据都以简单的方式从领导者流向其他服务器。领导者可能会失败或与其他服务器断开连接，在这种情况下，将选举出新的领导者。</p>
@@ -974,5 +972,20 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

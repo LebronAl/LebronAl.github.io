@@ -270,7 +270,7 @@
 </ul>
 <p>在 etcd 的实现中，如果 candidate 收到 term 大于自己的 RequestVote，也会退为 follower。 （准确的说是，收到一切 term 更大的，除了 RequestPreVote、PreVoteResp 外的所有消息，都退为 follower）。</p>
 <p>follower 收到 candidate 的 RequestVote 后，会检查自己是否已经投过票。 不过如果来源于同一个 candidate，那么 follower 可以在同一 term 内多次投给同一个 candidate。</p>
-<pre><code class="GO">// 检查自己是否已经投过票了，如果投票请求来自同一节点，可以重复投票。
+<pre><code class="lang-GO">// 检查自己是否已经投过票了，如果投票请求来自同一节点，可以重复投票。
 // We can vote if this is a repeat of a vote we&#39;ve already cast...
 canVote := r.Vote == m.From ||
     // ...we haven&#39;t voted and we don&#39;t think there&#39;s a leader yet in this term...
@@ -282,20 +282,21 @@ canVote := r.Vote == m.From ||
 <p>etcd 中将随机选举超时设置为 <code>[electiontimeout, 2 * electiontimeout - 1]</code>。</p>
 <p>如果一个 leader 在 electionTimeout 内无法完成一次多数节点的 heartbeat， 说明该 leader 很可能已经与集群失去联系了，那么该 leader 应该向所有的客户端请求返回 fail， 并且退回到 follower。</p>
 <h2 id="日志同步"><a href="#日志同步" class="headerlink" title="日志同步"></a>日志同步</h2><p>leader 被选举后，则负责所有的客户端请求。每一个客户端请求都包含一个命令，该命令可以被作用到 RSM。</p>
-<p>leader 收到客户端请求后，会生成一个 entry，包含 &lt;index, term number, cmd&gt;。 在将这个 entry 添加到自己的日志末尾后，向所有的节点广播该 entry。</p>
+<p>leader 收到客户端请求后，会生成一个 entry，包含 <index, term number, cmd>。 在将这个 entry 添加到自己的日志末尾后，向所有的节点广播该 entry。</index,></p>
 <p>follower 如果同意接受该 entry，则在将 entry 添加到自己的日志后，返回同意。</p>
 <p>如果 leader 收到了多数的成功答复，则将该 entry 应用到自己的 RSM， 之后，可以称该 entry 是 committed 的。该 committed 信息会随着 AppendEntriesRPC 被传达到其他节点。</p>
 <p><img src="http://q5ijnj5w7.bkt.clouddn.com/raft_log.png" srcset="/img/loading.gif" alt></p>
 <p>Raft 保证下列两个性质：</p>
 <p>如果在两个日志（节点）里，有两个 entry 拥有相同的 index 和 term，那么它们一定有相同的 cmd；<br>如果在两个日志（节点）里，有两个 entry 拥有相同的 index 和 term，那么它们前面的 entry 也一定相同。<br>通过“仅有 leader 可以生成 entry”来确保第一个性质， 第二个性质则通过一致性检查（consistency check）来保证，该检查包含几个步骤：</p>
 <p>leader 在通过 AppendEntriesRPC 和 follower 通讯时，会带上上一块 entry 的信息， 而 follower 在收到后会对比自己的日志 ， 如果发现这个 entry 的信息（index、term）和自己日志内的不符合，则会拒绝该请求。<br>一旦 leader 发现有 follower 拒绝了请求，则会与该 follower 再进行一轮一致性检查， 找到双方最大的共识点，然后用 leader 的 entries 记录覆盖 follower 所有在最大共识点之后的数据。</p>
-<p>寻找共识点时，leader 还是通过 AppendEntriesRPC 和 follower 进行一致性检查， 方法是发送再上一块的 entry， 如果 follower 依然拒绝，则 leader 再尝试发送更前面的一块，直到找到双方的共识点。 因为分歧发生的概率较低，而且一般很快能够得到纠正，所以这里的逐块确认一般不会造成性能问题。<br>每个 leader 都会为每一个 follower 保存一个 nextIndex 的变量， 标志了下一个需要发送给该 follower 的 entry 的 index。 在 leader 刚当选时，该值初始化为该 leader 的 log 的 index+1。 一旦 follower 拒绝了 entry，则 leader 会执行 nextIndex–，然后再次发送。</p>
+<p>寻找共识点时，leader 还是通过 AppendEntriesRPC 和 follower 进行一致性检查， 方法是发送再上一块的 entry， 如果 follower 依然拒绝，则 leader 再尝试发送更前面的一块，直到找到双方的共识点。 因为分歧发生的概率较低，而且一般很快能够得到纠正，所以这里的逐块确认一般不会造成性能问题。<br>每个 leader 都会为每一个 follower 保存一个 nextIndex 的变量， 标志了下一个需要发送给该 follower 的 entry 的 index。 在 leader 刚当选时，该值初始化为该 leader 的 log 的 index+1。 一旦 follower 拒绝了 entry，则 leader 会执行 nextIndex—，然后再次发送。</p>
 <h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><h3 id="选举限制"><a href="#选举限制" class="headerlink" title="选举限制"></a>选举限制</h3><p>因为 leader 的强势地位，所以 Raft 在投票阶段就确保选举出的 leader 一定包含了整个集群中目前已 committed 的所有日志。</p>
 <p>当 candidate 发送 RequestVoteRPC 时，会带上最后一个 entry 的信息。 所有的节点收到该请求后，都会比对自己的日志，如果发现自己的日志更新一些，则会拒绝投票给该 candidate。 （Pre-Vote 同理，如果 follower 认为 Pre-Candidate 没有资格的话，会拒绝 PreVote）</p>
 <p>判断日志新旧的方式：获取请求的 entry 后，比对自己日志中的最后一个 entry。 首先比对 term，如果自己的 term 更大，则拒绝请求。 如果 term 一样，则比对 index，如果自己的 index 更大（说明自己的日志更长），则拒绝请求。</p>
-<pre><code class="GO">func (l *raftLog) isUpToDate(lasti, term uint64) bool {
+<pre><code class="lang-GO">func (l *raftLog) isUpToDate(lasti, term uint64) bool {
     return term &gt; l.lastTerm() || (term == l.lastTerm() &amp;&amp; lasti &gt;= l.lastIndex())
-}</code></pre>
+}
+</code></pre>
 <p><img src="http://q5ijnj5w7.bkt.clouddn.com/raft_leader_restriction.png" srcset="/img/loading.gif" alt></p>
 <p>在上图中，raft 为了避免出现一致性问题，要求 leader 绝不会提交过去的 term 的 entry （即使该 entry 已经被复制到了多数节点上）。leader 永远只提交当前 term 的 entry， 过去的 entry 只会随着当前的 entry 被一并提交。（上图中的 c，term2 只会跟随 term4 被提交。）</p>
 <p>如果一个 candidate 能取得多数同意，说明它的日志已经是多数节点中最完备的， 那么也就可以认为该 candidate 已经包含了整个集群的所有 committed entries。</p>
@@ -303,7 +304,8 @@ canVote := r.Vote == m.From ||
 <h3 id="节点崩溃"><a href="#节点崩溃" class="headerlink" title="节点崩溃"></a>节点崩溃</h3><p>如果 leader 崩溃，集群中的所有节点在 electionTimeout 时间内没有收到 leader的心跳信息就会触发新一轮的选主。总而言之，最终集群总会选出唯一的 leader 。按论文中的说法，即使一次RPC高达 <code>30～40ms</code> 时，<code>99.9%</code> 的选举依然可以在 <code>3s</code> 内完成，但一般一个机房内一次 RPC 只需 1ms。当然，选主期间整个集群对外是不可用的。 </p>
 <p>如果 follower 和 candidate 奔溃相对而言就简单很多， 因为 Raft 所有的 RPC 都是幂等的，所以 Raft 中所有的请求，只要超时，就会无限的重试。follower 和 candidate 崩溃恢复后，可以收到新的请求，然后按照上面谈论过的追加或拒绝 entry 的方式处理请求。</p>
 <h3 id="时间与可用性"><a href="#时间与可用性" class="headerlink" title="时间与可用性"></a>时间与可用性</h3><p>Raft 原则上可以在绝大部分延迟情况下保证一致性， 不过为了保证选择和 leader 的正常工作，最好能满足下列时间条件：</p>
-<pre><code>broadcastTime &lt;&lt; electionTimeout &lt;&lt; MTBF</code></pre><ul>
+<pre><code>broadcastTime &lt;&lt; electionTimeout &lt;&lt; MTBF
+</code></pre><ul>
 <li><code>broadcastTime</code>：向其他节点并发发送消息的平均响应时间；</li>
 <li><code>electionTimeout</code>：follower 判定 leader 已经故障的时间（heartbeat 的最长容忍间隔）；</li>
 <li><code>MTBF(mean time between failures)</code>：单台机器的平均健康时间；</li>
@@ -404,7 +406,7 @@ canVote := r.Vote == m.From ||
 <p>这种情形下，脱离集群的节点，只会不断的发起 Pre-Vote，而不会更新自己的 term。</p>
 <p>在 etcd 的实现中，如果某个节点赞同了某个 candidate， 是不需要更新自己的状态的，它依然可以赞同其他 candidate。 而且，即使收到的 PreVote 的 term 大于自己，也不会更新自己的 term。 也就是说，PreVote 不会改变其他节点的任何状态。</p>
 <p>etcd 中还有一个设计是，当发起 PreVote 的时候，针对的是下一轮的 term， 所以会向所有的节点发送一个 term+1 的 PreVoteReq。</p>
-<pre><code class="GO">func (r *raft) campaign(t CampaignType) {
+<pre><code class="lang-GO">func (r *raft) campaign(t CampaignType) {
     var term uint64
     var voteMsg pb.MessageType
     if t == campaignPreElection {
@@ -426,7 +428,8 @@ canVote := r.Vote == m.From ||
     r.send(pb.Message{Term: term, To: id, Type: voteMsg, Index: r.raftLog.lastIndex(), LogTerm: r.raftLog.lastTerm(), Context: ctx})
 
     // ...
-}</code></pre>
+}
+</code></pre>
 <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>所有节点间仅通过三种类型的 RPC 进行通信：</p>
 <ul>
 <li><code>AppendEntriesRPC</code>：最常用的，leader 向 follower 发送心跳或同步日志。</li>
@@ -862,5 +865,20 @@ canVote := r.Vote == m.From ||
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
