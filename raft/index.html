@@ -327,7 +327,7 @@ canVote := r.Vote == m.From ||
 <p>（注：<code>separate majorities</code>的意思是需要新／旧集群中的多数都同意。比如如果是从 3 节点切换为全新的 9 节点， 那么要求旧节点中的 2 节点，和新节点中的 4 节点都同意，才被认为达成了一次共识。）</p>
 <p>所以，在一次配置变更中，一共有三个状态：</p>
 <ul>
-<li><code>C_new</code>：使用旧的配置文件；</li>
+<li><code>C_old</code>：使用旧的配置文件；</li>
 <li><code>C_old,new</code>：同时使用新旧配置文件，也就是新／旧节点的并集；</li>
 <li><code>C_new</code>：使用新的配置文件。</li>
 </ul>
