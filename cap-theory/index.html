@@ -107,7 +107,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('http://q5ijnj5w7.bkt.clouddn.com/cover.jpeg')no-repeat center center;
+         style="background: url('http://q5ijnj5w7.bkt.clouddn.com/blog-background.jpeg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -195,12 +195,12 @@
 <p>提高分区容忍性的办法就是一个数据项复制到多个节点上，那么出现分区之后，这一数据项仍然能在其他区中读取，容忍性就提高了。然而，把数据复制到多个节点，就会带来一致性的问题，就是多个节点上面的数据可能是不一致的。要保证一致，每次写操作就都要等待全部节点写成功，而这等待又会带来可用性的问题。</p>
 <p>总的来说就是，数据存在的节点越多，分区容忍性越高，但要复制更新的数据就越多，一致性就越难保证。为了保证一致性，更新所有节点数据所需要的时间就越长，可用性就会降低。</p>
 <h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="简单理解"><a href="#简单理解" class="headerlink" title="简单理解"></a>简单理解</h3><p>根据定理，分布式系统只能满足三项中的两项而不可能满足全部三项。理解 CAP 理论的最简单方式是想象两个节点分处分区两侧。允许至少一个节点更新状态会导致数据不一致，即丧失了 C 性质。如果为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了 A 性质。除非两个节点可以互相通信，才能既保证 C 又保证 A，这又会导致丧失 P 性质。</p>
-<h3 id="详细证明"><a href="#详细证明" class="headerlink" title="详细证明"></a>详细证明</h3><p><img src="http://q5ijnj5w7.bkt.clouddn.com/cap_base.png" srcset="/img/loading.gif" alt></p>
+<h3 id="详细证明"><a href="#详细证明" class="headerlink" title="详细证明"></a>详细证明</h3><p><img src="/cap-theory/base.png" srcset="/img/loading.gif" alt></p>
 <p>我们现在有两个网络 N1 和 N2，每个网络中都存在一个服务用于从 db 获取数据，初始状态下，db 中存储的数据都是 V0。</p>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com/cap_p.png" srcset="/img/loading.gif" alt></p>
+<p><img src="/cap-theory/p.png" srcset="/img/loading.gif" alt></p>
 <p>正常情况下，在网络 N1 通过服务 A 更新 V0 到 V1，更新成功后发送消息 M 使 N2 的 db 中的 V0 变为 V1，此时我们通过服务 B 获取数据时，获取到 V1。</p>
 <pre><code>此时满足 CA，没有分区故不满足 P。
-</code></pre><p><img src="http://q5ijnj5w7.bkt.clouddn.com/cap_withoutp.png" srcset="/img/loading.gif" alt></p>
+</code></pre><p><img src="/cap-theory/withoutp.png" srcset="/img/loading.gif" alt></p>
 <p>但是一旦发生了网络分区，此时我们通过服务 A 更新数据到 V1 后，由于网络错误，V1 值同步不到 N2 网络中去，此时我们调用服务 B 去请求数据的时候，我们必须从 C 和 A 选一个，如果选择 C，我们需要等到数据同步到 N2，但是从服务 B 获取数据肯定是失败了，失去了 A。如果选择 A，那么从 B 我们获取到的数据不是最新的，失去了 C。</p>
 <pre><code>此时有分区故满足 P，CA 只能满足一个。
 </code></pre><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="取舍策略"><a href="#取舍策略" class="headerlink" title="取舍策略"></a>取舍策略</h3><h4 id="CP-without-A"><a href="#CP-without-A" class="headerlink" title="CP without A"></a>CP without A</h4><p>如果一个分布式系统不要求强的可用性，即容许系统停机或者长时间无响应的话，就可以在 CAP 三者中保障 CP 而舍弃 A。</p>
