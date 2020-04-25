@@ -7,32 +7,39 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
   <title>谭新宇的博客</title>
 
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.10.2/css/all.min.css"  >
-<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css"  >
-<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.8.9/css/mdb.min.css"  >
-<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css"  >
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
 
 
-
-  <link rel="stylesheet" href="/lib/prettify/atelier.min.css"  >
-
-<link rel="stylesheet" href="/css/main.css"  >
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.18.1/styles/atelier.min.css" />
 
 
-  <link rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css"  >
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_ijqayz9ro8k.css">
+
+
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
 
 
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -58,41 +65,46 @@
           
           
           
-          
           <li class="nav-item">
-            <a class="nav-link" href="/">首页</a>
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              首页</a>
           </li>
         
           
           
           
-          
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">归档</a>
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              归档</a>
           </li>
         
           
           
           
-          
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">分类</a>
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              分类</a>
           </li>
         
           
           
           
-          
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">标签</a>
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              标签</a>
           </li>
         
           
           
           
-          
           <li class="nav-item">
-            <a class="nav-link" href="/about/">关于</a>
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              关于</a>
           </li>
         
         
@@ -106,12 +118,11 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background"
-         style="background: url('http://q5ijnj5w7.bkt.clouddn.com/blog-background.jpeg')no-repeat center center;
-           background-size: cover;
-           background-attachment: fixed;">
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('http://q5ijnj5w7.bkt.clouddn.com/blog-background.jpeg') no-repeat center center;
+           background-size: cover;">
       <div class="full-bg-img">
-        <div class="mask rgba-black-light flex-center">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="container text-center white-text fadeInUp">
             <span class="h2" id="subtitle">
               
@@ -122,7 +133,7 @@
 
           
             <div class="scroll-down-bar">
-              <i class="fas fa-angle-down scroll-down-arrow"></i>
+              <i class="iconfont icon-arrowdown"></i>
             </div>
           
         </div>
@@ -133,7 +144,8 @@
   <main>
     
       <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
+        <div class="py-5" id="board"
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
@@ -141,168 +153,166 @@
                 
 
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/raft-thesis-translate/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft-thesis-translate.png" srcset="/img/loading.gif" alt="Raft 博士论文翻译" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft-thesis-translate.png" srcset="/img/loading.gif" alt="Raft 博士论文翻译">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/raft-thesis-translate/">
-        <p class="h4 index-header">Raft 博士论文翻译</p>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/raft-thesis-translate/">Raft 博士论文翻译</a>
+
+      <a href="/raft-thesis-translate/" class="index-excerpt">
         
         
           
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">翻译原文在这里，欢迎提 PR！
+        <div>翻译原文在这里，欢迎提 PR！
 1 介绍当今的数据中心系统和应用程序在高度动态的环境中运行。它们通过利用额外服务器的资源横向扩展，并根据需求扩展和收缩。服务器和网络故障也很常见：每年约有 2-4% 的磁盘驱动器发生故障，服务器崩溃的频率与之相当，在现代数据中心中，每天都有数十个网络链接失败。
-因此，系统必须在正常操作期间处理服务器的上下线。他们必须对变故做出反应并在几秒钟内自动适应；对客户来说明显的中断通常是不可接受的。这是当今系统中的主要挑战；在这种动态环境中，故障处理，协调，服务发现和配置管理都很困难。
-幸运的是，分布式共识可以帮助应对这些挑战。共识允许一组机器作为一个一致的组来工作，这些组可以承受某些成员的故障。在一个达成共识的团队中，故障是用一种有原则的、行之有效的方式来处理的。由于共识组具有很高的可用性和可靠性，所以其他系统组件可以使用共识组作为自身容错的基础。因此，共识在构建可靠的大规模软件系统中起着关键作用。
-当我们开始这项工作时，达成共识的需求变得越来越明显，但是许多系统仍在努力解决共识可以解决的问题。一些大型系统仍然受到单个协调服务器作为单点故障的限制（例如，HDFS</div>
-        </div>
+因此，系统必须在正常操作期间处理服务器的上下线。他们必须对变故做出反应并在几秒钟内自动适应；对客户来说明显</div>
       </a>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-01&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
-          &nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-03-01
+          </div>
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%90%86%E8%AE%BA">理论</a>&nbsp;
-          
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA/">理论</a>
+            
+          </div>
         
       </div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/raft/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft.jpeg" srcset="/img/loading.gif" alt="Raft 协议介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/raft.jpeg" srcset="/img/loading.gif" alt="Raft 协议介绍">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/raft/">
-        <p class="h4 index-header">Raft 协议介绍</p>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/raft/">Raft 协议介绍</a>
+
+      <a href="/raft/" class="index-excerpt">
         
         
           
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">背景共识算法共识算法允许一组节点像一个整体一样一起工作，即使其中一些节点出现故障也能够继续工作下去。更详细点，可以认为每一个节点上都运行着一个状态机和一组日志。在客户端提交命令后，状态机负责执行命令并返回结果，同时还可能改变自己的状态；日志则记录了所有可能会影响到状态机的命令。任何一个处于初始状态的状态机都可以通过重新按顺序执行这组日志，来让自己恢复到最终状态。
-共识算法常被用来确保每一个节点上的状态机一定都会按相同的顺序执行相同的命令， 并且最终会处于相同的状态。换句话说，可以理解为共识算法就是用来确保每个节点上的日志顺序都是一致的。（不过需要注意的是，只确保“提交给状态机的日志”顺序是一致的，而有些日志项可能只是暂时添加，尚未决定要提交给状态机）。正因为如此，共识算法在构建可容错的大规模分布式系统中扮演着重要的角色。
-
-上图就是每个节点的状态机，日志模块，共识模块与客户端交互的过程。
-当然，实际使用系统中的共识算法一般满足以下特性：
-
-在非拜占庭条件（无恶意欺骗）下保证共识的一致性；
-在多数节点存活时，保持可用性；
-不依赖于时间，错误的时钟和高延迟只会导致可用性问题，而不会导致一致</div>
-        </div>
+        <div>背景共识算法共识算法允许一组节点像一个整体一样一起工作，即使其中一些节点出现故障也能够继续工作下去。更详细点，可以认为每一个节点上都运行着一个状态机和一组日志。在客户端提交命令后，状态机负责执行命令并返回结果，同时还可能改变自己的状态；日志则记录了所有可能会影响到状态机的命令。任何一个处于初始状态的状态机都可以通过重新按顺序执行这组日志，来让自己恢复到最终状态。
+共识算法常被用来确保每一个节点上的</div>
       </a>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-19&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
-          &nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-02-19
+          </div>
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%90%86%E8%AE%BA">理论</a>&nbsp;
-          
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA/">理论</a>
+            
+          </div>
         
       </div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/cap-theory/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/cap-theory.jpeg" srcset="/img/loading.gif" alt="CAP 定理介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/cap-theory.jpeg" srcset="/img/loading.gif" alt="CAP 定理介绍">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/cap-theory/">
-        <p class="h4 index-header">CAP 定理介绍</p>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/cap-theory/">CAP 定理介绍</a>
+
+      <a href="/cap-theory/" class="index-excerpt">
         
         
           
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">前言在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。
-CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可以作为理解分布式系统的起点。这篇博客将详细介绍 CAP 定理并简单证明，最后谈一谈 CAP 定理在工业界的应用。
-历史2000年，柏克莱加州大学（University of California, Berkeley）的计算机科学家 Eric Brewer 在分布式计算原则研讨会（Symposium on Principles of Distributed Computing）提出，分布式系统有三个指标。
-
-Consistency
-Availability
-Partition tolerance
-
-它们的第一个字母分别是 C、A、P。
-Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
-        </div>
+        <div>前言在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。
+CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可</div>
       </a>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-15&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>&nbsp;
-          &nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-02-15
+          </div>
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E7%90%86%E8%AE%BA">理论</a>&nbsp;
-          
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA/">理论</a>
+            
+          </div>
         
       </div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/iTerm2-hotkeys/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2-hotkeys.png" srcset="/img/loading.gif" alt="iTerm2 快捷键介绍" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/iTerm2-hotkeys.png" srcset="/img/loading.gif" alt="iTerm2 快捷键介绍">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/iTerm2-hotkeys/">
-        <p class="h4 index-header">iTerm2 快捷键介绍</p>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/iTerm2-hotkeys/">iTerm2 快捷键介绍</a>
+
+      <a href="/iTerm2-hotkeys/" class="index-excerpt">
         
         
           
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">前言iTerm2 是 MacOS 独有的终端工具，其有许多快捷键可以使用。为了便于开发并节约之后再次在搜索引擎上查询的时间成本，特写此博客以供自己日后查看。
+        <div>前言iTerm2 是 MacOS 独有的终端工具，其有许多快捷键可以使用。为了便于开发并节约之后再次在搜索引擎上查询的时间成本，特写此博客以供自己日后查看。
 快捷键介绍标签
 新建标签：Command + T
 关闭标签：Command + W
@@ -310,87 +320,77 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
 
 分屏
 垂直分屏：Command + D
-水平分屏：Command + Shift + D
-切换屏幕：Command + Option + 方向键 或 Command + [ / ]
-
-搜索
-局部搜索(包含单个终端)：Command + F
-全局搜索(包含所有Tab)：Command + Option + E
-搜索历史指令：Ctrl + R
-
-历史
-查看历史命令：Command + ;
-查看剪贴板历史：Command + Shift + H
-上一条命令：Ctrl + P 或 上方向键
-
-单行
-光标到行首：Ctrl + A
-光标到行尾：Ctrl + E
-删除当前行：Ctrl + U
-删除当前光标的字符：Ctrl + D
-删除光标之前的字符：Ctrl + H
-删除光标之前的单词：C</div>
-        </div>
+水平分屏：Command + Shift +</div>
       </a>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-12&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>&nbsp;
-          &nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-02-12
+          </div>
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E9%85%8D%E7%BD%AE">配置</a>&nbsp;
-          
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+            
+          </div>
         
       </div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
+  <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto">
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/mac-configuration/" target="_self">
-          <img src="http://q5ijnj5w7.bkt.clouddn.com/mac-configuration.jpeg" srcset="/img/loading.gif" alt="我的高效 Macbook 工作环境配置" class="img-fluid rounded z-depth-3 index-thumbnails">
+          <img src="http://q5ijnj5w7.bkt.clouddn.com/mac-configuration.jpeg" srcset="/img/loading.gif" alt="我的高效 Macbook 工作环境配置">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/mac-configuration/">
-        <p class="h4 index-header">我的高效 Macbook 工作环境配置</p>
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/mac-configuration/">我的高效 Macbook 工作环境配置</a>
+
+      <a href="/mac-configuration/" class="index-excerpt">
         
         
           
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">前言工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。
-我呢，在使用了 Windows，Ubuntu 和 MacOS 三种操作系统之后。结合种种体验和踩坑，最终还是觉得 MacOS 更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS 恰好捏住了我的舒适点。因此，我之后都将从 MacOS 上工作学习。
-前一段时间我从公司实习离职，上交了公司发给我的 MacBook（停止薅羊毛），然而我又不想回到 Windows，于是打算自己买一台 MacBook。但是 MacBook 从 2016 年开始更换的蝶式键盘很让我恶心，姑且不说故障率高，触感实在太差劲了。尽管 2020 年新出的 16 寸 Pro 已经重回剪刀脚键盘了，但是我的需求是轻薄的 13 寸而不是 16 寸（只是没钱而已）。尽管听到业界的呼声说 2020 年的 MacBook 应该都会回到剪刀脚键盘，但由于 2020 年会换新模具，我也不想踩第一代模具的坑，因而暂且将目标定为 2021 年的 MacBook，目前一年多买个二手过渡下就可</div>
-        </div>
+        <div>前言工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。
+我呢，在使用了 Windows，Ubuntu 和 MacOS 三种操作系统之后。结合种种体验和踩坑，最终还是觉得 MacOS 更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS 恰好捏住了我的舒适点。因此，我之后都将从 MacOS 上工作学习。</div>
       </a>
 
-      <div>
+      <div class="index-btm post-metas">
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-10&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>&nbsp;
-          &nbsp;
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-02-10
+          </div>
         
         
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E9%85%8D%E7%BD%AE">配置</a>&nbsp;
-          
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+            
+          </div>
         
       </div>
     </div>
@@ -409,8 +409,8 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
   </main>
 
   
-    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
-      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
     </a>
   
 
@@ -438,58 +438,63 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
 </div>
   
 
+  
+
+  
+
   <footer class="mt-5">
   <div class="text-center py-3">
-    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
-    <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
-    <br>
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
 
     
-  
-    <!-- 不蒜子统计PV -->
-    
-    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
-          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
-  
-  
-    <!-- 不蒜子统计UV -->
-    
-    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
-            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
-  
-  <br>
-
-
 
     
-
-
-    <!-- cnzz Analytics icon -->
-    
-
   </div>
 </footer>
 
 <!-- SCRIPTS -->
-<script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js" ></script>
-<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js" ></script>
-<script src="https://cdn.staticfile.org/mdbootstrap/4.8.9/js/mdb.min.js" ></script>
-<script src="/js/main.js" ></script>
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/main.js" ></script>
 
 
-  <script src="/js/lazyload.js" ></script>
+  <script  src="/js/lazyload.js" ></script>
 
 
 
 
 
-  <script src="https://cdn.staticfile.org/smoothscroll/1.4.10/smooth-scroll.min.js" ></script>
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
 
 
 
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
 
 
 <!-- Plugins -->
@@ -503,22 +508,13 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
 
   
 
-  <!-- cnzz Analytics -->
+  
+
   
 
 
 
-  <script src="https://cdn.staticfile.org/prettify/r298/prettify.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      $('pre').addClass('prettyprint  ');
-      prettyPrint();
-    })
-  </script>
-
-
-
-  <script src="https://cdn.staticfile.org/typed.js/2.0.10/typed.min.js" ></script>
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
   <script>
     var typed = new Typed('#subtitle', {
       strings: [
@@ -538,11 +534,11 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
 
 
 
-  <script src="https://cdn.staticfile.org/anchor-js/4.2.0/anchor.min.js" ></script>
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
   <script>
     anchors.options = {
       placement: "right",
-      visible: "false",
+      visible: "hover",
       
     };
     var el = "h1,h2,h3,h4,h5,h6".split(",");
@@ -555,29 +551,19 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
 
 
 
-  <script src="/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
   <script>
     var path = "/local-search.xml";
     var inputArea = document.querySelector("#local-search-input");
     inputArea.onclick = function () {
-      getSearchFile(path);
+      searchFunc(path, 'local-search-input', 'local-search-result');
       this.onclick = null
     }
   </script>
 
 
 
-  <script src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <script>
-    $("#post img:not(.no-zoom img, img[no-zoom])").each(
-      function () {
-        var element = document.createElement("a");
-        $(element).attr("data-fancybox", "images");
-        $(element).attr("href", $(this).attr("src"));
-        $(this).wrap(element);
-      }
-    );
-  </script>
+
 
 
 
@@ -632,6 +618,11 @@ Eric Brewer 说，这三个指标不可能同时做到。这个结</div>
       ;
     </script>
   
+
+
+
+
+
 
 
 
