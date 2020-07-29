@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
 
 
 
@@ -25,7 +25,7 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
 
 
 
@@ -38,6 +38,7 @@
 
 
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 4.2.0"></head>
 
 
@@ -120,8 +121,14 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
@@ -129,12 +136,12 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/blog-background.jpeg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
+          <div class="container page-header text-center fade-in-up">
             <span class="h2" id="subtitle">
               
             </span>
@@ -173,23 +180,30 @@
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/raft-thesis-translate/">Raft 博士论文翻译</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/raft-thesis-translate/">Raft 博士论文翻译</a>
+      </h1>
 
-      <a href="/raft-thesis-translate/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/raft-thesis-translate/">
           
-        
-        <div>翻译原文在这里，欢迎提 PR！
+          
+            
+          
+          翻译原文在这里，欢迎提 PR！
 1 介绍当今的数据中心系统和应用程序在高度动态的环境中运行。它们通过利用额外服务器的资源横向扩展，并根据需求扩展和收缩。服务器和网络故障也很常见：每年约有 2-4% 的磁盘驱动器发生故障，服务器崩溃的频率与之相当，在现代数据中心中，每天都有数十个网络链接失败。
-因此，系统必须在正常操作期间处理服务器的上下线。他们必须对变故做出反应并在几秒钟内自动适应；对客户来说明显</div>
-      </a>
+因此，系统必须在正常操作期间处理服务器的上下线。他们必须对变故做出反应并在几秒钟内自动适应；对客户来说明显
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-03-01
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-03-01 11:23" pubdate>
+              2020-03-01
+            </time>
           </div>
         
         
@@ -209,7 +223,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -221,22 +235,29 @@
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/raft/">Raft 协议介绍</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/raft/">Raft 协议介绍</a>
+      </h1>
 
-      <a href="/raft/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/raft/">
           
-        
-        <div>背景共识算法共识算法允许一组节点像一个整体一样一起工作，即使其中一些节点出现故障也能够继续工作下去。更详细点，可以认为每一个节点上都运行着一个状态机和一组日志。在客户端提交命令后，状态机负责执行命令并返回结果，同时还可能改变自己的状态；日志则记录了所有可能会影响到状态机的命令。任何一个处于初始状态的状态机都可以通过重新按顺序执行这组日志，来让自己恢复到最终状态。
-共识算法常被用来确保每一个节点上的</div>
-      </a>
+          
+            
+          
+          背景共识算法共识算法允许一组节点像一个整体一样一起工作，即使其中一些节点出现故障也能够继续工作下去。更详细点，可以认为每一个节点上都运行着一个状态机和一组日志。在客户端提交命令后，状态机负责执行命令并返回结果，同时还可能改变自己的状态；日志则记录了所有可能会影响到状态机的命令。任何一个处于初始状态的状态机都可以通过重新按顺序执行这组日志，来让自己恢复到最终状态。
+共识算法常被用来确保每一个节点上的
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-02-19
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-02-19 09:42" pubdate>
+              2020-02-19
+            </time>
           </div>
         
         
@@ -256,7 +277,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -268,22 +289,29 @@
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/cap-theory/">CAP 定理介绍</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/cap-theory/">CAP 定理介绍</a>
+      </h1>
 
-      <a href="/cap-theory/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/cap-theory/">
           
-        
-        <div>前言在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。
-CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可</div>
-      </a>
+          
+            
+          
+          前言在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。
+CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-02-15
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-02-15 13:24" pubdate>
+              2020-02-15
+            </time>
           </div>
         
         
@@ -303,7 +331,7 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -315,15 +343,18 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/iTerm2-hotkeys/">iTerm2 快捷键介绍</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/iTerm2-hotkeys/">iTerm2 快捷键介绍</a>
+      </h1>
 
-      <a href="/iTerm2-hotkeys/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/iTerm2-hotkeys/">
           
-        
-        <div>前言iTerm2 是 MacOS 独有的终端工具，其有许多快捷键可以使用。为了便于开发并节约之后再次在搜索引擎上查询的时间成本，特写此博客以供自己日后查看。
+          
+            
+          
+          前言iTerm2 是 MacOS 独有的终端工具，其有许多快捷键可以使用。为了便于开发并节约之后再次在搜索引擎上查询的时间成本，特写此博客以供自己日后查看。
 快捷键介绍标签
 新建标签：Command + T
 关闭标签：Command + W
@@ -331,13 +362,17 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
 
 分屏
 垂直分屏：Command + D
-水平分屏：Command + Shift +</div>
-      </a>
+水平分屏：Command + Shift +
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-02-12
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-02-12 14:27" pubdate>
+              2020-02-12
+            </time>
           </div>
         
         
@@ -357,7 +392,7 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -369,22 +404,29 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/mac-configuration/">我的高效 Macbook 工作环境配置</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/mac-configuration/">我的高效 Macbook 工作环境配置</a>
+      </h1>
 
-      <a href="/mac-configuration/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/mac-configuration/">
           
-        
-        <div>前言工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。
-我呢，在使用了 Windows，Ubuntu 和 MacOS 三种操作系统之后。结合种种体验和踩坑，最终还是觉得 MacOS 更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS 恰好捏住了我的舒适点。因此，我之后都将从 MacOS 上工作学习。</div>
-      </a>
+          
+            
+          
+          前言工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。
+我呢，在使用了 Windows，Ubuntu 和 MacOS 三种操作系统之后。结合种种体验和踩坑，最终还是觉得 MacOS 更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS 恰好捏住了我的舒适点。因此，我之后都将从 MacOS 上工作学习。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-02-10
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-02-10 22:16" pubdate>
+              2020-02-10
+            </time>
           </div>
         
         
@@ -404,7 +446,7 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
 
@@ -620,6 +662,8 @@ CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理�
 
 
 
+
+  
 
   
 
