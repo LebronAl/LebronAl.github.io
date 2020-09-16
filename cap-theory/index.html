@@ -27,7 +27,10 @@
 
   
     
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/atelier.min.css" />
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
   
 
   
@@ -35,11 +38,11 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -157,14 +160,17 @@
             </span>
 
             
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-02-15 13:24" pubdate>
-      星期六, 二月 15日 2020, 1:24 下午
-    </time>
-  </div>
-
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-15 13:24" pubdate>
+        星期六, 二月 15日 2020, 1:24 下午
+      </time>
+    </span>
+  
+</div>
 
 <div class="mt-1">
   
@@ -223,12 +229,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期五, 六月 12日 2020, 10:01 上午
+                  本文最后更新于：星期三, 九月 16日 2020, 5:27 下午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google, Amazon, MicroSoft, Alibaba, Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google，Amazon，MicroSoft，Alibaba，Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。</p>
 <p>CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可以作为理解分布式系统的起点。这篇博客将详细介绍 CAP 定理并简单证明，最后谈一谈 CAP 定理在工业界的应用。</p>
 <h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>2000年，柏克莱加州大学（University of California, Berkeley）的计算机科学家 Eric Brewer 在分布式计算原则研讨会（Symposium on Principles of Distributed Computing）提出，分布式系统有三个指标。</p>
 <ul>
@@ -275,7 +281,7 @@
 <blockquote>
 <p>如果说 Spanner 真有什么特别之处，那就是谷歌的广域网。Google 通过建立私有网络以及强大的网络工程能力来保证 P，在多年运营改进的基础上，在生产环境中可以最大程度的减少分区发生，从而实现高可用性。</p>
 </blockquote>
-<p>从 Google 的经验中可以得到的结论是，一直以来我们可能被 CAP 理论蒙蔽了双眼，CAP 三者之间并不对称，C 和 A 不是 P 的原因（P 不能和 CA trade-off，CP 和 AP 中不存在 trade-off，trade-off 在 CA 之间）。提高一个系统的抗毁能力或者说提高 P（分区容忍能力）是通过提高基础设施的稳定性来获得的，而不是通过降低 C 和 A 来获得的。也就说牺牲 C 和 A 也不能提高 P。</p>
+<p>从 Google 的经验中可以得到的结论是，一直以来我们可能被 CAP 理论蒙蔽了双眼，CAP 三者之间并不对称，C 和 A 不是 P 的原因（P 不能和 CA trade-off，CP 和 AP 中不存在 trade-off，trade-off 在 CA 之间）。提高一个系统的抗毁能力或者说提高 P（分区容忍能力）是通过提高基础设施的稳定性来获得的，而不是通过降低 C 和 A 来获得的，也就说牺牲 C 和 A 也不能提高 P。</p>
 <p>所以，对于一个分布式系统来说。P 是一个基本要求，CAP 三者中，只能在 CA 两者之间做权衡，并且要想尽办法提升 P。P 提升的越好，CA 同时满足就越有可能。</p>
 <h3 id="业界应用分析"><a href="#业界应用分析" class="headerlink" title="业界应用分析"></a>业界应用分析</h3><div class="table-container">
 <table>
@@ -318,7 +324,7 @@
 <td>最终一致性</td>
 </tr>
 <tr>
-<td>DNS服务</td>
+<td>DNS 服务</td>
 <td>AP</td>
 <td>最终一致性</td>
 </tr>
@@ -531,6 +537,10 @@
 
 
 
+  
+
+
+
   <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
   <script  src="/js/clipboard-use.js" ></script>
 
@@ -736,8 +746,6 @@
 
 
 
-
-  
 
   
 

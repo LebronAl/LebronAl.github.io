@@ -27,7 +27,10 @@
 
   
     
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/atelier.min.css" />
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
   
 
   
@@ -35,11 +38,11 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -157,21 +160,24 @@
             </span>
 
             
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-02-10 22:16" pubdate>
-      星期一, 二月 10日 2020, 10:16 晚上
-    </time>
-  </div>
-
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-10 22:16" pubdate>
+        星期一, 二月 10日 2020, 10:16 晚上
+      </time>
+    </span>
+  
+</div>
 
 <div class="mt-1">
   
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.5k 字
     </span>
   
 
@@ -223,7 +229,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期五, 六月 12日 2020, 10:02 上午
+                  本文最后更新于：星期三, 九月 16日 2020, 4:37 下午
                 
               </p>
             
@@ -233,7 +239,7 @@
 <p>前一段时间我从公司实习离职，上交了公司发给我的 MacBook（<del>停止薅羊毛</del>），然而我又不想回到 Windows，于是打算自己买一台 MacBook。但是 MacBook 从 2016 年开始更换的蝶式键盘很让我恶心，姑且不说故障率高，触感实在太差劲了。尽管 2020 年新出的 16 寸 Pro 已经重回剪刀脚键盘了，但是我的需求是轻薄的 13 寸而不是 16 寸（<del>只是没钱而已</del>）。尽管听到业界的呼声说 2020 年的 MacBook 应该都会回到剪刀脚键盘，但由于 2020 年会换新模具，我也不想踩第一代模具的坑，因而暂且将目标定为 2021 年的 MacBook，目前一年多买个二手过渡下就可以了。</p>
 <p>1 月份我在某宝平台上买了一台 2014 款 8+256 的二手 MacBook Pro，即使前期做了许多选店和辨伪的功课，拿到手之后却依然中招，总是无理由黑屏然后再无法开机一天，十分坑爹。所幸可以十五天无理由退换货，就赶快退了。之前早就听说二手 Mac 的水很深，被坑一次之后更加确信。接着我做了更多的功课，学到了许多辨伪技巧，浏览了许多店铺，也算有点心得，之后要是有时间可以写出来分享给大家。</p>
 <p>前几天经过慎重选择我又在某东平台上入手了一台 2015 款 8+128 的二手 MacBook Pro。这次总算没什么问题，但比较有趣的一点是我买的 8+128 的，老板发给我的是 8+256 的，平白无故赚了 128G 的固态，只能说真的舒服了。</p>
-<p><img src="http://q5ijnj5w7.bkt.clouddn.com//mac-configuration.jpeg" srcset="/img/loading.gif" alt></p>
+<p><img src="/mac-configuration/mac-configuration.jpeg" srcset="/img/loading.gif" alt></p>
 <p>这是一个新的 MacBook 刚打开后的主页，接下来我要通过一系列的配置使其成为一个十分符合我开发习惯的机器，可供大家参考。</p>
 <h2 id="系统篇"><a href="#系统篇" class="headerlink" title="系统篇"></a>系统篇</h2><h3 id="触屏板"><a href="#触屏板" class="headerlink" title="触屏板"></a>触屏板</h3><ul>
 <li>2016 年及之后的 MacBook 触屏板都有 Force touch 的功能，即可以按压两次来实现更多的功能，但是我一直用不来这个功能，因此我的第一件事就是调整触摸屏板，首先先关掉 Force touch 的功能，然后开启轻点来点按的点击方式，个人觉得这样才符合 MacBook 轻巧的特性嘛，每次都按下去多麻烦啊，现在手指轻轻一碰触摸板，就达到鼠标单击的顺滑效果。</li>
@@ -275,7 +281,7 @@
 </li>
 </ul>
 <h3 id="iTerm2-Zsh-Z"><a href="#iTerm2-Zsh-Z" class="headerlink" title="iTerm2 + Zsh + Z"></a>iTerm2 + Zsh + Z</h3><ul>
-<li>常用终端 iTerm2 + 优秀 Shell Zsh + 扁平目录跳转命令 Z，安装好之后开发十分舒适。具体安装可参考这个<a href="https://www.jianshu.com/p/a5f478a143dc" target="_blank" rel="noopener">博客</a>。</li>
+<li>常用终端 iTerm2 + 优秀 Shell Zsh + 扁平目录跳转命令 Z，安装好之后开发十分舒适。具体安装可参考这个<a href="https://www.zcfy.cc/article/become-a-command-line-power-user-with-oh-my-zsh-and-z" target="_blank" rel="noopener">博客</a>。</li>
 </ul>
 <h3 id="快捷键迅速打开-iTerm2"><a href="#快捷键迅速打开-iTerm2" class="headerlink" title="快捷键迅速打开 iTerm2"></a>快捷键迅速打开 iTerm2</h3><ul>
 <li>可以设置快捷键再 Home 页面输入 Command + , 直接打开 iTerm2，这样就不用再去点击 iTerm2 了。</li>
@@ -296,10 +302,13 @@
 <li>网易云音乐</li>
 <li>微信</li>
 <li>QQ</li>
-<li>SSR</li>
+<li>腾讯会议</li>
+<li>V2Ray</li>
 <li>Chrome</li>
 <li>VScode</li>
+<li>GoLand</li>
 <li>IDEA</li>
+<li>JProfile</li>
 <li>Docker</li>
 <li>…</li>
 </ul>
@@ -488,6 +497,10 @@
 
   
     <script  src="/js/lazyload.js" ></script>
+  
+
+
+
   
 
 
@@ -697,8 +710,6 @@
 
 
 
-
-  
 
   
 
