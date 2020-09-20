@@ -229,12 +229,13 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期五, 九月 18日 2020, 9:32 晚上
+                  本文最后更新于：星期日, 九月 20日 2020, 3:50 下午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>Monarch 是谷歌的一个全球分布的内存时间序列数据库系统，它被广泛用在监控谷歌上十亿用户规模的应用程序和系统的可用性、正确性、性能、负载和其他方面。</p>
+              <h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="http://www.vldb.org/pvldb/vol13/p3181-adams.pdf" target="_blank" rel="noopener">论文</a><br><a href="https://www.datacouncil.ai/talks/monarch-googles-planet-scale-streaming-monitoring-infrastructure" target="_blank" rel="noopener">PPT</a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>Monarch 是谷歌的一个全球分布的内存时间序列数据库系统，它被广泛用在监控谷歌上十亿用户规模的应用程序和系统的可用性、正确性、性能、负载和其他方面。</p>
 <p>Monarch 自 2010 年开始持续运行，收集、组织、存储、查询大量全球范围内快速增长的时间序列数据。它目前在内存中存储近 PB 的压缩时间序列数据，每秒摄入 TB 的数据，每秒处理数百万次查询。</p>
 <p>本文介绍了系统的结构，以及在区域分布式架构下实现可靠、灵活的统一系统的新机制。我们也分享了十年来在谷歌中开发和运行 Monarch 作为服务的经验教训。</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>谷歌有大量的计算机系统监控需求。数以千计的团队正在运营面向全球用户的服务(如 YouTube、GMail 和 Google Maps)，或者为这些服务(如 Spanner、Borg 和 F1)提供硬件和软件基础设施。这些团队需要监视不断增长和变化的异构实体(例如设备、虚拟机和容器)集合，这些实体数量达数十亿，分布在全球各地。</p>
@@ -334,7 +335,7 @@
 <li>时间序列键的字典序分片改进了摄取和查询的可伸缩性，使 Monarch zone 能够扩展到数以万计的叶子。</li>
 <li>基于推的数据收集模式提高了系统的健壮性，同时简化了系统架构。</li>
 <li>系统化的数据模型提高了健壮性和性能。</li>
-<li>系统扩展是一个连续的过程</li>
+<li>系统扩展是一个连续的过程。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Monarch 可以在很大规模下高效可靠地运行，这是由于它将自治 zone 监控子系统通过全局配置和查询平面整合成一个连贯的整体。它采用了一种新颖的、类型丰富的关系时间序列数据模型，允许高效和可伸缩的数据存储，同时为数据分析提供了一种表达性查询语言。为了适应这种大规模，Monarch 在数据收集和查询执行方面使用了各种优化技术。对于数据收集，Monarch 服务器执行区域内负载平衡和收集聚合，以提高可靠性和效率。对于查询执行，Monarch 以分布式、分层的方式执行每个查询，执行积极的过滤和聚合下推以提高性能和吞吐量，并利用紧凑而强大的分布式索引进行高效的数据修剪。</p>
 
