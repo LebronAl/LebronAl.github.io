@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>CAP 定理介绍 - 谭新宇的博客</title>
+  <title>BASE 定理介绍 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -165,8 +165,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-02-15 13:24" pubdate>
-        星期六, 二月 15日 2020, 1:24 下午
+      <time datetime="2020-10-01 13:50" pubdate>
+        星期四, 十月 1日 2020, 1:50 下午
       </time>
     </span>
   
@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.7k 字
+      2.3k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      39
+      23
        分钟
     </span>
   
@@ -225,123 +225,69 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">CAP 定理介绍</h1>
+            <h1 style="display: none">BASE 定理介绍</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期日, 十月 4日 2020, 4:43 下午
+                  本文最后更新于：星期日, 十月 4日 2020, 5:26 下午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在互联网行业飞速发展的 21 世纪，分布式系统正变得越来越重要，大型互联网公司如 Google，Amazon，MicroSoft，Alibaba，Tencent 等之所以被认为技术很厉害，很大程度上是因为其后台十分强悍，而这些后台一定是由若干个大的分布式系统组成的，因此理解分布式系统的运行原理对于程序员有非常重要的意义。</p>
-<p>CAP 定理是分布式系统方向一个比较宽泛但很重要的基本定理，也可以作为理解分布式系统的起点。这篇博客将详细介绍 CAP 定理并简单证明，最后谈一谈 CAP 定理在工业界的应用。</p>
-<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p>2000年，柏克莱加州大学（University of California, Berkeley）的计算机科学家 Eric Brewer 在分布式计算原则研讨会（Symposium on Principles of Distributed Computing）提出，分布式系统有三个指标。</p>
-<ul>
-<li>Consistency</li>
-<li>Availability</li>
-<li>Partition tolerance</li>
-</ul>
-<p>它们的第一个字母分别是 C、A、P。</p>
-<p>Eric Brewer 说，这三个指标不可能同时做到，这个结论就叫做 CAP 定理。</p>
-<p>需要注意的是，尽管我们常说某个系统能够满足 CAP 属性中的 2 个，但并不是必须满足 2 个，许多系统只具有 0 或 1 个 CAP 属性。</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><h3 id="Consistency"><a href="#Consistency" class="headerlink" title="Consistency"></a>Consistency</h3><p>我们知道 ACID 中事务的一致性是指事务的执行不能破坏数据库数据的完整性和一致性，一个事务在执行前后，数据库都必须处于一致性状态。也就是说，事务的执行结果必须是使数据库从一个一致性状态转变到另一个一致性状态。</p>
-<p>和 ACID 中的一致性不同，分布式环境中的一致性是指数据在多个副本之间是否能够保持一致的特性。</p>
-<p>分布式系统中，数据一般会存在不同节点的副本中，如果对第一个节点的数据成功进行了更新操作，而第二个节点上的数据却没有得到相应更新，这时候读取第二个节点的数据依然是更新前的数据，即脏数据，这就是分布式系统数据不一致的情况。</p>
-<p>在分布式系统中，如果能够做到针对一个数据项的更新操作执行成功后，所有的用户都能读取到最新的值，那么这样的系统就被认为具有强一致性（或严格的一致性）。</p>
-<h3 id="Availability"><a href="#Availability" class="headerlink" title="Availability"></a>Availability</h3><p>可用性是指系统提供的服务必须一直处于可用的状态，对于用户的每一个操作请求总是能够在有限的时间内返回结果，如果超过了这个时间范围，那么系统就被认为是不可用的。</p>
-<p>“有限的时间内”是在系统的运行指标，不同系统会有差别。例如搜索引擎通常在 0.5 秒内需要给出用户检索结果。</p>
-<p>”返回结果”是可用性的另一个重要指标，它要求系统完成对用户请求的处理后，返回一个正常的响应结果，要明确的反映出对请求处理的成功或失败。如果返回的结果是系统错误，比如”OutOfMemory”等报错信息，则认为此时系统是不可用的。</p>
-<h3 id="Partition-Tolerance"><a href="#Partition-Tolerance" class="headerlink" title="Partition Tolerance"></a>Partition Tolerance</h3><p>一个分布式系统中，节点组成的网络本来应该是连通的。然而可能因为某些故障，使得有些节点之间不连通了，整个网络就分成了几块区域，而数据就散布在了这些不连通的区域中，这就叫分区。</p>
-<p>当你一个数据项只在一个节点中保存，那么分区出现后，和这个节点不连通的部分就访问不到这个数据了。这时分区就是无法容忍的。</p>
-<p>提高分区容忍性的办法就是一个数据项复制到多个节点上，那么出现分区之后，这一数据项仍然能在其他区中读取，容忍性就提高了。然而，把数据复制到多个节点，就会带来一致性的问题，就是多个节点上面的数据可能是不一致的。要保证一致，每次写操作就都要等待全部节点写成功，而这等待又会带来可用性的问题。</p>
-<p>总的来说就是，数据存在的节点越多，分区容忍性越高，但要复制更新的数据就越多，一致性就越难保证。为了保证一致性，更新所有节点数据所需要的时间就越长，可用性就会降低。</p>
-<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><h3 id="简单理解"><a href="#简单理解" class="headerlink" title="简单理解"></a>简单理解</h3><p>根据定理，分布式系统只能满足三项中的两项而不可能满足全部三项。理解 CAP 理论的最简单方式是想象两个节点分处分区两侧。允许至少一个节点更新状态会导致数据不一致，即丧失了 C 性质。如果为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了 A 性质。除非两个节点可以互相通信，才能既保证 C 又保证 A，这又会导致丧失 P 性质。</p>
-<h3 id="详细证明"><a href="#详细证明" class="headerlink" title="详细证明"></a>详细证明</h3><p><img src="/cap-theory/base.png" srcset="/img/loading.gif" alt></p>
-<p>我们现在有两个网络 N1 和 N2，每个网络中都存在一个服务用于从 db 获取数据，初始状态下，db 中存储的数据都是 V0。</p>
-<p><img src="/cap-theory/p.png" srcset="/img/loading.gif" alt></p>
-<p>正常情况下，在网络 N1 通过服务 A 更新 V0 到 V1，更新成功后发送消息 M 使 N2 的 db 中的 V0 变为 V1，此时我们通过服务 B 获取数据时，获取到 V1。</p>
-<pre><code class="hljs stata">此时满足 <span class="hljs-keyword">CA</span>，没有分区故不满足 P。</code></pre>
-<p><img src="/cap-theory/withoutp.png" srcset="/img/loading.gif" alt></p>
-<p>但是一旦发生了网络分区，此时我们通过服务 A 更新数据到 V1 后，由于网络错误，V1 值同步不到 N2 网络中去，此时我们调用服务 B 去请求数据的时候，我们必须从 C 和 A 选一个，如果选择 C，我们需要等到数据同步到 N2，但是从服务 B 获取数据肯定是失败了，失去了 A。如果选择 A，那么从 B 我们获取到的数据不是最新的，失去了 C。</p>
-<pre><code class="hljs stata">此时有分区故满足 P，<span class="hljs-keyword">CA</span> 只能满足一个。</code></pre>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="取舍策略"><a href="#取舍策略" class="headerlink" title="取舍策略"></a>取舍策略</h3><h4 id="CP-without-A"><a href="#CP-without-A" class="headerlink" title="CP without A"></a>CP without A</h4><p>如果一个分布式系统不要求强的可用性，即容许系统停机或者长时间无响应的话，就可以在 CAP 三者中保障 CP 而舍弃 A。</p>
-<p>一个保证了 CP 而一个舍弃了 A 的分布式系统，一旦发生网络故障或者消息丢失等情况，就要牺牲用户的体验，等待所有数据全部一致了之后再让用户访问系统。</p>
-<p>设计成 CP 的系统其实也不少，其中最典型的就是很多分布式数据库，他们都是设计成 CP 的。在发生极端情况时，优先保证数据的强一致性，代价就是舍弃系统的可用性。如 Redis、HBase 等，还有分布式系统中常用的 Zookeeper 也是在 CAP 三者之中选择优先保证 CP 的。</p>
-<p>无论是像 Redis、HBase 这种分布式存储系统，还是像 Zookeeper 这种分布式协调组件。数据的一致性是他们最最基本的要求。一个连数据一致性都保证不了的分布式存储要他有何用？</p>
-<p>ZooKeeper 是个 CP（一致性+分区容错性）的，即任何时刻对 ZooKeeper 的访问请求能得到一致的数据结果，同时系统对网络分割具备容错性。但是它不能保证每次服务请求的可用性，也就是在极端环境下，ZooKeeper 可能会丢弃一些请求，消费者程序需要重新请求才能获得结果。ZooKeeper 是分布式协调服务，它的职责是保证数据在其管辖下的所有服务之间保持同步、一致。所以就不难理解为什么 ZooKeeper 被设计成 CP 而不是 AP 特性的了。</p>
-<h4 id="AP-wihtout-C"><a href="#AP-wihtout-C" class="headerlink" title="AP wihtout C"></a>AP wihtout C</h4><p>要高可用并允许分区，则需放弃一致性。一旦网络问题发生，节点之间可能会失去联系。为了保证高可用，需要在用户访问时可以马上得到返回，则每个节点只能用本地数据提供服务，而这样会导致全局数据的不一致性。</p>
-<p>这种舍弃强一致性而保证系统的分区容错性和可用性的场景和案例非常多。前面我们介绍可用性的时候说到过，很多系统在可用性方面会做很多事情来保证系统的全年可用性可以达到 N 个 9，所以，对于很多业务系统来说，比如淘宝的购物，12306 的买票。都是在可用性和一致性之间舍弃了一致性而选择可用性。</p>
-<p>你在 12306 买票的时候肯定遇到过这种场景，当你购买的时候提示你是有票的（但是可能实际已经没票了），你也正常的去输入验证码，下单了。但是过了一会系统提示你下单失败，余票不足。这其实就是先在可用性方面保证系统可以正常的服务，然后在数据的一致性方面做了些牺牲，会影响一些用户体验，但是也不至于造成用户流程的严重阻塞。</p>
-<p>但是，我们说很多网站牺牲了一致性，选择了可用性，这其实也不准确的。就比如上面的买票的例子，其实舍弃的只是强一致性。退而求其次保证了最终一致性。也就是说，虽然下单的瞬间，关于车票的库存可能存在数据不一致的情况，但是过了一段时间，还是要保证最终一致性的。</p>
-<p>对于多数大型互联网应用的场景，主机众多、部署分散，而且现在的集群规模越来越大，所以节点故障、网络故障是常态，而且要保证服务可用性达到 N 个 9，即保证 P 和 A，舍弃 C（退而求其次保证最终一致性）。虽然某些地方会影响客户体验，但没达到造成用户流程的严重程度。</p>
-<h4 id="CA-without-P"><a href="#CA-without-P" class="headerlink" title="CA without P"></a>CA without P</h4><p>这种情况在分布式系统中几乎是不存在的。首先在分布式环境下，网络分区是一个自然的事实。因为分区是必然的，所以如果舍弃 P，意味着要舍弃分布式系统。那也就没有必要再讨论 CAP 理论了。这也是为什么在前面的 CAP 证明中，我们以系统满足 P 为前提论述了无法同时满足 C 和 A。</p>
-<p>比如我们熟知的关系型数据库，如 Mysql 和 Oracle 就是保证了可用性和数据一致性，但是他并不是个分布式系统。一旦关系型数据库要考虑主备同步、集群部署等就必须要把 P 也考虑进来。</p>
-<p>其实，在 CAP 理论中。C，A，P 三者并不是平等的，CAP 之父在《Spanner，真时，CAP 理论》一文中写到：</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>CAP 理论表明，对于一个分布式系统而言，它是无法同时满足 Consistency（强一致性）、Availability（可用性）和 Partition tolerance（分区容忍性）这三个条件的，最多只能满足其中两个。</p>
+<p>对于绝大多数互联网应用来说，由于网络环境是不可信的，所以分区容错性（P）必须满足。</p>
+<p>如果只能在一致性和可用性之间做出选择的话，大部分情况下大家都会选择牺牲一部分一致性来保证可用性。因为如果不返回给用户数据，用户的体验会十分差，因此很多应用宁肯拒绝服务也不会能访问却没有数据。当然，在一些较为严格的场景比如支付场景下，强一致性是必须要满足的。</p>
+<p>好了，我们只能放弃一致性，但是我们真这样做了，将一致性放弃了，现在这个系统返回的数据你敢信吗？没有一致性，系统中的数据也就从根本上变得不可信了，那这数据拿来有什么用，那这个系统也就没有任何价值，根本没用。</p>
+<p>如上所述，由于我们三者都无法抛弃，但 CAP 定理限制了我们三者无法同时满足。在这种情况下，我们只能选择尽量靠近 CAP 定理，即尽量让 C、A、P 都满足。在此大势所趋下，eBay 的架构师 Dan Pritchett 源于对大规模分布式系统的实践总结，在 ACM 上发表文章提出 BASE 理论，其是基于 CAP 定理逐步演化而来的。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>BASE 理论是 Basically Available(基本可用)，Soft State（软状态）和 Eventually Consistent（最终一致性）三个短语的缩写。</p>
+<p>其核心思想是：</p>
 <blockquote>
-<p>如果说 Spanner 真有什么特别之处，那就是谷歌的广域网。Google 通过建立私有网络以及强大的网络工程能力来保证 P，在多年运营改进的基础上，在生产环境中可以最大程度的减少分区发生，从而实现高可用性。</p>
+<p>即使无法做到强一致性，但每个应用都可以根据自身业务特点，采用适当的方式来使系统达到最终一致性。</p>
 </blockquote>
-<p>从 Google 的经验中可以得到的结论是，一直以来我们可能被 CAP 理论蒙蔽了双眼，CAP 三者之间并不对称，C 和 A 不是 P 的原因（P 不能和 CA trade-off，CP 和 AP 中不存在 trade-off，trade-off 在 CA 之间）。提高一个系统的抗毁能力或者说提高 P（分区容忍能力）是通过提高基础设施的稳定性来获得的，而不是通过降低 C 和 A 来获得的，也就说牺牲 C 和 A 也不能提高 P。</p>
-<p>所以，对于一个分布式系统来说。P 是一个基本要求，CAP 三者中，只能在 CA 两者之间做权衡，并且要想尽办法提升 P。P 提升的越好，CA 同时满足就越有可能。</p>
-<h3 id="业界应用分析"><a href="#业界应用分析" class="headerlink" title="业界应用分析"></a>业界应用分析</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>应用</th>
-<th>类型</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MySQL</td>
-<td>CA</td>
-<td>主从模式为 AP</td>
-</tr>
-<tr>
-<td>Spanner</td>
-<td>CA/CP</td>
-<td>技术实现是 CP 但号称是 CA，宣称 CA 系统并不意味着 100％ 的可用性</td>
-</tr>
-<tr>
-<td>分布式协议-Raft/ZAB/Paxos</td>
-<td>CP</td>
-<td>在分区后，对于 A，只有分区内节点大于 Quorum 才对外服务</td>
-</tr>
-<tr>
-<td>分布式事务-2PC</td>
-<td>CP</td>
-<td>锁住资源,该资源其他请求阻塞</td>
-</tr>
-<tr>
-<td>分布式事务-TCC</td>
-<td>AP</td>
-<td>最终一致性</td>
-</tr>
-<tr>
-<td>分布式事务-最大努力尝试</td>
-<td>AP</td>
-<td>最终一致性</td>
-</tr>
-<tr>
-<td>DNS 服务</td>
-<td>AP</td>
-<td>最终一致性</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于多数大型互联网应用的场景，主机众多、部署分散，而且现在的集群规模越来越大，所以节点故障、网络故障是常态，因此分区容错性也就成为了一个分布式系统必然要面对的问题，那么就只能在 C 和 A 之间进行取舍。</p>
-<p>对于某些安全性要求极高的项目，比如银行的转账系统，涉及到金钱的对于数据一致性不能做出一丝的让步，C 必须保证，出现网络故障的话，宁可停止服务，也不能冒着出错误的风险继续提供服务。</p>
-<p>对于网站，DNS 服务等，其内容的实时性不是特别严格，则可以牺牲一定的一致性，保证最高的可用性是最好的选择。</p>
-<p>个人认为，CAP 定理的核心在于，在网络分区的情况下，我们需要对 C 和 A 做出相应的妥协，我们不可能完全满足 CA，但是我们可以合理控制 C 和 A 之间的比例让我们的应用/中间件正常提供服务，同时也尽量提升基础设施的稳定性来保障 P。</p>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>《Spanner，真时，CAP 理论》是 Google VP，CAP 理论之父在情人节当天撰写的，主要介绍了 Google 的 Spanner 数据库的真时（TrueTime）服务和 CA 特性，以及结合 CAP 理论的一些思考，建议阅读，阅读 Spanner 论文后阅读更佳。</p>
+<h3 id="Basically-Available"><a href="#Basically-Available" class="headerlink" title="Basically Available"></a>Basically Available</h3><p>基本可用是相对于正常的系统来说的，常见如下情况：</p>
 <ul>
-<li><p><a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/45855.pdf" target="_blank" rel="noopener">《Spanner，真时，CAP 理论》</a></p>
+<li><p>响应时间上的损失：正常情况下的搜索引擎 0.5 秒即返回给用户结果，而基本可用的搜索引擎可以在 2 秒作用返回结果。</p>
 </li>
-<li><p><a href="https://toutiao.io/posts/zdqrx0/preview" target="_blank" rel="noopener">《Spanner，真时，CAP 理论》中文</a></p>
+<li><p>功能上的损失：在一个电商网站上，正常情况下，用户可以顺利完成每一笔订单。但是到了大促期间，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面。</p>
 </li>
 </ul>
+<h3 id="Soft-state"><a href="#Soft-state" class="headerlink" title="Soft state"></a>Soft state</h3><p>软状态是相对原子性来说的：</p>
+<ul>
+<li>原子性（硬状态）：要求多个节点的数据副本都是一致的，这是一种”硬状态”。</li>
+<li>软状态（弱状态）：允许系统中的数据存在中间状态，并认为该状态不影响系统的整体可用性，即允许系统在多个不同节点的数据副本存在数据延迟。</li>
+</ul>
+<h3 id="Eventually-Consistent"><a href="#Eventually-Consistent" class="headerlink" title="Eventually Consistent"></a>Eventually Consistent</h3><p>最终一致性是相对强一致性来说的：</p>
+<ul>
+<li>系统并不保证连续进程或者线程的访问都会返回最新的更新过的值。系统在数据写入成功之后，不承诺立即可以读到最新写入的值，也不会具体的承诺多久之后可以读到。但会尽可能保证在某个时间级别（比如秒级别）之后，可以让数据达到一致性状态。最终一致性是弱一致性的特定形式。</li>
+<li>对于软状态，我们允许中间状态存在，但不可能一直是中间状态，必须要有个期限，系统保证在没有后续更新的前提下，在这个期限后，系统最终返回上一次更新操作的值，从而达到数据的最终一致性，这个容忍期限（不一致窗口的时间）取决于通信延迟，系统负载，数据复制方案设计，复制副本个数等。DNS 就是一个典型的最终一致性系统。</li>
+</ul>
+<h2 id="最终一致性的种类"><a href="#最终一致性的种类" class="headerlink" title="最终一致性的种类"></a>最终一致性的种类</h2><p>在实际工程实践中，最终一致性常被分为 5 种：</p>
+<h3 id="因果一致性（Causal-consistency）"><a href="#因果一致性（Causal-consistency）" class="headerlink" title="因果一致性（Causal consistency）"></a>因果一致性（Causal consistency）</h3><p>如果节点 A 在更新完某个数据后通知了节点 B，那么节点 B 之后对该数据的访问和修改都是基于 A 更新后的值。与此同时，和节点 A 无因果关系的节点 C 的数据访问则没有这样的限制。</p>
+<h3 id="读己之所写（Read-your-writes）"><a href="#读己之所写（Read-your-writes）" class="headerlink" title="读己之所写（Read your writes）"></a>读己之所写（Read your writes）</h3><p>节点 A 更新一个数据后，它自身总是能访问到自身更新过的最新值，而不会看到旧值。其实也算一种因果一致性。</p>
+<h3 id="会话一致性（Session-consistency）"><a href="#会话一致性（Session-consistency）" class="headerlink" title="会话一致性（Session consistency）"></a>会话一致性（Session consistency）</h3><p>系统能保证在同一个有效的会话中实现 “读己之所写” 的一致性，也就是说，执行更新操作之后，客户端能够在同一个会话中始终读取到该数据项的最新值。</p>
+<h3 id="单调读一致性（Monotonic-read-consistency）"><a href="#单调读一致性（Monotonic-read-consistency）" class="headerlink" title="单调读一致性（Monotonic read consistency）"></a>单调读一致性（Monotonic read consistency）</h3><p>如果一个节点从系统中读取出一个数据项的某个值后，那么系统对于该节点后续的任何数据访问都不应该返回更旧的值。</p>
+<h3 id="单调写一致性（Monotonic-write-consistency）"><a href="#单调写一致性（Monotonic-write-consistency）" class="headerlink" title="单调写一致性（Monotonic write consistency）"></a>单调写一致性（Monotonic write consistency）</h3><p>一个系统要能够保证来自同一个节点的写操作被顺序的执行。</p>
+<p><img src="/base-theory/consistency_level.png" srcset="/img/loading.gif" alt></p>
+<blockquote>
+<p>在实际的实践中，这 5 种系统往往会结合使用，以构建一个具有最终一致性的分布式系统。</p>
+</blockquote>
+<p>事实上，最终一致性并不是只有那些大型分布式系统才设计的特性，许多现代的关系型数据库都采用了最终一致性模型。在现代关系型数据库中，大多都会采用同步和异步方式来实现主备数据复制技术。在同步方式中，数据的复制通常是更新事务的一部分，因此在事务完成后，主备数据库的数据就会达到一致。而在异步方式中，备库的更新往往存在延时，这取决于事务日志在主备数据库之间传输的时间长短，如果传输时间过长或者甚至在日志传输过程中出现异常导致无法及时将事务应用到备库上，那么很显然，从备库中读取的的数据将是旧的，因此就出现了不一致的情况。当然，无论是采用多次重试还是将数据修正，关系型数据库还是能够保证最终数据达到一致——这就是关系数据库提供最终一致性保证的经典案例。</p>
+<h2 id="ACID-与-BASE-的区别和联系"><a href="#ACID-与-BASE-的区别和联系" class="headerlink" title="ACID 与 BASE 的区别和联系"></a>ACID 与 BASE 的区别和联系</h2><h3 id="ACID-是什么"><a href="#ACID-是什么" class="headerlink" title="ACID 是什么"></a>ACID 是什么</h3><p>ACID，是指数据库管理系统在写入或更新数据的过程中，为保证事务（transaction）是正确可靠的，所必须具备的四个特性：</p>
+<ul>
+<li>原子性（atomicity，或称不可分割性）</li>
+<li>一致性（consistency）</li>
+<li>隔离性（isolation，又称独立性）</li>
+<li>持久性（durability）</li>
+</ul>
+<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p>一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</p>
+<h4 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h4><p>在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</p>
+<h4 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h4><p>数据库允许多个并发事务同时对齐数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</p>
+<h4 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h4><p>事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</p>
+<h3 id="和-BASE-的区别和联系"><a href="#和-BASE-的区别和联系" class="headerlink" title="和 BASE 的区别和联系"></a>和 BASE 的区别和联系</h3><ul>
+<li>ACID 是传统数据库常用的设计理念, 追求强一致性模型。</li>
+<li>BASE 支持的是大型分布式系统，提出通过牺牲强一致性获得高可用性。</li>
+</ul>
+<p>总体来说 BASE 理论面向的是大型高可用、可扩展的分布式系统。与传统 ACID 特性相反，不同于 ACID 的强一致性模型，BASE 理论提出通过牺牲强一致性来获得可用性，并允许数据段时间内的不一致，但是最终达到一致状态。同时，在实际分布式场景中，不同业务对数据的一致性要求不一样。因此在设计中，ACID 和 BASE 理论往往又会结合使用。</p>
 
             </div>
             <hr>
@@ -372,18 +318,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/raft/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Raft 协议介绍</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/iTerm2-hotkeys/">
-                        <span class="hidden-mobile">iTerm2 快捷键介绍</span>
+                      <a href="/monarch/">
+                        <span class="hidden-mobile">Monarch 论文阅读</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -584,7 +524,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "CAP 定理介绍&nbsp;",
+        "BASE 定理介绍&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
