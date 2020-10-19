@@ -38,7 +38,7 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
@@ -229,7 +229,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期日, 九月 20日 2020, 3:53 下午
+                  本文最后更新于：星期二, 十月 13日 2020, 4:31 下午
                 
               </p>
             
@@ -337,7 +337,7 @@
 <li>系统扩展是一个连续的过程。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Monarch 可以在很大规模下高效可靠地运行，这是由于它将自治 zone 监控子系统通过全局配置和查询平面整合成一个连贯的整体。它采用了一种新颖的、类型丰富的关系时间序列数据模型，允许高效和可伸缩的数据存储，同时为数据分析提供了一种表达性查询语言。为了适应这种大规模，Monarch 在数据收集和查询执行方面使用了各种优化技术。对于数据收集，Monarch 服务器执行区域内负载平衡和收集聚合，以提高可靠性和效率。对于查询执行，Monarch 以分布式、分层的方式执行每个查询，执行积极的过滤和聚合下推以提高性能和吞吐量，并利用紧凑而强大的分布式索引进行高效的数据修剪。</p>
-<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="http://www.vldb.org/pvldb/vol13/p3181-adams.pdf" target="_blank" rel="noopener">论文</a></p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="http://www.vldb.org/pvldb/vol13/p3181-adams.pdf" target="_blank" rel="noopener">论文</a></p>
 <p><a href="https://www.datacouncil.ai/talks/monarch-googles-planet-scale-streaming-monitoring-infrastructure" target="_blank" rel="noopener">PPT</a></p>
 
             </div>
@@ -357,6 +357,10 @@
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AD%98%E5%82%A8/">存储</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Google/">Google</a>
                     
                   </div>
                 
@@ -477,17 +481,11 @@
 
   
 
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
   
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
-    
   <div class="statistics">
     
     
@@ -513,10 +511,9 @@
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
 <!-- SCRIPTS -->
@@ -681,61 +678,6 @@
     <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
 
   
-
-
-
-  
-  
-    <script type="text/javascript">
-      //定义获取词语下标
-      var a_idx = 0;
-      jQuery(document).ready(function ($) {
-        //点击body时触发事件
-        $("body").click(function (e) {
-          //需要显示的词语
-          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
-          //设置词语给span标签
-          var $i = $("<span/>").text(a[a_idx]);
-          //下标等于原来下标+1  余 词语总数
-          a_idx = (a_idx + 1) % a.length;
-          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
-          //获取x和y的指针坐标
-          var x = e.pageX, y = e.pageY;
-          //在鼠标的指针的位置给$i定义的span标签添加css样式
-          $i.css({
-            "z-index": 999,
-            "top": y - 20,
-            "left": x,
-            "position": "absolute",
-            "font-weight": "bold",
-            "color": rand_color()
-          });
-          // 随机颜色
-          function rand_color() {
-            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
-          }
-          //在body添加这个标签
-          $("body").append($i);
-          //animate() 方法执行 CSS 属性集的自定义动画。
-          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
-          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
-          $i.animate({
-            //将原来的位置向上移动180
-            "top": y - 180,
-            "opacity": 0
-            //1500动画的速度
-          }, 1500, function () {
-            //时间到了自动删除
-            $i.remove();
-          });
-        });
-      })
-      ;
-    </script>
-  
-
-
-
 
 
 

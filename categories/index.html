@@ -25,7 +25,7 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
@@ -181,7 +181,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckfweg4jn00031p5l3iexhodg" role="tab" data-toggle="collapse" href="#collapse-ckfweg4jn00031p5l3iexhodg"
+        id="heading-ckggirtfr00094b5l15ge6n0m" role="tab" data-toggle="collapse" href="#collapse-ckggirtfr00094b5l15ge6n0m"
         aria-expanded="false"
       >
         分布式系统
@@ -189,14 +189,21 @@
       </a>
       <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" class="category-count col-2 col-md-1">
         <i class="iconfont icon-articles"></i>
-        <span>5</span>
+        <span>6</span>
       </a>
       <div class="category-collapse">
         
-  <div id="collapse-ckfweg4jn00031p5l3iexhodg" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckfweg4jn00031p5l3iexhodg">
+  <div id="collapse-ckggirtfr00094b5l15ge6n0m" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckggirtfr00094b5l15ge6n0m">
     
     
+    
+      
+      
+        <a href="/maxcompute-yugong/" class="list-group-item list-group-item-action">
+          <span class="category-post">MaxCompute 跨域流量优化论文阅读</span>
+        </a>
+      
     
       
       
@@ -245,7 +252,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckfweg4jz000b1p5la8v18pk7" role="tab" data-toggle="collapse" href="#collapse-ckfweg4jz000b1p5la8v18pk7"
+        id="heading-ckggirtfg00054b5leq6eavbg" role="tab" data-toggle="collapse" href="#collapse-ckggirtfg00054b5leq6eavbg"
         aria-expanded="false"
       >
         开发工具
@@ -257,8 +264,8 @@
       </a>
       <div class="category-collapse">
         
-  <div id="collapse-ckfweg4jz000b1p5la8v18pk7" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckfweg4jz000b1p5la8v18pk7">
+  <div id="collapse-ckggirtfg00054b5leq6eavbg" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckggirtfg00054b5leq6eavbg">
     
     
     
@@ -333,17 +340,11 @@
 
   
 
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
   
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
-    
   <div class="statistics">
     
     
@@ -369,10 +370,9 @@
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
 <!-- SCRIPTS -->
@@ -441,61 +441,6 @@
 
 
 
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript">
-      //定义获取词语下标
-      var a_idx = 0;
-      jQuery(document).ready(function ($) {
-        //点击body时触发事件
-        $("body").click(function (e) {
-          //需要显示的词语
-          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
-          //设置词语给span标签
-          var $i = $("<span/>").text(a[a_idx]);
-          //下标等于原来下标+1  余 词语总数
-          a_idx = (a_idx + 1) % a.length;
-          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
-          //获取x和y的指针坐标
-          var x = e.pageX, y = e.pageY;
-          //在鼠标的指针的位置给$i定义的span标签添加css样式
-          $i.css({
-            "z-index": 999,
-            "top": y - 20,
-            "left": x,
-            "position": "absolute",
-            "font-weight": "bold",
-            "color": rand_color()
-          });
-          // 随机颜色
-          function rand_color() {
-            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
-          }
-          //在body添加这个标签
-          $("body").append($i);
-          //animate() 方法执行 CSS 属性集的自定义动画。
-          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
-          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
-          $i.animate({
-            //将原来的位置向上移动180
-            "top": y - 180,
-            "opacity": 0
-            //1500动画的速度
-          }, 1500, function () {
-            //时间到了自动删除
-            $i.remove();
-          });
-        });
-      })
-      ;
-    </script>
-  
 
 
 
