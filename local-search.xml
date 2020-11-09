@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>为什么选择 git 来作为代码版本控制系统</title>
+    <link href="/git-or-svn/"/>
+    <url>/git-or-svn/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>开发工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>配置</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>30 条常用 git 命令详解</title>
     <link href="/git-common-command/"/>
     <url>/git-common-command/</url>
