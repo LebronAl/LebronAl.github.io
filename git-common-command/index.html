@@ -1,0 +1,974 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
+  <meta name="author" content="谭新宇">
+  <meta name="keywords" content="">
+  <title>30 条 git 常用命令详解 - 谭新宇的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>谭新宇的博客</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/blog-background.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-30 14:21" pubdate>
+        星期五, 十月 30日 2020, 2:21 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      66
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">30 条 git 常用命令详解</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期一, 十一月 9日 2020, 9:10 晚上
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>git 是一个强大的分布式版本管理工具，也是计算机专业找工作的必备技能之一。关于 git 的教程网上已经有很多很多，其大致工作流程如下图，此处不再赘述。</p>
+<p><img src="/git-common-command/workload.png" srcset="/img/loading.gif" alt></p>
+<p>本文主要介绍常用的 30 条 git 命令，希望能够大家使用 git 带来一些帮助。</p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p>git version 2.17.2 (Apple Git-113)</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>以下每条命令也可使用<code>git &lt;command&gt; -h</code>来查看对应官方文档。</p>
+<h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><p>可以使用<code>git init</code>在当前目录创建 git 仓库，也可使用<code>git init &lt;path&gt;</code>在 path 路径下创建目录并创建 git 仓库。注意有个<code>--bare</code>参数可以生成一般作为远程仓库的裸仓库，其不包含工作区，具体可参考此<a href="https://www.jianshu.com/p/5b7ff91c5338" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="clone"><a href="#clone" class="headerlink" title="clone"></a>clone</h3><p>可以直接使用<code>git clone &lt;url&gt;</code>来克隆对应仓库代码，本地默认存储目录为当前目录下的仓库同名目录，也可在 url 之后指定本地的存储目录名。例如：<br><pre><code class="hljs crmsh">git <span class="hljs-keyword">clone</span> <span class="hljs-title">&lt;url</span>&gt;
+git <span class="hljs-keyword">clone</span> <span class="hljs-title">&lt;url</span>&gt; <span class="hljs-tag">&lt;dir_name&gt;</span></code></pre></p>
+<p>具体的 url 有四种协议格式，分别是 local，git，ssh，https 协议，具体区别可参考此<a href="https://juejin.im/post/6844903536749182989" target="_blank" rel="noopener">博客</a>和<a href="https://cloud.tencent.com/developer/article/1347791" target="_blank" rel="noopener">博客</a>。</p>
+<p>此外在克隆某些存在较大文件的项目时，可以使用<code>git clone --depth=n &lt;url&gt;</code>来下载该项目 master 分支最近 n 次 commit 的相关文件和引用；使用<code>git clone --single-branch --branch=dev &lt;url&gt;</code>来下载该项目 dev 分支的相关文件和引用。这样可以大大加快克隆的速度。</p>
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><p>通常只用来设置邮箱和用户名。注意有三个级别<code>local</code>，<code>global</code>和<code>system</code>，分别对应项目级别，用户级别和机器级别。默认不指定是<code>local</code>级别，具体区别可参考此<a href="https://www.daixiaorui.com/read/240.html" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs routeros">git<span class="hljs-built_in"> config </span>user.email <span class="hljs-string">"TXYPotato@gmail.com"</span>
+git<span class="hljs-built_in"> config </span>user.name <span class="hljs-string">"LebronAl"</span></code></pre></p>
+<p>此外，在单机配置多个 git 账号时，除了在目录<code>~/.ssh/</code>下生成 config 文件外，一般也需要在对应仓库重新设置非全局的正确用户名和邮箱以避免身份混淆，具体配置方式可参考此<a href="http://www.chenyp.com/2017/08/11/multiple-git-account/" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h3><p>通常用来管理上游仓库，可以通过<code>git remote -v</code>来查看相关信息，其相关命令如下：<br><pre><code class="hljs dts"><span class="hljs-comment">// 添加远程仓库关联</span>
+git remote add <span class="hljs-params">&lt;name&gt;</span> <span class="hljs-params">&lt;url&gt;</span>
+<span class="hljs-comment">// 删除远程仓库关联</span>
+git remote remove <span class="hljs-params">&lt;name&gt;</span>
+<span class="hljs-comment">// 更名远程仓库关联</span>
+git remote rename <span class="hljs-params">&lt;old_name&gt;</span> <span class="hljs-params">&lt;new_name&gt;</span>
+<span class="hljs-comment">// 显示某个远程仓库的信息</span>
+git remote show <span class="hljs-params">&lt;name&gt;</span>
+<span class="hljs-comment">// 更新远程仓库 url</span>
+git remote set-url <span class="hljs-params">&lt;name&gt;</span> <span class="hljs-params">&lt;new_url&gt;</span></code></pre></p>
+<p>此外，remote 命令也可以为一个远程仓库设置多个 url 地址，这样一次 push 就可以同时对该远程仓库的所有 url 进行推送，比如同时往 github 和 gitee 上推送，具体可参考此<a href="https://www.cnblogs.com/hsd1727728211/p/5331651.html" target="_blank" rel="noopener">博客</a>，相关命令如下：<br><pre><code class="hljs dsconfig"><span class="hljs-string">git </span><span class="hljs-string">remote </span><span class="hljs-built_in">set-url</span> <span class="hljs-built_in">--add</span> &lt;<span class="hljs-string">name&gt;</span> &lt;<span class="hljs-string">url&gt;</span>
+<span class="hljs-string">git </span><span class="hljs-string">remote </span><span class="hljs-built_in">set-url</span> <span class="hljs-built_in">--delete</span> &lt;<span class="hljs-string">name&gt;</span> &lt;<span class="hljs-string">url&gt;</span></code></pre></p>
+<p>此外，remote 命令也可以跟踪远程的所有分支和清理无效的远程分支跟踪，具体可参考此<a href="https://www.jianshu.com/p/884ff6252be5" target="_blank" rel="noopener">博客</a>：<br><pre><code class="hljs delphi"><span class="hljs-comment">// 本地创建远程追踪分支</span>
+git remote update &lt;<span class="hljs-keyword">name</span>&gt;
+<span class="hljs-comment">// 本地清理无效的远程追踪分支</span>
+git remote prune &lt;<span class="hljs-keyword">name</span>&gt;
+<span class="hljs-comment">// 查看无效的远程追踪分支</span>
+git remote prune --dry-run &lt;<span class="hljs-keyword">name</span>&gt;</code></pre></p>
+<h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3><p>用来从工作区向暂存区添加变更。可以使用<code>git add -e &lt;file&gt;</code>或者<code>git add -p &lt;file&gt;</code>来交互性的添加工作区文件的部分变更到暂存区中去，具体可查看此<a href="https://www.cnblogs.com/zqb-all/p/13020293.html" target="_blank" rel="noopener">博客</a>。</p>
+<p>add 命令支持添加单个文件，带有通配符路径的所有对应文件和所有文件。添加所有文件对应三种命令，有细微的区别，介绍如下：<br><pre><code class="hljs cs"><span class="hljs-comment">// 提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)</span>
+git <span class="hljs-keyword">add</span> -u
+<span class="hljs-comment">// 提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件</span>
+git <span class="hljs-keyword">add</span> .
+<span class="hljs-comment">// 提交所有变化</span>
+git <span class="hljs-keyword">add</span> -A</code></pre></p>
+<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>用于删除工作区文件，并将此次删除放入到暂存区。（注：要删除的文件没有修改过，就是说和当前版本库文件的内容相同。）<br><pre><code class="hljs stata">git <span class="hljs-keyword">rm</span> &lt;<span class="hljs-keyword">file</span>&gt;</code></pre></p>
+<p>用于删除工作区和暂存区文件，并将此次删除放入暂存区。（注：要删除的文件已经修改过，就是说和当前版本库文件的内容不同）<br><pre><code class="hljs stata">git <span class="hljs-keyword">rm</span> -f &lt;<span class="hljs-keyword">file</span>&gt;
+<span class="hljs-comment">// 对所有文件进行操作</span>
+git <span class="hljs-keyword">rm</span> -f -r .</code></pre></p>
+<p>用于删除暂存区文件，并将此次删除放入暂存区，但会保留工作区的文件。<br><pre><code class="hljs stata">git <span class="hljs-keyword">rm</span> --cached &lt;<span class="hljs-keyword">file</span>&gt;
+<span class="hljs-comment">// 对所有文件进行操作</span>
+git <span class="hljs-keyword">rm</span> --cached -r .</code></pre></p>
+<p>更多例子可参考此<a href="https://blog.csdn.net/qq_42780289/article/details/98353792" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>用于移动或重命名一个文件、目录或软链接。<br><pre><code class="hljs xml">git mv <span class="hljs-tag">&lt;<span class="hljs-name">old_file</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">new_file</span>&gt;</span></code></pre><br>相当于<code>mv old_file new_file</code>，<code>git rm old_file</code>，<code>git add new_file</code>这三条命令一起运行，具体可参考此<a href="https://www.cnblogs.com/mf001/p/8663386.html" target="_blank" rel="noopener">博客</a>。</p>
+<p>新文件名已经存在，若想强制覆盖则可以使用 -f 参数：<br><pre><code class="hljs xml">git mv -f <span class="hljs-tag">&lt;<span class="hljs-name">old_file</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">new_file</span>&gt;</span></code></pre></p>
+<h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>用于将指定 commit 和 branch 的文件替换暂存区的文件。有三个常用参数，分别是<code>--hard</code>，<code>--soft</code>，<code>--mixed</code>，默认是<code>--mixed</code>。具体细节和应用场景可参考此<a href="https://www.jianshu.com/p/c2ec5f06cf1a" target="_blank" rel="noopener">博客</a>。</p>
+<p>定义三种动作：</p>
+<ol>
+<li>替换引用的指向，指向新的提交。</li>
+<li>替换暂存区。暂存区内容将和指定的提交内容一样。</li>
+<li>替换工作区。工作区和指定的提交内容一样。</li>
+</ol>
+<pre><code class="hljs pgsql">// 执行 <span class="hljs-number">1</span>。常用于合并多个 <span class="hljs-keyword">commit</span>，类似于 squash
+git <span class="hljs-keyword">reset</span> <span class="hljs-comment">--soft [commitId]/&lt;branch&gt;</span>
+// 执行 <span class="hljs-number">12</span>。常用于移出暂存区的文件以作为 <span class="hljs-keyword">add</span> 命令的反动作
+git <span class="hljs-keyword">reset</span> (<span class="hljs-comment">--mixed) &lt;commitId&gt;/&lt;branch&gt;</span>
+// 执行 <span class="hljs-number">123</span>。常用于无条件放弃本地所有变更以向远程分支同步
+git <span class="hljs-keyword">reset</span> <span class="hljs-comment">--hard &lt;commitId&gt;/&lt;branch&gt;</span>
+// 将暂存区的所有改动撤销到工作区
+git <span class="hljs-keyword">reset</span> (<span class="hljs-comment">--mixed) HEAD</span></code></pre>
+<h3 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h3><p>常用来保存和恢复工作进度。注意该命令只对被 git 跟踪的文件有效。这是一个非常有用的命令，具体相关用法可查看此<a href="https://blog.csdn.net/andyzhaojianhui/article/details/80586695" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs sql">// 保存当前工作进度，将工作区和暂存区恢复到修改之前。默认 message 为当前分支最后一次 <span class="hljs-keyword">commit</span> 的 message
+git stash
+// 作用同上，message 为此次进度保存的说明
+git stash <span class="hljs-keyword">save</span> message
+// 显示此次工作进度做了哪些文件行数的变化，此命令的 stash@&#123;<span class="hljs-keyword">num</span>&#125; 是可选项，不带此项则默认显示最近一次的工作进度相当于 git stash <span class="hljs-keyword">show</span> stash@&#123;<span class="hljs-number">0</span>&#125;
+git stash <span class="hljs-keyword">show</span> stash@&#123;<span class="hljs-keyword">num</span>&#125;
+// 显示此次工作进度做了哪些具体的代码改动，此命令的 stash@&#123;<span class="hljs-keyword">num</span>&#125; 是可选项，不带此项则默认显示最近一次的工作进度相当于 git stash <span class="hljs-keyword">show</span> stash@&#123;<span class="hljs-number">0</span>&#125; -p
+git stash <span class="hljs-keyword">show</span> stash@&#123;<span class="hljs-keyword">num</span>&#125; -p
+// 显示保存的工作进度列表，编号越小代表保存进度的时间越近
+git stash <span class="hljs-keyword">list</span>
+// 恢复工作进度到工作区，此命令的 stash@&#123;<span class="hljs-keyword">num</span>&#125; 是可选项，在多个工作进度中可以选择恢复，不带此项则默认恢复最近的一次进度相当于 git stash pop stash@&#123;<span class="hljs-number">0</span>&#125;
+git stash pop stash@&#123;<span class="hljs-keyword">num</span>&#125;
+// 恢复工作进度到工作区且该工作进度可重复恢复，此命令的 stash@&#123;<span class="hljs-keyword">num</span>&#125; 是可选项，在多个工作进度中可以选择恢复，不带此项则默认恢复最近的一次进度相当于 git stash <span class="hljs-keyword">apply</span> stash@&#123;<span class="hljs-number">0</span>&#125;
+git stash <span class="hljs-keyword">apply</span> stash@&#123;<span class="hljs-keyword">num</span>&#125;
+// 删除一条保存的工作进度，此命令的 stash@&#123;<span class="hljs-keyword">num</span>&#125; 是可选项，在多个工作进度中可以选择删除，不带此项则默认删除最近的一次进度相当于 git stash <span class="hljs-keyword">drop</span> stash@&#123;<span class="hljs-number">0</span>&#125;
+git stash <span class="hljs-keyword">drop</span> stash@&#123;<span class="hljs-keyword">num</span>&#125;
+// 删除所有保存的工作进度
+git stash <span class="hljs-keyword">clear</span></code></pre>
+<p>此外有时我们只想保存部分文件，可以通过 add 一些不想保存的文件到暂存区去，然后使用<code>git stash --keep-index</code>来将工作区的工作进度保存，从而保留暂存区的进度并保存工作区的进度。具体可参考此<a href="https://juejin.im/post/6844903961770606605" target="_blank" rel="noopener">博客</a>。</p>
+<p>此外虽然 stash 命令默认不包含未跟踪的文件，但我们可以通过显示声明<code>-u</code>的方式来保存未被 git 追踪的文件。即<code>git stash -u</code>。</p>
+<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><p>用于显示文件和文件夹在工作区和暂存区的状态。<br><pre><code class="hljs lua">git <span class="hljs-built_in">status</span>
+// 展示中包含被忽略的文件
+git <span class="hljs-built_in">status</span> <span class="hljs-comment">--ignored</span></code></pre></p>
+<h3 id="log"><a href="#log" class="headerlink" title="log"></a>log</h3><p>用来回顾提交历史。可参考此<a href="https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2" target="_blank" rel="noopener">文档</a>和此<a href="https://www.cnblogs.com/lenomirei/p/8379457.html" target="_blank" rel="noopener">博客</a>。以下只列出几个常用的打印格式：<br><pre><code class="hljs cos">git log
+git log --oneline
+git log --graph --pretty=format:'<span class="hljs-built_in">%Cred</span><span class="hljs-built_in">%h</span><span class="hljs-built_in">%Creset</span> -<span class="hljs-built_in">%C</span>(yellow)<span class="hljs-built_in">%d</span><span class="hljs-built_in">%Creset</span> <span class="hljs-built_in">%s</span> <span class="hljs-built_in">%Cgreen</span>(<span class="hljs-built_in">%cr</span>) <span class="hljs-built_in">%C</span>(bold blue)&lt;<span class="hljs-built_in">%an</span>&gt;<span class="hljs-built_in">%Creset</span>' --abbrev-commit --date=relative
+<span class="hljs-comment">// 从 commit 信息中查找与关键字相关的 commit</span>
+git log --grep &lt;key&gt;
+<span class="hljs-comment">// 从代码中查找与关键字相关的 commit</span>
+git log -<span class="hljs-keyword">S</span> &lt;key&gt;</code></pre></p>
+<h3 id="shortlog"><a href="#shortlog" class="headerlink" title="shortlog"></a>shortlog</h3><p>用于汇总 git 日志输出。非常人性化的一个命令。<br><pre><code class="hljs pgsql">// 按照用户列出其 <span class="hljs-keyword">commit</span> 的次数以及每次 <span class="hljs-keyword">commit</span> 的注释
+git shortlog
+// 按照 <span class="hljs-keyword">commit</span> 数量从多到少的顺序列出本仓库的贡献者并省略注释
+git shortlog -sn</code></pre></p>
+<h3 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h3><p>用来比较文件之间的不同。具体用法可参考此<a href="https://blog.csdn.net/wq6ylg08/article/details/88798254" target="_blank" rel="noopener">博客</a>。diff 结果的格式可参考此<a href="http://www.ruanyifeng.com/blog/2012/08/how_to_read_diff.html" target="_blank" rel="noopener">博客</a>了解。<br><pre><code class="hljs dts"><span class="hljs-comment">// 查看工作区与暂存区所有文件的变更</span>
+git diff
+<span class="hljs-comment">// 查看暂存区与最后一次 commit 之间所有文件的变更</span>
+git diff --cached
+<span class="hljs-comment">// 查看工作区与最后一次 commit 之间所有文件的变更</span>
+git diff HEAD
+<span class="hljs-comment">// 查看两次 commit 之间的变动</span>
+git diff <span class="hljs-params">&lt;commitId&gt;</span>...<span class="hljs-params">&lt;commitId&gt;</span>
+<span class="hljs-comment">// 查看两个分支上最后一次 commit 的内容差别</span>
+git diff <span class="hljs-params">&lt;branch&gt;</span>...<span class="hljs-params">&lt;branch&gt;</span></code></pre></p>
+<h3 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h3><p>用于分支的操作，比如创建分支，查看分支等等。<br><pre><code class="hljs dts"><span class="hljs-comment">// 可以查看本地分支对应的远程分支</span>
+git branch -vv 
+<span class="hljs-comment">// 查看远程版本库分支列表</span>
+git branch -r
+<span class="hljs-comment">// 查看所有分支列表，包括本地和远程</span>
+git branch -a
+<span class="hljs-comment">// 在当前位置新建 name 分支</span>
+git branch <span class="hljs-params">&lt;name&gt;</span>
+<span class="hljs-comment">// 在指定 commit 上新建 name 分支</span>
+git branch <span class="hljs-params">&lt;name&gt;</span> <span class="hljs-params">&lt;commitId&gt;</span>
+<span class="hljs-comment">// 强制创建 name 分支，原来的分支会被新建分支覆盖，从而迁移 name 分支指针</span>
+git branch -f <span class="hljs-params">&lt;name&gt;</span>
+<span class="hljs-comment">// 删除 dev 分支，如果在分支中有一些未 merge 的提交则会失败</span>
+git branch -d dev
+<span class="hljs-comment">// 强制删除 dev 分支</span>
+git branch -D dev
+<span class="hljs-comment">// 重命名分支</span>
+git branch -m <span class="hljs-params">&lt;oldName&gt;</span> <span class="hljs-params">&lt;newName&gt;</span></code></pre></p>
+<h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h3><p>用于切换分支或更新工作树文件以匹配索引或指定树中的版本，具体可参考此<a href="https://www.jianshu.com/p/cad4d2ec4da5" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs dts"><span class="hljs-comment">// 切换到指定分支</span>
+git checkout <span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 在当前位置新建分支并切换</span>
+git checkout -b <span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 在指定 commit 上新建分支并切换</span>
+git checkout -b <span class="hljs-params">&lt;branch&gt;</span> <span class="hljs-params">&lt;commitId&gt;</span>
+<span class="hljs-comment">// 切换到指定 v1.2 的标签</span>
+git checkout tags/v1<span class="hljs-number">.2</span>
+<span class="hljs-comment">// 切换到指定 commit</span>
+git checkout <span class="hljs-params">&lt;commitId&gt;</span>
+<span class="hljs-comment">// 基于当前所在分支新建一个赤裸分支，该分支没有任何的提交历史但包含当前分支的所有内容，相当于 git checkout -b &lt;new_branch&gt; 和 git reset --soft &lt;firstCommitId&gt; 两条命令 </span>
+git checkout --orphan <span class="hljs-params">&lt;new_branch&gt;</span>
+<span class="hljs-comment">// 放弃工作区单个文件的变更，默认会从暂存区检出该文件，如果暂存区为空，则该文件会回滚到最近一次的提交状态</span>
+git checkout -- <span class="hljs-params">&lt;filepath&gt;</span>
+<span class="hljs-comment">// 放弃工作区所有文件的变更（不包含未跟踪的）</span>
+git checkout .</code></pre></p>
+<h3 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h3><p>用于将暂存区里的改动给提交到本地的版本库。<br><pre><code class="hljs pgsql">// 提交一个描述为 message 的 <span class="hljs-keyword">commit</span>
+git <span class="hljs-keyword">commit</span> -m "message"
+// 相当于 git <span class="hljs-keyword">add</span> -a 和 git <span class="hljs-keyword">commit</span> -m "message" 两条命令
+git <span class="hljs-keyword">commit</span> -am "message"
+// 在不增加一个新 <span class="hljs-keyword">commit</span> 的情况下将新修改的代码追加到前一次的 <span class="hljs-keyword">commit</span> 中，会弹出一个编辑器界面重新编辑 message 信息
+git <span class="hljs-keyword">commit</span> <span class="hljs-comment">--amend</span>
+// 在不增加一个新 <span class="hljs-keyword">commit</span> 的情况下将新修改的代码追加到前一次的 <span class="hljs-keyword">commit</span> 中，不需要再修改 message 信息
+git <span class="hljs-keyword">commit</span> <span class="hljs-comment">--amend --no-edit</span>
+// 提交一次没有任何改动的空提交，常用于触发远程 ci
+git <span class="hljs-keyword">commit</span> <span class="hljs-comment">----allow-empty -m "message"</span>
+// 修改 <span class="hljs-keyword">commit</span> 时间
+git <span class="hljs-keyword">commit</span> -m "message" <span class="hljs-comment">--date=" Wed May 27 00:35:36 2020 +0800"</span></code></pre></p>
+<h3 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h3><p>撤销某个 commit 的改动。在多人协作中如果某个 commit 已经被推到了远程，此时使用 revert 相比 reset + force-update 是更优雅的撤销变更方式。可参考此<a href="https://www.cnblogs.com/0616--ataozhijia/p/3709917.html" target="_blank" rel="noopener">博客</a>和<a href="https://www.jianshu.com/p/5e7ee87241e4" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs jboss-cli"><span class="hljs-string">//</span> 可以撤销指定的提交
+git revert &lt;commitId&gt;
+<span class="hljs-string">//</span> 可以撤销不包括 commit1，但包括 commit2 的一串提交
+git revert &lt;commit1&gt;<span class="hljs-string">...</span>&lt;commit2&gt;
+<span class="hljs-string">//</span> revert 命令会对每个撤销的 commit 进行一次提交，<span class="hljs-params">--no-commit</span> 后可以最后一起手动提交
+git revert <span class="hljs-params">--no-commit</span> &lt;commit1&gt;<span class="hljs-string">...</span>&lt;commit2&gt;
+<span class="hljs-string">//</span> 退出 revert 过程，常在处理冲突出错时使用
+git revert <span class="hljs-params">--abort</span>
+<span class="hljs-string">//</span> 继续 revert 过程，常在处理完冲突时使用
+git revert <span class="hljs-params">--continue</span></code></pre>
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>用于将两个或两个以上的开发历史合并在一起的操作，具体详细命令及介绍可看此<a href="https://www.jianshu.com/p/58a166f24c81" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs cos"><span class="hljs-comment">// 合并某个分支</span>
+git <span class="hljs-keyword">merge</span> &lt;branch&gt;
+<span class="hljs-comment">// 退出 merge 过程，常在处理冲突出错时使用</span>
+git <span class="hljs-keyword">merge</span> --abort
+<span class="hljs-comment">// 继续 merge 过程，常在处理完冲突时使用</span>
+git <span class="hljs-keyword">merge</span> --<span class="hljs-keyword">continue</span></code></pre>
+<p>此外，关于在可以 fast-forward 合并时是否再提交一个 commit 有一些争议，具体可看此<a href="https://www.jianshu.com/p/b357df6794e3" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs livecodeserver">git <span class="hljs-built_in">merge</span> <span class="hljs-comment">--no-ff &lt;branch&gt;</span></code></pre></p>
+<p>此外可以在 merge 时也可以使用 —squash 参数，该命令能够将合并分支上的多个 commit 合并成一个 commit 放在当前分支上。相比 rebase 的 squash，其主要区别是该 commit 的 author 不一样。具体可查看此<a href="https://www.jianshu.com/p/684a8ae9dcf1" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs livecodeserver">git <span class="hljs-built_in">merge</span> <span class="hljs-comment">--squash &lt;branch&gt;</span></code></pre></p>
+<h3 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h3><p>相比 merge，合并分支历史的另一种管理方式，区别可查看此<a href="https://www.jianshu.com/p/6960811ac89c" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs cpp"><span class="hljs-comment">// 变基某个分支</span>
+git rebase &lt;branch&gt;
+<span class="hljs-comment">// 退出 rebase 过程，常在处理冲突出错时使用</span>
+git rebase --<span class="hljs-built_in">abort</span>
+<span class="hljs-comment">// 继续 rebase 过程，常在处理完冲突时使用</span>
+git rebase --<span class="hljs-keyword">continue</span></code></pre></p>
+<p>此外也可以使用<code>git rebase -i HEAD~n</code> 来合并 n 个 commit，具体过程可参考此<a href="https://www.jianshu.com/p/6960811ac89c" target="_blank" rel="noopener">博客</a>。切记不要在共用的分支上进行 rebase，具体原因可查看此<a href="https://segmentfault.com/a/1190000005937408" target="_blank" rel="noopener">博客</a>。</p>
+<p>此外也可以使用<code>git rebase --onto &lt;branch&gt; &lt;fromCommitId&gt; &lt;toCommitId&gt;</code>来将 (fromCommitId,toCommitId] 上的所有 commit 合并到指定分支上，具体可参考此<a href="https://www.cnblogs.com/rickyk/p/3848768.html" target="_blank" rel="noopener">博客</a>。其实类似于 cherry-pick 多个提交。</p>
+<h3 id="cherry-pick"><a href="#cherry-pick" class="headerlink" title="cherry-pick"></a>cherry-pick</h3><p>用于将指定的 commit 应用于其他分支，具体可参考此<a href="http://www.ruanyifeng.com/blog/2020/04/git-cherry-pick.html" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs dts"><span class="hljs-comment">// 将指定的提交应用于当前分支</span>
+git cherry-pick <span class="hljs-params">&lt;commitId&gt;</span>
+<span class="hljs-comment">// 将指定分支的最近一次提交应用于当前分支</span>
+git cherry-pick <span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 将指定的两个提交先后应用于当前分支</span>
+git cherry-pick <span class="hljs-params">&lt;commitId1&gt;</span> <span class="hljs-params">&lt;commitId2&gt;</span>
+<span class="hljs-comment">// 将指定范围内的多个提交(不包含 commitId1，包含 commitId2)先后应用于当前分支</span>
+git cherry-pick <span class="hljs-params">&lt;commitId1&gt;</span>..<span class="hljs-params">&lt;commitId2&gt;</span>
+<span class="hljs-comment">// 将指定范围内的多个提交(包含 commitId1，包含 commitId2)先后应用于当前分支</span>
+git cherry-pick <span class="hljs-params">&lt;commitId1&gt;</span>^..<span class="hljs-params">&lt;commitId2&gt;</span>
+<span class="hljs-comment">// 退出 cherry-pick 过程，常在处理冲突出错时使用</span>
+git cherry-pick --abort
+<span class="hljs-comment">// 继续 cherry-pick 过程，常在处理完冲突时使用</span>
+git cherry-pick --continue</code></pre></p>
+<h3 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h3><p>常用于发布版本的管理，是指向某个 commit 的指针，具体可查看此<a href="https://blog.csdn.net/jdsjlzx/article/details/98654951" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs crmsh">// 查看所有 <span class="hljs-keyword">tag</span>
+<span class="hljs-title">git</span> <span class="hljs-keyword">tag</span>
+<span class="hljs-title">// 基于本地当前分支最后一个 commit</span> 创建 <span class="hljs-keyword">tag</span>
+<span class="hljs-title">git</span> <span class="hljs-keyword">tag</span> <span class="hljs-title">&lt;tagName</span>&gt; 
+// 基于指定 commit 创建 <span class="hljs-keyword">tag</span>
+<span class="hljs-title">git</span> <span class="hljs-keyword">tag</span> <span class="hljs-title">&lt;tagName</span>&gt; <span class="hljs-tag">&lt;commitId&gt;</span>
+// 基于指定 commit 创建 <span class="hljs-keyword">tag</span> <span class="hljs-title">并指定 message</span>
+git <span class="hljs-keyword">tag</span> <span class="hljs-title">-a</span> <span class="hljs-tag">&lt;tagName&gt;</span> -m <span class="hljs-string">"message"</span>
+// 删除本地指定 <span class="hljs-keyword">tag</span>
+<span class="hljs-title">git</span> <span class="hljs-keyword">tag</span> <span class="hljs-title">-d</span> <span class="hljs-tag">&lt;tagName&gt;</span></code></pre>
+<h3 id="push"><a href="#push" class="headerlink" title="push"></a>push</h3><p>用于将本地版本库的分支推送到远程服务器上对应的分支，具体用法可查看此<a href="https://www.cnblogs.com/qianqiannian/p/6008140.html" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs dts"><span class="hljs-comment">// 向远程推送指定分支</span>
+git push <span class="hljs-params">&lt;remote&gt;</span> <span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 向远程推送指定分支并绑定</span>
+git push -u <span class="hljs-params">&lt;remote&gt;</span> <span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 删除远程分支</span>
+git push <span class="hljs-params">&lt;remote&gt;</span> :<span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 向远程推送 tag</span>
+git push <span class="hljs-params">&lt;remote&gt;</span> <span class="hljs-params">&lt;tagName&gt;</span>
+<span class="hljs-comment">// 删除远程 tag</span>
+git push <span class="hljs-params">&lt;remote&gt;</span> :<span class="hljs-params">&lt;tagName&gt;</span>
+<span class="hljs-comment">// 向远程推送本地所有 tag</span>
+git push --tags <span class="hljs-params">&lt;remote&gt;</span></code></pre></p>
+<p>此外，当本地版本库的分支和远程版本库的对应分支有冲突时，如果想要强制覆盖，千万不要用<code>git push -f</code>，而是应该用<code>git push --force-with-lease</code>，具体原因可查看此<a href="https://www.cnblogs.com/walterlv/p/10236461.html" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h3><p>用于从远程获取对象和引用到本地，具体可参考此<a href="https://www.yiibai.com/git/git_fetch.html" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs dts"><span class="hljs-comment">// 取回指定远程仓库的所有分支</span>
+git fetch <span class="hljs-params">&lt;remote&gt;</span> 
+<span class="hljs-comment">// 取回指定远程仓库的指定分支</span>
+git fetch <span class="hljs-params">&lt;remote&gt;</span> <span class="hljs-params">&lt;branch&gt;</span>
+<span class="hljs-comment">// 取回所有远程仓库的所有分支</span>
+git fetch --all</code></pre>
+<h3 id="pull"><a href="#pull" class="headerlink" title="pull"></a>pull</h3><p>用于从远程获取代码并合并本地的版本，其实就是<code>git fetch</code>和<code>git merge FETCH_HEAD</code>的简写。有关其与 fetch 的区别，可以参考此<a href="https://www.cnblogs.com/ruiyang-/p/10764711.html" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs dts"><span class="hljs-comment">// 相当于 fetch + merge</span>
+git pull <span class="hljs-params">&lt;remote&gt;</span> <span class="hljs-params">&lt;remote_branch&gt;</span>:<span class="hljs-params">&lt;local_branch&gt;</span>
+<span class="hljs-comment">// 相当于 fetch + rebase</span>
+git pull --rebase <span class="hljs-params">&lt;remote&gt;</span> <span class="hljs-params">&lt;remote_branch&gt;</span>:<span class="hljs-params">&lt;local_branch&gt;</span></code></pre>
+<h3 id="bisect"><a href="#bisect" class="headerlink" title="bisect"></a>bisect</h3><p>用于在 git 历史里面二分查找有 bug 的 commit。这是找 bug 时一个非常有用的命令，可以快速定位出引入 bug 的 commit。具体使用方式可查看此<a href="http://www.ruanyifeng.com/blog/2018/12/git-bisect.html" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs less"><span class="hljs-comment">// 开始查找</span>
+<span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">bisect</span> <span class="hljs-selector-tag">start</span> <span class="hljs-selector-attr">[endCommitId]</span> <span class="hljs-selector-attr">[startCommitId]</span>
+<span class="hljs-comment">// 版本正确</span>
+<span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">bisect</span> <span class="hljs-selector-tag">good</span>
+<span class="hljs-comment">// 版本错误</span>
+<span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">bisect</span> <span class="hljs-selector-tag">bad</span>
+<span class="hljs-comment">// 退出查找</span>
+<span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">bisect</span> <span class="hljs-selector-tag">reset</span></code></pre></p>
+<h3 id="reflog"><a href="#reflog" class="headerlink" title="reflog"></a>reflog</h3><p>常用来恢复本地错误操作。用户每次使用更新 HEAD 的 git 命令比如 commit、amend、cherry-pick、reset、revert 等都会被记录下来（不限分支），就像 shell 的 history 一样。 这样用户如果发生误操作删除了某个 commit 找不到时，调用此命令就可以查找到对应的 commit，从而回到误删前的状态了。具体使用场景可查看此<a href="https://cloud.tencent.com/developer/article/1413097" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs angelscript">git <span class="hljs-built_in">ref</span>log</code></pre>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>用于检索文件中的文本内容，更多用法可参考此<a href="https://www.softwhy.com/article-8652-1.html" target="_blank" rel="noopener">博客</a>。<br><pre><code class="hljs arduino"><span class="hljs-comment">// 检索所有包含指定关键字的文件</span>
+git grep <span class="hljs-built_in">text</span>
+<span class="hljs-comment">// 检索关键字出现在哪一行</span>
+git grep -n <span class="hljs-built_in">text</span>
+<span class="hljs-comment">// 统计每一个文件中检索到指定关键字的行数</span>
+git grep -c <span class="hljs-built_in">text</span></code></pre></p>
+<h3 id="blame"><a href="#blame" class="headerlink" title="blame"></a>blame</h3><p>用于查看某个文件的每一行内容由谁所写，类似于 IDEA 的 annotate 功能，具体可查看此<a href="http://www.zhai14.com/blog/git-blame-command-help-u-find-out-who-made-the-serious-mistake.html" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs applescript">git blame &lt;<span class="hljs-built_in">file</span>&gt;</code></pre>
+<h3 id="gc"><a href="#gc" class="headerlink" title="gc"></a>gc</h3><p>用来清理 git 目录，删除掉无效的应用和文件，节约存储空间和传输大小。具体功能可参考此<a href="https://blog.csdn.net/lihuanshuai/article/details/37345565" target="_blank" rel="noopener">博客</a>。</p>
+<pre><code class="hljs ebnf"><span class="hljs-attribute">git gc</span></code></pre>
+<h3 id="submodule"><a href="#submodule" class="headerlink" title="submodule"></a>submodule</h3><p>用于管理多个子项目。该命令允许一个 git 仓库作为另一个 git 仓库的子目录，并且保持父项目和子项目相互独立。具体用法可参考此<a href="http://www.ayqy.net/blog/%E7%90%86%E8%A7%A3git-submodules/" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="我的-alias-设置"><a href="#我的-alias-设置" class="headerlink" title="我的 alias 设置"></a>我的 alias 设置</h2><pre><code class="hljs nix"><span class="hljs-attr">a</span> = add 
+<span class="hljs-attr">aa</span> = add -A
+   <span class="hljs-attr">au</span> = add -u
+<span class="hljs-attr">ae</span> = add -e
+<span class="hljs-attr">ap</span> = add -p
+<span class="hljs-attr">bm</span> = blame
+<span class="hljs-attr">br</span> = branch -vv
+<span class="hljs-attr">bra</span> = branch -a
+   <span class="hljs-attr">brr</span> = branch -r
+<span class="hljs-attr">brd</span> = branch -d
+<span class="hljs-attr">brdd</span> = branch -D
+   <span class="hljs-attr">brf</span> = branch -f
+<span class="hljs-attr">brm</span> = branch -m
+<span class="hljs-attr">bs</span> = bisect
+   <span class="hljs-attr">bss</span> = bisect start
+<span class="hljs-attr">bsb</span> = bisect bad
+<span class="hljs-attr">bsg</span> = bisect good
+<span class="hljs-attr">bsr</span> = bisect reset
+<span class="hljs-attr">cf</span> = config
+   <span class="hljs-attr">cfl</span> = config --list
+<span class="hljs-attr">cfg</span> = config --global
+<span class="hljs-attr">cfgl</span> = config --global --list
+<span class="hljs-attr">cfs</span> = config --system
+<span class="hljs-attr">cfsl</span> = config --system --list
+<span class="hljs-attr">cl</span> = clone
+<span class="hljs-attr">clb</span> = clone --single-branch --branch
+<span class="hljs-attr">cld</span> = clone --depth
+<span class="hljs-attr">cm</span> = commit
+   <span class="hljs-attr">cmm</span> = commit -am
+   <span class="hljs-attr">cmem</span> = commit --allow-empty -m
+<span class="hljs-attr">cma</span> = commit -a --amend
+<span class="hljs-attr">cman</span> = commit -a --amend --no-edit
+<span class="hljs-attr">co</span> = checkout
+<span class="hljs-attr">cob</span> = checkout -b
+<span class="hljs-attr">cod</span> = checkout -- 
+<span class="hljs-attr">coda</span> = checkout .
+<span class="hljs-attr">coo</span> = checkout --orphan
+<span class="hljs-attr">cp</span> = cherry-pick
+<span class="hljs-attr">cpa</span> = cherry-pick --<span class="hljs-built_in">abort</span>
+<span class="hljs-attr">cpc</span> = cherry-pick --continue
+<span class="hljs-attr">df</span> = diff
+<span class="hljs-attr">dfc</span> = diff --cached
+<span class="hljs-attr">dfh</span> = diff HEAD
+<span class="hljs-attr">fh</span> = fetch
+<span class="hljs-attr">fha</span> = fetch --all
+<span class="hljs-attr">ge</span> = grep -n 
+<span class="hljs-attr">gec</span> = grep -c 
+<span class="hljs-attr">lg</span> = log
+<span class="hljs-attr">lgo</span> = log --oneline
+<span class="hljs-attr">lgga</span> = log --graph <span class="hljs-attr">--pretty=format:'%Cred%h%Creset</span> -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit <span class="hljs-attr">--date=relative</span>
+<span class="hljs-attr">lgge</span> = log --grep
+<span class="hljs-attr">lgs</span> = log -S
+<span class="hljs-attr">me</span> = merge
+<span class="hljs-attr">mea</span> = merge --<span class="hljs-built_in">abort</span>
+<span class="hljs-attr">mec</span> = merge --continue
+<span class="hljs-attr">men</span> = merge --no-ff
+<span class="hljs-attr">mvf</span> = mv -f
+<span class="hljs-attr">pl</span> = pull
+<span class="hljs-attr">plr</span> = pull --rebase
+<span class="hljs-attr">ps</span> = push
+<span class="hljs-attr">psu</span> = push -u
+<span class="hljs-attr">psf</span> = push --force-<span class="hljs-keyword">with</span>-lease
+<span class="hljs-attr">pst</span> = push --tags
+<span class="hljs-attr">rb</span> = rebase
+<span class="hljs-attr">rba</span> = rebase --<span class="hljs-built_in">abort</span>
+<span class="hljs-attr">rbc</span> = rebase --continue
+<span class="hljs-attr">rbo</span> = rebase --onto
+<span class="hljs-attr">rmc</span> = rm --cached
+<span class="hljs-attr">rmca</span> = rm --cached -r .
+<span class="hljs-attr">rmf</span> = rm -f
+<span class="hljs-attr">rmfa</span> = rm -f -r .
+<span class="hljs-attr">rs</span> = reset
+<span class="hljs-attr">rse</span> = reset HEAD 
+<span class="hljs-attr">rsh</span> = reset --hard
+<span class="hljs-attr">rss</span> = reset --soft
+<span class="hljs-attr">rv</span> = revert
+<span class="hljs-attr">rva</span> = revert --<span class="hljs-built_in">abort</span>
+<span class="hljs-attr">rvc</span> = revert --continue
+<span class="hljs-attr">rvn</span> = revert --no-commit
+<span class="hljs-attr">rt</span> = remote
+<span class="hljs-attr">rta</span> = remote add
+<span class="hljs-attr">rtp</span> = remote prune
+<span class="hljs-attr">rtpd</span> = remote prune --dry-run
+<span class="hljs-attr">rtrm</span> = remote remove
+<span class="hljs-attr">rtrn</span> = remote rename
+<span class="hljs-attr">rtsu</span> = remote set-url
+<span class="hljs-attr">rtsua</span> = remote set-url --add
+<span class="hljs-attr">rtsud</span> = remote set-url --delete
+<span class="hljs-attr">rts</span> = remote show
+<span class="hljs-attr">rtu</span> = remote update
+<span class="hljs-attr">rtv</span> = remote -v
+<span class="hljs-attr">sh</span> = stash
+<span class="hljs-attr">shu</span> = stash -u
+<span class="hljs-attr">shk</span> = stash --keep-index
+<span class="hljs-attr">sha</span> = stash apply
+<span class="hljs-attr">shc</span> = stash clear
+<span class="hljs-attr">shd</span> = stash drop
+<span class="hljs-attr">shl</span> = stash list
+<span class="hljs-attr">shp</span> = stash pop
+<span class="hljs-attr">shsh</span> = stash show
+<span class="hljs-attr">shshp</span> = stash show -p
+<span class="hljs-attr">shsa</span> = stash save
+<span class="hljs-attr">shsak</span> = stash save --keep-index
+<span class="hljs-attr">sl</span> = shortlog
+<span class="hljs-attr">slsn</span> = shortlog -s -n
+<span class="hljs-attr">st</span> = status	--show-stash
+<span class="hljs-attr">sti</span> = stash ---ignored --show-stash
+<span class="hljs-attr">tg</span> = tag
+<span class="hljs-attr">tga</span> = tag -a
+<span class="hljs-attr">tgd</span> = tag -d</code></pre>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p>以下两个仓库是我刷过的比较有趣的两个教程，十分推荐。</p>
+<ul>
+<li><a href="https://github.com/Gazler/githug" target="_blank" rel="noopener">githug</a></li>
+<li><a href="https://github.com/pcottle/learnGitBranching" target="_blank" rel="noopener">learnGitBranching</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/mapreduce-thesis/">
+                        <span class="hidden-mobile">MapReduce 论文阅读</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2MDNHupHBJJGDzuzl7OJfBSk-gzGzoHsz",
+          app_key: "SPxv4rnqQEhTBn2BMGkp6dn1",
+          placeholder: "说点什么吧~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: true,
+          serverURLs: "",
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "30 条 git 常用命令详解&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

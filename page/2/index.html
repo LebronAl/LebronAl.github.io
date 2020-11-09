@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>标签 - 配置 - 谭新宇的博客</title>
+  <title>谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -43,7 +43,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -150,6 +150,10 @@
           </div>
 
           
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
         </div>
       </div>
     </div>
@@ -159,45 +163,82 @@
     
       <div class="container nopadding-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 4 篇文章</p>
-  <hr>
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2020</p>
     
-    <a href="/git-common-command/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">30 条 git 常用命令详解</span>
-      <time style="float: right;">10-30</time>
-    </a>
-  
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/mac-configuration/" target="_self">
+          <img src="/./mac-configuration/mac-configuration.jpeg" srcset="/img/loading.gif" alt="我的高效 Macbook 工作环境配置">
+        </a>
+      </div>
     
-    <a href="/jprofile-remote/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">JProfile 远程配置</span>
-      <time style="float: right;">10-05</time>
-    </a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/mac-configuration/">我的高效 Macbook 工作环境配置</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/mac-configuration/">
+          
+          
+            
+          
+          前言工欲善其事，必先利其器，工具永远都是用来解决问题的，没必要为了工具而工具，一切工具都是为了能快速准确的完成工作和学习任务而服务。
+我呢，在使用了 Windows，Ubuntu 和 MacOS 三种操作系统之后。结合种种体验和踩坑，最终还是觉得 MacOS 更舒适一点。每个人都有每个人的看法，每个人都有每个人的舒适点，MacOS 恰好捏住了我的舒适点。因此，我之后都将从 MacOS 上工作学习。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-02-10 22:16" pubdate>
+              2020-02-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
   
-    
-    <a href="/iTerm2-hotkeys/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">iTerm2 快捷键介绍</span>
-      <time style="float: right;">02-12</time>
-    </a>
-  
-    
-    <a href="/mac-configuration/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">我的高效 Macbook 工作环境配置</span>
-      <time style="float: right;">02-10</time>
-    </a>
-  
-</div>
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -313,7 +354,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签 - 配置&nbsp;",
+        "日常闲侃&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
