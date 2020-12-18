@@ -229,7 +229,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期二, 十一月 10日 2020, 1:25 下午
+                  本文最后更新于：星期二, 十一月 17日 2020, 10:31 晚上
                 
               </p>
             
@@ -268,7 +268,7 @@ git remote prune --dry-run &lt;<span class="hljs-keyword">name</span>&gt;</code>
 <h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3><p>用来从工作区向暂存区添加变更。可以使用<code>git add -e &lt;file&gt;</code>或者<code>git add -p &lt;file&gt;</code>来交互性的添加工作区文件的部分变更到暂存区中去，具体可查看此<a href="https://www.cnblogs.com/zqb-all/p/13020293.html" target="_blank" rel="noopener">博客</a>。</p>
 <p>add 命令支持添加单个文件，带有通配符路径的所有对应文件和所有文件。添加所有文件对应三种命令，有细微的区别，介绍如下：<br><pre><code class="hljs cs"><span class="hljs-comment">// 提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)</span>
 git <span class="hljs-keyword">add</span> -u
-<span class="hljs-comment">// 提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件</span>
+<span class="hljs-comment">// 提交当前目录下的所有变化</span>
 git <span class="hljs-keyword">add</span> .
 <span class="hljs-comment">// 提交所有变化</span>
 git <span class="hljs-keyword">add</span> -A</code></pre></p>
