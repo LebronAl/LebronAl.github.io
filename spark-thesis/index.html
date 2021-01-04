@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>为什么选择 git 来作为代码版本控制系统 - 谭新宇的博客</title>
+  <title>Spark 论文阅读 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -165,8 +165,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-11-09 23:20" pubdate>
-        星期一, 十一月 9日 2020, 11:20 晚上
+      <time datetime="2020-11-26 15:55" pubdate>
+        星期四, 十一月 26日 2020, 3:55 下午
       </time>
     </span>
   
@@ -177,7 +177,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      3k 字
     </span>
   
 
@@ -187,7 +187,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      13
+      31
        分钟
     </span>
   
@@ -225,69 +225,84 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">为什么选择 git 来作为代码版本控制系统</h1>
+            <h1 style="display: none">Spark 论文阅读</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期一, 十一月 16日 2020, 3:38 下午
+                  本文最后更新于：星期二, 一月 5日 2021, 12:22 凌晨
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <p>转载一篇介绍代码版本控制系统的<a href="https://zhuanlan.zhihu.com/p/27374348" target="_blank" rel="noopener">博客</a>，此外也可参考此<a href="https://www.zhihu.com/question/25491925" target="_blank" rel="noopener">博客</a>。</p>
-<h2 id="版本控制系统"><a href="#版本控制系统" class="headerlink" title="版本控制系统"></a>版本控制系统</h2><p>代码作为软件研发的核心产物，在整个开发周期都在递增，不断合入新需求以及解决 bug 的新 patch，这就需要有一款系统，能够存储、追踪文件的修改历史，记录多个版本的开发和维护。于是，版本控制系统（Version Control Systems）应运而生，主要分为两类，集中式和分布式。</p>
-<h2 id="集中式版本控制系统"><a href="#集中式版本控制系统" class="headerlink" title="集中式版本控制系统"></a>集中式版本控制系统</h2><p><img src="https://pic2.zhimg.com/80/v2-974ee843e5b45fa3c81701dcd86ce8e9_1440w.png" srcset="/img/loading.gif" alt></p>
-<p>集中式版本控制系统的特点是只有一台中央服务器，存放着所有研发数据，而其它客户端机器上保存的是中央服务器最新版本的文件快照，不包括项目文件的变更历史。所以，每个相关人员工作开始前，都需要从这台中央服务器同步最新版本，才能开始工作。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-0b59fbfed7cd73abaf5682b88413f062_1440w.png" srcset="/img/loading.gif" alt></p>
-<p>集中式版本控制系统的优点：</p>
+              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在 Apache Spark 广泛使用以前，业界主要使用 MapReduce 和 Dryad 这样的集群计算框架来对大数据进行分布式处理。这类计算框架，最大的优点旨在帮助程序员专注业务编程，而非花精力分发计算任务和实现程序容错。</p>
+<p>MapReduce 虽然对利用集群中的计算资源做了各类抽象，但还没有实现对集群内存的抽象封装。这样对那些需要重复利用中间结果集的应用就很不友好，比如机器学习和图算法，PageRank, K-means 聚类以及逻辑回归等等。此外，MapReduce 也很难支持高效的交互式数据分析，因涉及大量的即席数据查询，为确保下一次数据集可以被重用，需要借助存储物化结果集，这引发大量写入实体磁盘的操作，导致执行时间拉长。</p>
+<p>意识到这个问题的存在，学者们做了大量尝试，比如 Pregel，它把大量中间数据缓存起来，专为图计算封装了框架；HaLoop 则提供了实现迭代算法的 MapReduce 接口。但这些仅仅对个案有帮助，回到通用的计算上来，毫无优势。比如最常见的数据分析，装载多样化多源头数据，展开即席查询等等。</p>
+<p>综上，MapReduce 的局限可以总结为：</p>
+<ul>
+<li>编程模型的表达能力有限，仅靠 MapReduce 难以实现部分算法。</li>
+<li>对分布式内存资源的使用方式有限，使得其难以满足迭代式分析场景和交互式分析场景，比如迭代式机器学习算法及图算法，交互式数据挖掘等。</li>
+</ul>
+<p>Spark RDD 作为一个分布式内存资源抽象便致力于解决 Hadoop MapReduce 的上述问题：</p>
+<ul>
+<li>通过对分布式集群的内存资源进行抽象，允许程序高效复用已有的中间结果。</li>
+<li>提供比 MapReduce 更灵活的编程模型，兼容更多的高级算法。</li>
+</ul>
+<h2 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h2><p>RDD（Resilient Distributed Dataset，弹性分布式数据集）本质上是一种只读、分片的记录集合，只能由所支持的数据源或是由其他 RDD 经过一定的转换（Transformation）来产生。通过由用户构建 RDD 间组成的产生关系图，每个 RDD 都能记录到自己是如何由还位于持久化存储中的源数据计算得出的，即其血统（Lineage）。</p>
+<p><img src="/spark-thesis/lineage.jpg" srcset="/img/loading.gif" alt></p>
+<p>Spark 为 RDD 提供了 Transformation 和 Action 两种操作，前者可以从其他数据源读入数据生成 RDD 或利用已有的 RDD 生成新的只读 RDD。后者可对 RDD 进行计算操作并把一个结果值返回给客户端，或是将 RDD 里的数据写出到外部存储。</p>
+<p><img src="/spark-thesis/Transformation_Action.jpg" srcset="/img/loading.gif" alt></p>
+<p>Transformation 与 Action 的区别还在于，对 RDD 进行 Transformation 并不会触发计算：Transformation 方法所产生的 RDD 对象只会记录住该 RDD 所依赖的 RDD 以及计算产生该 RDD 的数据的方式；只有在用户进行 Action 操作时，Spark 才会调度 RDD 计算任务，依次为各个 RDD 计算数据，这是 RDD 典型的惰性计算。</p>
+<h2 id="分布式共享内存模型对比"><a href="#分布式共享内存模型对比" class="headerlink" title="分布式共享内存模型对比"></a>分布式共享内存模型对比</h2><p>相比于 RDD 只能通过粗粒度的”转换”来创建（或是说写入数据），分布式共享内存（Distributed Shared Memory，DSM）是另一种分布式系统常用的分布式内存抽象模型：应用在使用分布式共享内存时可以在一个全局可见的地址空间中进行随机的读写操作。类似的系统包括了一些常见的分布式内存数据库（如 Redis、Memcached）。其最大的优点在于写一次，多机同步。集群中的所有计算机节点，在同一内存位置存储了同一份数据。弊端也很明显，一旦数据损坏，所有数据都要重新还原或重做；同步导致的延迟会很高，因为系统要保障数据的完整性，这在分布式数据库中常见。</p>
+<p><img src="/spark-thesis/comparison.png" srcset="/img/loading.gif" alt></p>
+<p>RDD 产生的方式限制了其只适用于那些只会进行批量数据写入的应用程序，但却使得 RDD 可以使用更为高效的高可用机制。RDD 与 DSM 的区别在于，前者是粗放式写入，通过转换函数生成，而后者在内存任意位置均可写入。RDD 不能很好地支持大批量随机写入，却可以很好的支持批量写入和分区容错。前面也说道，血统依赖是 RDD 容错的利器，丢失分区可重生。</p>
+<p>RDD 的第二大优势在于，备份节点可以迅速的被唤起，去代替那些缓慢节点执行任务。即在缓慢节点执行任务的同时，备份节点同时也执行相同的任务，哪个节点快就用那个节点的结果。而 DSM 则会被备份节点干扰，引起大家同时缓慢，因为共享内存之间会同步状态，互相干扰。</p>
+<p>RDD 还有两大优化点：基于数据存储分发任务和溢出缓存至硬盘。在大量写入的操作中，比如生成 RDD，会选择离数据最近的节点开始任务；而在只读操作中，大量数据没法存入内存时，会自动存到硬盘上而不是报错停止执行。</p>
+<h2 id="计算调度"><a href="#计算调度" class="headerlink" title="计算调度"></a>计算调度</h2><p>前面我们提到，RDD 在物理形式上是分片的，其完整数据被分散在集群内若干机器的内存上。当用户通过 Transformation 创建出新的 RDD 后，新的 RDD 与原本的 RDD 便形成了依赖关系。根据用户所选 Transformation 操作的不同，RDD 间的依赖关系可以被分为两种：</p>
+<ul>
+<li>窄依赖（Narrow Dependency）：父 RDD 的每个分片至多被子 RDD 中的一个分片所依赖</li>
+<li>宽依赖（Wide Dependency）：父 RDD 中的分片可能被子 RDD 中的多个分片所依赖</li>
+</ul>
+<p><img src="/spark-thesis/dependency.jpg" srcset="/img/loading.gif" alt></p>
+<p>通过将窄依赖从宽依赖中区分出来，Spark 便可以针对 RDD 窄依赖进行一定的优化。首先，窄依赖使得位于该依赖链上的 RDD 计算操作可以被安排到同一个集群节点上流水线进行；其次，在节点失效需要恢复 RDD 时，Spark 只需要恢复父 RDD 中的对应分片即可，恢复父分片时还能将不同父分片的恢复任务调度到不同的节点上并发进行。</p>
+<p>总的来说，一个 RDD 由以下几部分组成：</p>
+<ul>
+<li>其分片集合</li>
+<li>其父 RDD 集合</li>
+<li>计算产生该 RDD 的方式</li>
+<li>描述该 RDD 所包含数据的模式、分片方式、存储位置偏好等信息的元数据</li>
+</ul>
+<p>在用户调用 Action 方法触发 RDD 计算时，Spark 会按照定义好的 RDD 依赖关系绘制出完整的 RDD 血统依赖，并根据图中各节点间依赖关系的不同对计算过程进行切分：</p>
+<p><img src="/spark-thesis/stage.jpg" srcset="/img/loading.gif" alt></p>
+<p>简单来说，Spark 会把尽可能多的可以流水线执行的窄依赖 Transformation 放到同一个 Job Stage 中，而 Job Stage 之间则要求集群对数据进行 Shuffle。Job Stage 划分完毕后，Spark 便会为每个 Partition 生成计算任务（Task）并调度到集群节点上运行。</p>
+<p>在调度 Task 时，Spark 也会考虑计算该 Partition 所需的数据的位置：例如，如果 RDD 是从 HDFS 中读出数据，那么 Partition 的计算就会尽可能被分配到持有对应 HDFS Block 的节点上；或者，如果 Spark 已经将父 RDD 持有在内存中，子 Partition 的计算也会被尽可能分配到持有对应父 Partition 的节点上。对于不同 Job Stage 之间的 Data Shuffle，目前 Spark 采取与 MapReduce 相同的策略，会把中间结果持久化到节点的本地存储中，以简化失效恢复的过程。</p>
+<p>当 Task 所在的节点失效时，只要该 Task 所属 Job Stage 的父 Job Stage 数据仍可用，Spark 只要将该 Task 调度到另一个节点上重新运行即可。如果父 Job Stage 的数据也已经不可用了，那么 Spark 就会重新提交一个计算父 Job Stage 数据的 Task，以完成恢复。有趣的是，从论文来看，Spark 当时还没有考虑调度模块本身的高可用，不过调度模块持有的状态只有 RDD 的血统图和 Task 分配情况，通过状态备份的方式实现高可用也是十分直观的。</p>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>Spark 为 RDD 提供了三种存储格式：</p>
+<ul>
+<li>内存中反序列化的 Java 对象；</li>
+<li>内存中序列化的 Java 对象；</li>
+<li>硬盘存储</li>
+</ul>
+<p>访问速度从快到慢，即第一种方式最快，无需任何转换就可以被自由访问。最后一种最慢，因每次使用，需从硬盘抽取数据，有不必要的 IO 开销。</p>
+<p>当内存吃紧，新建的 RDD 分区没有足够内存存储时，Spark 会采用回收分区方式，以给新分区提供空间。回收机制采用的是常规 LRU（Least Recently Used）算法，即最近最少使用的算法。这套回收机制很有用，至少目前来说是。但权值机制也很有用，比如设定 RDD 的权限等级，控制 RDD 分区被回收的可能性。</p>
+<h2 id="容错"><a href="#容错" class="headerlink" title="容错"></a>容错</h2><p>前面已经提到，Spark 可以利用血统依赖来恢复出现故障的 RDD，这样即可不用对中间结果做持久化。然而，在部分长链场景下，做 checkpoint 来持久化也是有必要的。这是因为如果血统依赖足够长，在故障之后，RDD 的恢复需要经历相当多的步骤，会导致时间过多的消耗，此时如果有 checkpoint 即可减少较多的时间消耗。</p>
+<p>Spark 将 checkpoint 的决策留给了用户。实现 checkpoint 的 API 是 persist 的 replicate 开关，即:<br><pre><code class="hljs css"><span class="hljs-selector-tag">rdd</span><span class="hljs-selector-class">.persist</span>(<span class="hljs-selector-tag">REPLICATE</span>)</code></pre></p>
+<p>通过定期将数据暂存至稳定的存储设备，可以保证在性能不大幅度下降的情况下优化 RDD 失效后的过长重算。</p>
+<h2 id="评测"><a href="#评测" class="headerlink" title="评测"></a>评测</h2><p><img src="/spark-thesis/performance.jpg" srcset="/img/loading.gif" alt></p>
+<p>Spark 在性能方面表现出众，对标物是 Hadoop，以下是基于 Amazon EC2 做出的 4 组对比数据：</p>
 <ol>
-<li>操作简单，使用没有难度，可轻松上手。</li>
-<li>文件夹级权限控制，权限控制粒度小。</li>
-<li>对客户端配置要求不高，无需存储全套代码。</li>
+<li>在图运算和迭代机器学习方面，优先 Hadoop 20 倍速度。性能的提高得益于无需硬盘 I/O，且在内存中的 Java 对象计算，没有序列化和反序列化的开销。</li>
+<li>性能与扩展性都很好。单测一张分析报表，就比 Hadoop 提高了 40 倍性能</li>
+<li>当有节点故障时，Spark 能自动恢复已丢失的分区</li>
+<li>查询 1TB 的数据，延迟仅在 5-7 秒。</li>
 </ol>
-<p>集中式版本控制系统的缺点：</p>
-<ol>
-<li>网络环境要求高，相关人员必须联网才能工作。</li>
-<li>中央服务器的单点故障影响全局，如果服务器宕机，所有人都无法工作。</li>
-<li>中央服务器在没有备份的情况下，磁盘一旦被损坏，将丢失所有数据。</li>
-</ol>
-<h2 id="分布式版本控制系统"><a href="#分布式版本控制系统" class="headerlink" title="分布式版本控制系统"></a>分布式版本控制系统</h2><p><img src="https://pic2.zhimg.com/80/v2-fb54a44c9918cd2228224b89a64fa7d1_1440w.png" srcset="/img/loading.gif" alt></p>
-<p>分布式版本控制系统的特点是每个客户端都是代码仓库的完整镜像，包括项目文件的变更历史。所有数据分布的存储在每个客户端，不存在中央服务器。可能有人会问，我们公司使用 git 工具，也有”中央服务器”啊？其实，这个所谓的”中央服务器”仅仅是用来方便管理多人协作，任何一台客户端都可以胜任它的工作，它和所有客户端没有本质区别。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-2de2b87f4b39d2a36df4be7a01ebabfa_1440w.png" srcset="/img/loading.gif" alt></p>
-<p>分布式版本控制系统的优点：</p>
-<ol>
-<li>版本库本地化，版本库的完整克隆，包括标签、分支、版本记录等。</li>
-<li>支持离线提交，适合跨地域协同开发。</li>
-<li>分支切换快速高效，创建和销毁分支廉价。</li>
-</ol>
-<p>分布式版本控制系统的缺点：</p>
-<ol>
-<li>学习成本高，不容易上手。</li>
-<li>只能针对整个仓库创建分支，无法根据目录建立层次性的分支。</li>
-</ol>
-<h2 id="svn-or-git"><a href="#svn-or-git" class="headerlink" title="svn or git?"></a>svn or git?</h2><p>svn 和 git 作为集中式和分布式版本控制系统的代表，都有广大的使用群体，两者的优缺点经常被比较。其实，工具对我们来说，就是帮助我们有效提升工作的效率与质量，最适合的就是最好的。我们引用几个开发场景来看看两个版本控制工具的适用范围。</p>
-<h3 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h3><p>公司 A，非纯技术开发，项目包含大量媒体设计文件，相关人员只需下载自己关注的部分文件；员工 PC 电脑配置不高，没有空间拷贝整个项目资料。</p>
-<p>适用：svn</p>
-<p>分析：只需公司有一个足够大的服务器硬盘，员工本地只存储自己相关的文件夹，不必下载不想关的媒体文件，避免浪费文件传输时间。</p>
-<h3 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h3><p>公司 B，嵌入式底层开发，项目人员较多并且分布在两个城市，代码庞大；用分支管理多机种并行开发，机种间经常相互合并新特性，新 patch。</p>
-<p>适用：git</p>
-<p>分析：</p>
-<ol>
-<li>git 有能力高效管理类似 Linux 内核一样的超大规模项目；</li>
-<li>git 实现了离线开发、代码审核特性，解决了跨地域协同开发中代码质量和编码协同的问题；</li>
-<li>分支管理功能强大，便于查询和追溯分支间的提交历史；</li>
-<li>git 基于 DAG（有向非环图）的设计比 svn 的线性提交提供更好的合并追踪，避免不必要的冲突，提高工作效率。</li>
-</ol>
-<p><img src="https://pic2.zhimg.com/80/v2-6349574ea7ed79d1e9aa65fdd84bb141_1440w.png" srcset="/img/loading.gif" alt></p>
-<h3 id="场景三"><a href="#场景三" class="headerlink" title="场景三"></a>场景三</h3><p>公司 C，某行业软件开发，包含敏感重要数据，代码仓库和版本发布权限掌握在客户手中，代码安全要求高，公司开发人员先将代码提交到本地仓库，只有在客户审核通过才能提交到发布仓库。</p>
-<p>适用：git</p>
-<p>分析：</p>
-<ol>
-<li>git 通过哈希加密保证数据的完整性，防止恶意篡改；</li>
-<li>代码分布存储，异地容灾，保证数据安全；</li>
-<li>git 支持团队成员自建本地版本库和分支，只有客户发出合并请求，开发人员才能提交代码，客户可以对提交说明、代码规范等方面逐一审核。</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不难看出，git 凭借自身的优势，完美解决了大多数公司对版本控制工具的诉求。在当今敏捷开发成为主流，研发周期短，跨地域协同开发多的大形势下，选择 git 是大势所趋。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，Spark RDD 的亮点在于如下两点：</p>
+<ul>
+<li>通过对分布式集群的内存资源进行抽象，允许程序高效复用已有的中间结果且保证高可用性。</li>
+<li>提供比 MapReduce 更灵活的编程模型，兼容更多的高级算法。</li>
+</ul>
+<p>比起类似于分布式内存数据库的那种分布式共享内存模型，Spark RDD 巧妙地利用了其不可变和血统依赖的特性实现了对分布式内存资源的抽象，很好地支持了批处理程序的使用场景，同时大大简化了节点失效后的数据恢复过程。</p>
+<p>同时，我们也应该意识到，Spark 是对 MapReduce 的一种补充而不是替代：将那些能够已有的能够很好契合 MapReduce 模型的计算作业迁移到 Spark 上不会收获太多的好处（例如普通的 ETL 作业）。</p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://www.usenix.org/system/files/conference/nsdi12/nsdi12-final138.pdf" target="_blank" rel="noopener">论文</a><br><a href="https://zhuanlan.zhihu.com/p/36288538" target="_blank" rel="noopener">Spark 博客</a></p>
 
             </div>
             <hr>
@@ -297,7 +312,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a>
+                      <a class="hover-with-bg" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>
                     
                   </div>
                 
@@ -305,7 +320,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+                      <a class="hover-with-bg" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97/">计算</a>
                     
                   </div>
                 
@@ -318,9 +335,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/spark-thesis/">
+                      <a href="/twitter-cache-analysis-thesis/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Spark 论文阅读</span>
+                        <span class="hidden-mobile">Twitter 内存缓存系统分析论文阅读</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -328,8 +345,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/git-common-command/">
-                        <span class="hidden-mobile">30 条常用 git 命令详解</span>
+                      <a href="/git-or-svn/">
+                        <span class="hidden-mobile">为什么选择 git 来作为代码版本控制系统</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -523,7 +540,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "为什么选择 git 来作为代码版本控制系统&nbsp;",
+        "Spark 论文阅读&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
