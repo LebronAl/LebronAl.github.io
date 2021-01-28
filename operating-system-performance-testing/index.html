@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&quot;auto&quot;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
+  <meta name="author" content="谭新宇">
+  <meta name="keywords" content="">
+  <title>操作系统硬件介绍和性能评测 - 谭新宇的博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>谭新宇的博客</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/blog-background.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-27 20:05" pubdate>
+        星期三, 一月 27日 2021, 8:05 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      54
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">操作系统硬件介绍和性能评测</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：星期四, 一月 28日 2021, 11:53 中午
+                
+              </p>
+            
+            <div class="markdown-body" id="post-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在测试数据库的性能时，往往需要通过从网卡，CPU，内存，磁盘，代码等方面出发进行性能调优，这期间可能会纵向扩展机器以获得更好的性能。然而，在不同的硬件机器上测试时，有时的结果可能与预期相差较多，单从软件方面进行猜想可能并不靠谱。因此，需要对机器硬件进行一定的了解和对应的测试，这样就能够在调优分析时利用底层的硬件信息来支撑瓶颈分析，从而更可能做出正确的判断。本篇博客将从网卡，CPU，内存，磁盘出发来介绍一些基本的知识和性能评测方式，最后也会介绍一个 Linux 下常用的性能测试工具 sysbench 的使用。</p>
+<h2 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>网卡，即网络接口卡（network interface card），也叫 NIC 卡，是一种允许网络连接的计算机硬件设备。网卡应用广泛，市场上有许多不同种类，如 PCIe网卡，服务器网卡。</p>
+<p>基于不同的速度，网卡有 10Mbps，100Mbps， 10/100Mbps 自适应卡，1000Mbps、10Gbps、25Gbps、100Gbps 甚至更高速度的网卡。10Mbps、100Mbps 和 10/100Mbps 自适应网卡适用于小型局域网、家庭或办公室。1000Mbps 网卡可为快速以太网提供更高的带宽。10Gbps/25Gbps/100Gbps 网卡以及更高速度的网卡则受到大企业与数据中心的欢迎。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>Linux 下要想得知本机的网卡速率。可以查也可以测。<br>对于查，可以使用 <code>ifconfig</code> 找到网卡对应的设备名，然后使用 <code>ethtool &lt;device&gt;</code> 来查看对应网卡设备的额定速率。如下图所示：<br><img src="/operating-system-performance-testing/ethtool.png" srcset="/img/loading.gif" alt><br>对于测，可以使用 iperf 或者 iperf3 来测量 tcp/udp 协议的吞吐量，进而测试网卡的性能。当然，由于连接参数（比如客户端连接数，包大小）的不同，测试时可能也跑不满理论带宽，因此对实际线上系统调优操作系统网络栈就是一个可以优化性能的方向。<br>iperf 和 iperf3 的具体使用方式可参考此<a href="https://www.cnblogs.com/cloudwas/p/13084815.html" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>市面上常说的千兆网卡速率是 1000Mbps，即 125MB/s；万兆网卡速率是 10000Mbps，即 1.22GB/s；十万兆网卡速率是 100000Mbps，即 12.21 GB/s。</p>
+<h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>中央处理器（CPU），是电子计算机的主要设备之一，电脑中的核心配件。其功能主要是解释计算机指令以及处理计算机软件中的数据。CPU 是计算机中负责读取指令，对指令译码并执行指令的核心部件。中央处理器主要包括两个部分，即控制器、运算器，其中还包括高速缓冲存储器及实现它们之间联系的数据、控制的总线。</p>
+<p>CPU 的性能与以下衡量指标都有关系，具体可以参考此<a href="https://mp.weixin.qq.com/s/Hrn9J2l_Di3gZy0BvPcx6A" target="_blank" rel="noopener">博客</a>。</p>
+<ul>
+<li>主频（时钟频率）</li>
+<li>外频（基准频率）</li>
+<li>总线(FSB)频率</li>
+<li>CPU 的位和字长</li>
+<li>倍频系数</li>
+<li>缓存</li>
+<li>CPU 内核和 I/O 工作电压</li>
+<li>制造工艺</li>
+<li>指令集</li>
+<li>CPU 扩展指令集</li>
+<li>架构（如 UMA 或者 NUMA 架构），具体可以参考此<a href="https://www.cnblogs.com/linhaostudy/p/9980383.html" target="_blank" rel="noopener">博客</a>。</li>
+</ul>
+<h3 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h3><p>Linux 下想要得知本机有关 CPU 的信息，可以使用 <code>lscpu</code> 指令，其会显示 CPU 的型号，架构，主频大小，缓存大小，物理和逻辑核心数等等，如下图所示。<br><img src="/operating-system-performance-testing/lscpu.png" srcset="/img/loading.gif" alt></p>
+<p>我们在知道 CPU 型号之后也可以去相关网站寻找更多有关此 cpu 的数据信息，比如<a href="https://www.cpubenchmark.net/" target="_blank" rel="noopener">PassMark</a>。</p>
+<p>在系统运行过程中，可以评测 CPU 使用率的一个重要参考指标就是平均负载（load average）。如下图所示<br><img src="/operating-system-performance-testing/load.png" srcset="/img/loading.gif" alt></p>
+<p>平均负载是指单位时间内平均活跃进程数，包括可运行状态的进程数，以及不可中断状态的进程（如等待 IO,等待硬件设备响应），其可以一定程度上反映一段时间内 CPU 的繁忙程度。但是平均负载高 CPU 的使用率不一定高，其主要表现如下，具体可参考此<a href="https://www.cnblogs.com/maxwellsky/p/10629564.html" target="_blank" rel="noopener">博客</a>。</p>
+<ul>
+<li>CPU 密集型进程，导致平均负载和 CPU 使用率比较高</li>
+<li>IO 密集型进程，等待 IO 会导致平均负载升高，但是 CPU 使用率不一定高</li>
+<li>等待 CPU 的进程调度也会导致平均负载升高，此时 CPU 使用率也高</li>
+</ul>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>内存是计算机中重要的部件之一，它是与 CPU 进行沟通的桥梁。计算机中所有程序的运行都是在内存中进行的，因此内存的性能对计算机的影响非常大。内存也被称为内存储器，其作用是用于暂时存放 CPU 中的运算数据，以及与硬盘等外部存储器交换的数据。只要计算机在运行中，CPU 就会把需要运算的数据调到内存中进行运算，当运算完成后 CPU 再将结果传送出来，内存的运行也决定了计算机的稳定运行。内存是由内存芯片、电路板、金手指等部分组成的。</p>
+<p>有关内存的发展，分类等详细信息可以参考<a href="https://baike.baidu.com/item/%E5%86%85%E5%AD%98" target="_blank" rel="noopener">百度百科</a>。</p>
+<h3 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h3><p>Linux 可以通过 <code>free -h</code> 命令来查看本机的内存大小等等，如下图所示<br><img src="/operating-system-performance-testing/memory.png" srcset="/img/loading.gif" alt><br>具体参数含义为：</p>
+<ul>
+<li>total：服务器内存总大小：31G</li>
+<li>used：已经使用了多少内存：26G</li>
+<li>free：未被任何应用使用的真实空闲内存</li>
+<li>shared：被共享的物理内存</li>
+<li>buff/cache：缓冲、缓存区内存数，缓存在应用之中</li>
+<li>available：真正剩余的可被程序应用的内存数</li>
+<li>Swap：swap 分区的大小</li>
+</ul>
+<h4 id="free-和-available-的区别"><a href="#free-和-available-的区别" class="headerlink" title="free 和 available 的区别"></a>free 和 available 的区别</h4><p>free 是真正尚未被使用的物理内存数量。<br>available 是应用程序认为可用内存数量，available = free + buffer + cache (注：只是大概的计算方法)</p>
+<p>Linux 为了提升读写性能，会消耗一部分内存资源缓存磁盘数据，对于内核来说，buffer 和 cache 其实都属于已经被使用的内存。但当应用程序申请内存时，如果 free 内存不够，内核就会回收 buffer 和 cache 的内存来满足应用程序的请求。</p>
+<h4 id="buff-和-cache-的区别"><a href="#buff-和-cache-的区别" class="headerlink" title="buff 和 cache 的区别"></a>buff 和 cache 的区别</h4><p>buffer 名为缓冲，cache 名为缓存。</p>
+<p><img src="/operating-system-performance-testing/buffer_cache.png" srcset="/img/loading.gif" alt></p>
+<ul>
+<li><p>cache：文件系统层级的缓存，从磁盘里读取的内容是存储到这里，这样程序读取磁盘内容就会非常快，比如使用 grep 和 find 等命令查找内容和文件时，第一次会慢很多，再次执行就快好多倍，几乎是瞬间。但如上所说，如果对文件的更新不关心，就没必要清 cache，否则如果要实施同步，必须要把内存空间中的 cache 清楚下。</p>
+</li>
+<li><p>buffer：磁盘等块设备的缓冲，内存的这一部分是要写入到磁盘里的。这种情况需要注意，位于内存 buffer 中的数据不是即时写入磁盘，而是系统空闲或者 buffer 达到一定大小统一写到磁盘中，所以断电易失，为了防止数据丢失所以我们最好正常关机或者多执行几次 sync 命令，让位于 buffer 上的数据立刻写到磁盘里。</p>
+</li>
+</ul>
+<h4 id="swap-是什么"><a href="#swap-是什么" class="headerlink" title="swap 是什么"></a>swap 是什么</h4><p>在 Linux 下，swap 的作用类似 Windows 系统下的“虚拟内存”。当物理内存不足时，拿出部分硬盘空间当 swap 分区（虚拟成内存）使用，从而解决内存容量不足的情况。</p>
+<p>swap 意思是交换，顾名思义，当某进程向 OS 请求内存发现不足时，OS 会把内存中暂时不用的数据交换出去，放在 swap 分区中，这个过程称为 swap out。当某进程又需要这些数据且 OS 发现还有空闲物理内存时，又会把 swap 分区中的数据交换回物理内存中，这个过程称为 swap in。</p>
+<p>当然，swap 大小是有上限的，一旦 swap 使用完，操作系统会触发 OOM-Killer 机制，把消耗内存最多的进程 kill 掉以释放内存。</p>
+<p>有关数据库与 swap 的关系以及 swap 的细节机制可以参考此<a href="http://hbasefly.com/2017/05/24/hbase-linux/?lkfgjq=xbbdl2&amp;ekpqfu=awbp92" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="补充-1"><a href="#补充-1" class="headerlink" title="补充"></a>补充</h3><p>近年来常用的 DDR4 内存的吞吐量一般大于 10GB/s，其吞吐量往往不会成为瓶颈。当然，不同的语言对内存管理的方式不同，某些自动管理内存的语言（比如 Java）会出现 STW (Stop the world）的状况来调整内存空间，其会暂停所有用户线程，对性能影响很大。因此，基于业务负载和语言特性制定更好的 GC 策略能够更好地利用内存的吞吐量。</p>
+<h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><p>磁盘是指利用磁记录技术存储数据的存储器。 磁盘是计算机主要的存储介质，可以存储大量的二进制数据，并且断电后也能保持数据不丢失。 早期计算机使用的磁盘是软磁盘（Floppy Disk，简称软盘），如今常用的磁盘是硬磁盘（Hard disk，简称硬盘）。</p>
+<p>目前常见的硬盘大可分为三类：机械硬盘（HDD）采用磁性碟片来存储，固态硬盘（SSD）采用闪存颗粒来存储，混合硬盘（HHD）是把磁性碟片和闪存集成到一起的一种硬盘。</p>
+<p>HDD 和 SSD 的区别主要如下：<br><img src="/operating-system-performance-testing/comparison.jpg" srcset="/img/loading.gif" alt></p>
+<p>总体上来说，HDD 主要为 SATA 和 SAS 接口，目前家用类别的 HDD 多为 SATA 接口，SAS 接口则为企业级应用。SAS 可满足高性能、高可靠性的应用，SATA 则满足大容量、非关键业务的应用。</p>
+<p>此外业界也常用多块 HDD 来组装磁盘阵列（比如 RAID 5 等等），从而提供更好的吞吐量和磁盘级别的容错，具体细节可参考此<a href="https://mp.weixin.qq.com/s/WRYQFRnf28RBK3CUkN7REg" target="_blank" rel="noopener">博客</a>。</p>
+<p>至于固态硬盘，其常见接口和速率如下图所示：<br><img src="/operating-system-performance-testing/ssd.jpg" srcset="/img/loading.gif" alt></p>
+<h3 id="测试-3"><a href="#测试-3" class="headerlink" title="测试"></a>测试</h3><p>Linux 可以通过 <code>df -hT</code> 命令来查看本机磁盘设备挂载的磁盘目录，文件系统以及容量等等，如下图所示<br><img src="/operating-system-performance-testing/df.png" srcset="/img/loading.gif" alt></p>
+<p>此外还可以通过 <code>fdisk -l &lt;device&gt;</code> 命令来查看磁盘设备的源信息，比如可以通过此命令来查看磁盘是 SSD 还是 HDD，如果有”heads”（磁头），”track”（磁道）和”cylinders”（柱面）等等则就是 HDD，否则则是 SSD。如下图所示就是 SSD。<br><img src="/operating-system-performance-testing/fdisk.png" srcset="/img/loading.gif" alt></p>
+<pre><code class="hljs yaml"><span class="hljs-comment"># SSD 示例</span>
+<span class="hljs-attr">Disk /dev/nvme0n1:</span> <span class="hljs-number">238.5</span> <span class="hljs-string">GiB,</span> <span class="hljs-number">256060514304</span> <span class="hljs-string">bytes,</span> <span class="hljs-number">500118192</span> <span class="hljs-string">sectors</span>
+<span class="hljs-attr">Units:</span> <span class="hljs-string">sectors</span> <span class="hljs-string">of</span> <span class="hljs-number">1</span> <span class="hljs-string">*</span> <span class="hljs-number">512</span> <span class="hljs-string">=</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span>
+<span class="hljs-string">Sector</span> <span class="hljs-string">size</span> <span class="hljs-string">(logical/physical):</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span> <span class="hljs-string">/</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span>
+<span class="hljs-string">I/O</span> <span class="hljs-string">size</span> <span class="hljs-string">(minimum/optimal):</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span> <span class="hljs-string">/</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span>
+<span class="hljs-attr">Disklabel type:</span> <span class="hljs-string">dos</span>
+<span class="hljs-attr">Disk identifier:</span> <span class="hljs-number">0xad91c214</span>
+
+<span class="hljs-comment"># HDD 示例</span>
+<span class="hljs-attr">Disk /dev/sda:</span> <span class="hljs-number">120.0</span> <span class="hljs-string">GB,</span> <span class="hljs-number">120034123776</span> <span class="hljs-string">bytes</span>
+<span class="hljs-number">255</span> <span class="hljs-string">heads,</span> <span class="hljs-number">63</span> <span class="hljs-string">sectors/track,</span> <span class="hljs-number">14593</span> <span class="hljs-string">cylinders</span>
+<span class="hljs-string">Units</span> <span class="hljs-string">=</span> <span class="hljs-string">cylinders</span> <span class="hljs-string">of</span> <span class="hljs-number">16065</span> <span class="hljs-string">*</span> <span class="hljs-number">512</span> <span class="hljs-string">=</span> <span class="hljs-number">8225280</span> <span class="hljs-string">bytes</span>
+<span class="hljs-string">Sector</span> <span class="hljs-string">size</span> <span class="hljs-string">(logical/physical):</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span> <span class="hljs-string">/</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span>
+<span class="hljs-string">I/O</span> <span class="hljs-string">size</span> <span class="hljs-string">(minimum/optimal):</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span> <span class="hljs-string">/</span> <span class="hljs-number">512</span> <span class="hljs-string">bytes</span>
+<span class="hljs-attr">Disk identifier:</span> <span class="hljs-number">0x00074f7d</span></code></pre>
+<p>如果想要测试磁盘的 IOPS 或者吞吐量，则可以使用一些磁盘测试工具进行测试，如 smartctl，sysbench 等等，后文会介绍如何使用 sysbench 测量磁盘性能。</p>
+<p>有关文件系统的区别（xfs or ext4），可以参考此<a href="https://segmentfault.com/a/1190000008481493" target="_blank" rel="noopener">博客</a>。至于具体性能，由于上层应用不同，其在不同文件系统上的表现也不同，建议实际测试一下才能知道真实场景下哪个更优秀，一般情况下选择 xfs 就够用了。</p>
+<p>有关磁盘 IO 的理论细节可以参考美团技术团队的<a href="https://tech.meituan.com/2017/05/19/about-desk-io.html" target="_blank" rel="noopener">博客</a>，十分详细。</p>
+<h3 id="补充-2"><a href="#补充-2" class="headerlink" title="补充"></a>补充</h3><ul>
+<li>对于顺序读写，普通的 HDD 的吞吐量一般在 100 MB/s 左右，某些企业级 HDD 能够达到 200 MB/s 左右。对于随机读写，HDD 的性能表现很差，一般是几十兆每秒。</li>
+<li>对于顺序读写，普通的 SSD 的吞吐量一般在 300~500MB/s 左右，某些企业级 SSD（例如适配 PCIE 3.0 接口）甚至能够达到 2GB/s。对于随机读写，SSD 的性能相比顺序读写下降较少，一般也是几百兆每秒。 </li>
+</ul>
+<h2 id="sysbench"><a href="#sysbench" class="headerlink" title="sysbench"></a>sysbench</h2><p>sysbench 是一款开源的多线程性能测试工具，可以执行 CPU/内存/线程/IO/数据库等方面的性能测试。<br>sysbench 支持以下几种测试模式 ：</p>
+<ol>
+<li>CPU 运算性能</li>
+<li>内存分配及传输速度</li>
+<li>磁盘 IO 性能</li>
+<li>POSIX 线程性能</li>
+<li>互斥锁性能测试</li>
+<li>数据库性能(OLTP 基准测试)。目前 sysbench 主要支持 MySQL，PostgreSQL 等几种数据库。</li>
+</ol>
+<p>sysbench 的安装建议直接参考<a href="https://github.com/akopytov/sysbench" target="_blank" rel="noopener">官方 repo</a>，最详细最不踩坑。具体负载参数可以用 <code>sysbench --help</code> 查看也可以参考官方 repo，当然也可以查看此<a href="https://blog.51cto.com/3842834/2364563" target="_blank" rel="noopener">博客</a>和此<a href="https://blog.51cto.com/cyent/2350925" target="_blank" rel="noopener">博客</a>。</p>
+<p>以下列出几种测试实例：</p>
+<h3 id="CPU-运算性能"><a href="#CPU-运算性能" class="headerlink" title="CPU 运算性能"></a>CPU 运算性能</h3><h4 id="单核性能"><a href="#单核性能" class="headerlink" title="单核性能"></a>单核性能</h4><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span> <span class="hljs-string">--test=cpu</span> <span class="hljs-string">--cpu-max-prime=5000</span> <span class="hljs-string">run</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">1</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-attr">Prime numbers limit:</span> <span class="hljs-number">5000</span>
+
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+<span class="hljs-attr">CPU speed:</span>
+    <span class="hljs-attr">events per second:</span>  <span class="hljs-number">3325.67</span>
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">10.</span><span class="hljs-string">0004s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">33274</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                    <span class="hljs-number">0.30</span>
+         <span class="hljs-attr">avg:</span>                                    <span class="hljs-number">0.30</span>
+         <span class="hljs-attr">max:</span>                                    <span class="hljs-number">1.21</span>
+         <span class="hljs-attr">95th percentile:</span>                        <span class="hljs-number">0.30</span>
+         <span class="hljs-attr">sum:</span>                                 <span class="hljs-number">9995.62</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">33274.0000</span><span class="hljs-string">/0.00</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">9.9956</span><span class="hljs-string">/0.00</span></code></pre>
+<h4 id="多核性能"><a href="#多核性能" class="headerlink" title="多核性能"></a>多核性能</h4><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span> <span class="hljs-string">--test=cpu</span> <span class="hljs-string">--cpu-max-prime=5000</span> <span class="hljs-string">--threads=192</span> <span class="hljs-string">run</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">192</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-attr">Prime numbers limit:</span> <span class="hljs-number">5000</span>
+
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+<span class="hljs-attr">CPU speed:</span>
+    <span class="hljs-attr">events per second:</span> <span class="hljs-number">411077.30</span>
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">10.</span><span class="hljs-string">0017s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">4112237</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                    <span class="hljs-number">0.30</span>
+         <span class="hljs-attr">avg:</span>                                    <span class="hljs-number">0.46</span>
+         <span class="hljs-attr">max:</span>                                  <span class="hljs-number">147.50</span>
+         <span class="hljs-attr">95th percentile:</span>                        <span class="hljs-number">0.46</span>
+         <span class="hljs-attr">sum:</span>                              <span class="hljs-number">1885541.21</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">21417.9010</span><span class="hljs-string">/378.98</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">9.8205</span><span class="hljs-string">/0.14</span></code></pre>
+<h3 id="内存吞吐量"><a href="#内存吞吐量" class="headerlink" title="内存吞吐量"></a>内存吞吐量</h3><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span> <span class="hljs-string">--test=memory</span> <span class="hljs-string">--memory-block-size=4k</span> <span class="hljs-string">--memory-total-size=740G</span> <span class="hljs-string">run</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">1</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-attr">Running memory speed test with the following options:</span>
+  <span class="hljs-attr">block size:</span> <span class="hljs-string">4KiB</span>
+  <span class="hljs-attr">total size:</span> <span class="hljs-string">757760MiB</span>
+  <span class="hljs-attr">operation:</span> <span class="hljs-string">write</span>
+  <span class="hljs-attr">scope:</span> <span class="hljs-string">global</span>
+
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+<span class="hljs-attr">Total operations:</span> <span class="hljs-number">31972684</span> <span class="hljs-string">(3195628.16</span> <span class="hljs-string">per</span> <span class="hljs-string">second)</span>
+
+<span class="hljs-number">124893.30</span> <span class="hljs-string">MiB</span> <span class="hljs-string">transferred</span> <span class="hljs-string">(12482.92</span> <span class="hljs-string">MiB/sec)</span>
+
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">10.</span><span class="hljs-string">0001s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">31972684</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                    <span class="hljs-number">0.00</span>
+         <span class="hljs-attr">avg:</span>                                    <span class="hljs-number">0.00</span>
+         <span class="hljs-attr">max:</span>                                    <span class="hljs-number">0.10</span>
+         <span class="hljs-attr">95th percentile:</span>                        <span class="hljs-number">0.00</span>
+         <span class="hljs-attr">sum:</span>                                 <span class="hljs-number">7085.34</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">31972684.0000</span><span class="hljs-string">/0.00</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">7.0853</span><span class="hljs-string">/0.00</span></code></pre>
+<h3 id="磁盘性能"><a href="#磁盘性能" class="headerlink" title="磁盘性能"></a>磁盘性能</h3><h4 id="顺序读写"><a href="#顺序读写" class="headerlink" title="顺序读写"></a>顺序读写</h4><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span> <span class="hljs-string">--test=fileio</span> <span class="hljs-string">--num-threads=1</span> <span class="hljs-string">--file-num=20</span> <span class="hljs-string">--file-total-size=4G</span> <span class="hljs-string">--file-test-mode=seqrewr</span> <span class="hljs-string">prepare(run)</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">1</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-attr">Extra file open flags:</span> <span class="hljs-string">(none)</span>
+<span class="hljs-number">20</span> <span class="hljs-string">files,</span> <span class="hljs-number">204.</span><span class="hljs-string">8MiB</span> <span class="hljs-string">each</span>
+<span class="hljs-string">4GiB</span> <span class="hljs-string">total</span> <span class="hljs-string">file</span> <span class="hljs-string">size</span>
+<span class="hljs-string">Block</span> <span class="hljs-string">size</span> <span class="hljs-string">16KiB</span>
+<span class="hljs-string">Periodic</span> <span class="hljs-string">FSYNC</span> <span class="hljs-string">enabled,</span> <span class="hljs-string">calling</span> <span class="hljs-string">fsync()</span> <span class="hljs-string">each</span> <span class="hljs-number">100</span> <span class="hljs-string">requests.</span>
+<span class="hljs-string">Calling</span> <span class="hljs-string">fsync()</span> <span class="hljs-string">at</span> <span class="hljs-string">the</span> <span class="hljs-string">end</span> <span class="hljs-string">of</span> <span class="hljs-string">test,</span> <span class="hljs-string">Enabled.</span>
+<span class="hljs-string">Using</span> <span class="hljs-string">synchronous</span> <span class="hljs-string">I/O</span> <span class="hljs-string">mode</span>
+<span class="hljs-string">Doing</span> <span class="hljs-string">sequential</span> <span class="hljs-string">rewrite</span> <span class="hljs-string">test</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+
+<span class="hljs-attr">File operations:</span>
+    <span class="hljs-attr">reads/s:</span>                      <span class="hljs-number">0.00</span>
+    <span class="hljs-attr">writes/s:</span>                     <span class="hljs-number">50759.51</span>
+    <span class="hljs-attr">fsyncs/s:</span>                     <span class="hljs-number">10153.80</span>
+
+<span class="hljs-attr">Throughput:</span>
+    <span class="hljs-string">read,</span> <span class="hljs-attr">MiB/s:</span>                  <span class="hljs-number">0.00</span>
+    <span class="hljs-string">written,</span> <span class="hljs-attr">MiB/s:</span>               <span class="hljs-number">793.07</span>
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">10.</span><span class="hljs-string">0011s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">609479</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                    <span class="hljs-number">0.00</span>
+         <span class="hljs-attr">avg:</span>                                    <span class="hljs-number">0.02</span>
+         <span class="hljs-attr">max:</span>                                    <span class="hljs-number">1.68</span>
+         <span class="hljs-attr">95th percentile:</span>                        <span class="hljs-number">0.01</span>
+         <span class="hljs-attr">sum:</span>                                 <span class="hljs-number">9834.28</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">609479.0000</span><span class="hljs-string">/0.00</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">9.8343</span><span class="hljs-string">/0.00</span></code></pre>
+<h4 id="乱序读写"><a href="#乱序读写" class="headerlink" title="乱序读写"></a>乱序读写</h4><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span> <span class="hljs-string">--test=fileio</span> <span class="hljs-string">--num-threads=1</span> <span class="hljs-string">--file-num=20</span> <span class="hljs-string">--file-total-size=4G</span> <span class="hljs-string">--file-test-mode=rndrw</span> <span class="hljs-string">prepare(run)</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">1</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-attr">Extra file open flags:</span> <span class="hljs-string">(none)</span>
+<span class="hljs-number">20</span> <span class="hljs-string">files,</span> <span class="hljs-number">204.</span><span class="hljs-string">8MiB</span> <span class="hljs-string">each</span>
+<span class="hljs-string">4GiB</span> <span class="hljs-string">total</span> <span class="hljs-string">file</span> <span class="hljs-string">size</span>
+<span class="hljs-string">Block</span> <span class="hljs-string">size</span> <span class="hljs-string">16KiB</span>
+<span class="hljs-attr">Number of IO requests:</span> <span class="hljs-number">0</span>
+<span class="hljs-attr">Read/Write ratio for combined random IO test:</span> <span class="hljs-number">1.50</span>
+<span class="hljs-string">Periodic</span> <span class="hljs-string">FSYNC</span> <span class="hljs-string">enabled,</span> <span class="hljs-string">calling</span> <span class="hljs-string">fsync()</span> <span class="hljs-string">each</span> <span class="hljs-number">100</span> <span class="hljs-string">requests.</span>
+<span class="hljs-string">Calling</span> <span class="hljs-string">fsync()</span> <span class="hljs-string">at</span> <span class="hljs-string">the</span> <span class="hljs-string">end</span> <span class="hljs-string">of</span> <span class="hljs-string">test,</span> <span class="hljs-string">Enabled.</span>
+<span class="hljs-string">Using</span> <span class="hljs-string">synchronous</span> <span class="hljs-string">I/O</span> <span class="hljs-string">mode</span>
+<span class="hljs-string">Doing</span> <span class="hljs-string">random</span> <span class="hljs-string">r/w</span> <span class="hljs-string">test</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+
+<span class="hljs-attr">File operations:</span>
+    <span class="hljs-attr">reads/s:</span>                      <span class="hljs-number">43044.01</span>
+    <span class="hljs-attr">writes/s:</span>                     <span class="hljs-number">28696.01</span>
+    <span class="hljs-attr">fsyncs/s:</span>                     <span class="hljs-number">14348.50</span>
+
+<span class="hljs-attr">Throughput:</span>
+    <span class="hljs-string">read,</span> <span class="hljs-attr">MiB/s:</span>                  <span class="hljs-number">672.54</span>
+    <span class="hljs-string">written,</span> <span class="hljs-attr">MiB/s:</span>               <span class="hljs-number">448.36</span>
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">10.</span><span class="hljs-string">0007s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">861345</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                    <span class="hljs-number">0.00</span>
+         <span class="hljs-attr">avg:</span>                                    <span class="hljs-number">0.01</span>
+         <span class="hljs-attr">max:</span>                                    <span class="hljs-number">0.41</span>
+         <span class="hljs-attr">95th percentile:</span>                        <span class="hljs-number">0.04</span>
+         <span class="hljs-attr">sum:</span>                                 <span class="hljs-number">9816.61</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">861345.0000</span><span class="hljs-string">/0.00</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">9.8166</span><span class="hljs-string">/0.00</span></code></pre>
+<h3 id="POSIX-线程性能"><a href="#POSIX-线程性能" class="headerlink" title="POSIX 线程性能"></a>POSIX 线程性能</h3><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span>  <span class="hljs-string">--test=threads</span> <span class="hljs-string">--num-threads=200</span> <span class="hljs-string">--thread-yields=100</span> <span class="hljs-string">--thread-locks=1</span> <span class="hljs-string">run</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">200</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">10.</span><span class="hljs-string">0140s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">54268</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                   <span class="hljs-number">11.03</span>
+         <span class="hljs-attr">avg:</span>                                   <span class="hljs-number">36.88</span>
+         <span class="hljs-attr">max:</span>                                   <span class="hljs-number">86.79</span>
+         <span class="hljs-attr">95th percentile:</span>                       <span class="hljs-number">47.47</span>
+         <span class="hljs-attr">sum:</span>                              <span class="hljs-number">2001322.28</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">271.3400</span><span class="hljs-string">/3.10</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">10.0066</span><span class="hljs-string">/0.00</span></code></pre>
+<h3 id="互斥锁性能"><a href="#互斥锁性能" class="headerlink" title="互斥锁性能"></a>互斥锁性能</h3><pre><code class="hljs yaml"><span class="hljs-string">&gt;</span> <span class="hljs-string">sudo</span> <span class="hljs-string">sysbench</span> <span class="hljs-string">--test=mutex</span> <span class="hljs-string">--mutex-num=2048</span> <span class="hljs-string">--mutex-locks=20000</span> <span class="hljs-string">--mutex-loops=5000</span> <span class="hljs-string">run</span>
+
+<span class="hljs-string">sysbench</span> <span class="hljs-number">1.0</span><span class="hljs-number">.20</span> <span class="hljs-string">(using</span> <span class="hljs-string">bundled</span> <span class="hljs-string">LuaJIT</span> <span class="hljs-number">2.1</span><span class="hljs-number">.0</span><span class="hljs-string">-beta2)</span>
+
+<span class="hljs-attr">Running the test with following options:</span>
+<span class="hljs-attr">Number of threads:</span> <span class="hljs-number">1</span>
+<span class="hljs-string">Initializing</span> <span class="hljs-string">random</span> <span class="hljs-string">number</span> <span class="hljs-string">generator</span> <span class="hljs-string">from</span> <span class="hljs-string">current</span> <span class="hljs-string">time</span>
+
+
+<span class="hljs-string">Initializing</span> <span class="hljs-string">worker</span> <span class="hljs-string">threads...</span>
+
+<span class="hljs-string">Threads</span> <span class="hljs-string">started!</span>
+
+
+<span class="hljs-attr">General statistics:</span>
+    <span class="hljs-attr">total time:</span>                          <span class="hljs-number">0.</span><span class="hljs-string">0387s</span>
+    <span class="hljs-attr">total number of events:</span>              <span class="hljs-number">1</span>
+
+<span class="hljs-string">Latency</span> <span class="hljs-string">(ms):</span>
+         <span class="hljs-attr">min:</span>                                   <span class="hljs-number">38.49</span>
+         <span class="hljs-attr">avg:</span>                                   <span class="hljs-number">38.49</span>
+         <span class="hljs-attr">max:</span>                                   <span class="hljs-number">38.49</span>
+         <span class="hljs-attr">95th percentile:</span>                       <span class="hljs-number">38.25</span>
+         <span class="hljs-attr">sum:</span>                                   <span class="hljs-number">38.49</span>
+
+<span class="hljs-attr">Threads fairness:</span>
+    <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">1.0000</span><span class="hljs-string">/0.00</span>
+    <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">0.0385</span><span class="hljs-string">/0.00</span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇博客简单介绍了网卡，CPU，内存和磁盘的一些理论知识和我个人认为写的比较好的博客，最后介绍了 Linux 下常用的性能测试工具 sysbench 的使用。</p>
+<p>本篇博客涉及了较多硬件和操作系统的知识，其实这些都可以挖的更深，由于水平和时间有限，暂不继续深挖，希望看完本博客之后能对大家的系统调优有所帮助。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/open-source-license/">
+                        <span class="hidden-mobile">开源协议解读</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    function loadValine() {
+      addScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "2MDNHupHBJJGDzuzl7OJfBSk-gzGzoHsz",
+          app_key: "SPxv4rnqQEhTBn2BMGkp6dn1",
+          placeholder: "说点什么吧~",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: true,
+          recordIP: true,
+          serverURLs: "",
+        });
+      });
+    }
+    waitElementVisible('vcomments', loadValine);
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "操作系统硬件介绍和性能评测&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
