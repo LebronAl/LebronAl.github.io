@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>操作系统硬件介绍和性能评测 - 谭新宇的博客</title>
+  <title>操作系统硬件介绍和性能测试与监控 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.3k 字
+      4.6k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      54
+      58
        分钟
     </span>
   
@@ -213,16 +213,16 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">操作系统硬件介绍和性能评测</h1>
+            <h1 style="display: none">操作系统硬件介绍和性能测试与监控</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期四, 一月 28日 2021, 11:53 中午
+                  本文最后更新于：星期四, 一月 28日 2021, 12:12 中午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在测试数据库的性能时，往往需要通过从网卡，CPU，内存，磁盘，代码等方面出发进行性能调优，这期间可能会纵向扩展机器以获得更好的性能。然而，在不同的硬件机器上测试时，有时的结果可能与预期相差较多，单从软件方面进行猜想可能并不靠谱。因此，需要对机器硬件进行一定的了解和对应的测试，这样就能够在调优分析时利用底层的硬件信息来支撑瓶颈分析，从而更可能做出正确的判断。本篇博客将从网卡，CPU，内存，磁盘出发来介绍一些基本的知识和性能评测方式，最后也会介绍一个 Linux 下常用的性能测试工具 sysbench 的使用。</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在测试数据库的性能时，往往需要通过从网卡，CPU，内存，磁盘，代码等方面出发进行性能调优，这期间可能会纵向扩展机器以获得更好的性能。然而，在不同的硬件机器上测试时，有时的结果可能与预期相差较多，单从软件方面进行猜想可能并不靠谱。因此，需要对机器硬件进行一定的了解和对应的测试，这样就能够在调优分析时利用底层的硬件信息来支撑瓶颈分析，从而更可能做出正确的判断。本篇博客将从网卡，CPU，内存，磁盘出发来介绍一些基本的知识和性能评测方式，最后也会介绍 Linux 下常用的性能测试工具 sysbench 的使用和性能监控工具 glances 的使用。</p>
 <h2 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>网卡，即网络接口卡（network interface card），也叫 NIC 卡，是一种允许网络连接的计算机硬件设备。网卡应用广泛，市场上有许多不同种类，如 PCIe网卡，服务器网卡。</p>
 <p>基于不同的速度，网卡有 10Mbps，100Mbps， 10/100Mbps 自适应卡，1000Mbps、10Gbps、25Gbps、100Gbps 甚至更高速度的网卡。10Mbps、100Mbps 和 10/100Mbps 自适应网卡适用于小型局域网、家庭或办公室。1000Mbps 网卡可为快速以太网提供更高的带宽。10Gbps/25Gbps/100Gbps 网卡以及更高速度的网卡则受到大企业与数据中心的欢迎。</p>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>Linux 下要想得知本机的网卡速率。可以查也可以测。<br>对于查，可以使用 <code>ifconfig</code> 找到网卡对应的设备名，然后使用 <code>ethtool &lt;device&gt;</code> 来查看对应网卡设备的额定速率。如下图所示：<br><img src="/operating-system-performance-testing/ethtool.png" srcset="/img/loading.gif" alt><br>对于测，可以使用 iperf 或者 iperf3 来测量 tcp/udp 协议的吞吐量，进而测试网卡的性能。当然，由于连接参数（比如客户端连接数，包大小）的不同，测试时可能也跑不满理论带宽，因此对实际线上系统调优操作系统网络栈就是一个可以优化性能的方向。<br>iperf 和 iperf3 的具体使用方式可参考此<a href="https://www.cnblogs.com/cloudwas/p/13084815.html" target="_blank" rel="noopener">博客</a>。</p>
@@ -308,7 +308,7 @@
 <li>对于顺序读写，普通的 HDD 的吞吐量一般在 100 MB/s 左右，某些企业级 HDD 能够达到 200 MB/s 左右。对于随机读写，HDD 的性能表现很差，一般是几十兆每秒。</li>
 <li>对于顺序读写，普通的 SSD 的吞吐量一般在 300~500MB/s 左右，某些企业级 SSD（例如适配 PCIE 3.0 接口）甚至能够达到 2GB/s。对于随机读写，SSD 的性能相比顺序读写下降较少，一般也是几百兆每秒。 </li>
 </ul>
-<h2 id="sysbench"><a href="#sysbench" class="headerlink" title="sysbench"></a>sysbench</h2><p>sysbench 是一款开源的多线程性能测试工具，可以执行 CPU/内存/线程/IO/数据库等方面的性能测试。<br>sysbench 支持以下几种测试模式 ：</p>
+<h2 id="sysbench-测试工具"><a href="#sysbench-测试工具" class="headerlink" title="sysbench 测试工具"></a>sysbench 测试工具</h2><p>sysbench 是一款开源的多线程性能测试工具，可以执行 CPU/内存/线程/IO/数据库等方面的性能测试。<br>sysbench 支持以下几种测试模式 ：</p>
 <ol>
 <li>CPU 运算性能</li>
 <li>内存分配及传输速度</li>
@@ -569,7 +569,21 @@
 <span class="hljs-attr">Threads fairness:</span>
     <span class="hljs-string">events</span> <span class="hljs-string">(avg/stddev):</span>           <span class="hljs-number">1.0000</span><span class="hljs-string">/0.00</span>
     <span class="hljs-string">execution</span> <span class="hljs-string">time</span> <span class="hljs-string">(avg/stddev):</span>   <span class="hljs-number">0.0385</span><span class="hljs-string">/0.00</span></code></pre>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇博客简单介绍了网卡，CPU，内存和磁盘的一些理论知识和我个人认为写的比较好的博客，最后介绍了 Linux 下常用的性能测试工具 sysbench 的使用。</p>
+<h2 id="glances-监控工具"><a href="#glances-监控工具" class="headerlink" title="glances 监控工具"></a>glances 监控工具</h2><p>glances 是一个基于 python 语言开发，可以为 Linux 或者 Unix 性能提供监视和分析性能数据的功能。glances 在用户的终端上显示重要的系统信息，并动态的进行更新，让管理员实时掌握系统资源的使用情况，而动态监控并不会消耗大量的系统资源，比如 CPU 资源，通常消耗小于 2%，glances 默认每两秒更新一次数据。同时 glances 还可以将监控数据导出到文件中，便于以后使用其他可视化工具（例如 grafana）对报告进行分析和图形绘制。</p>
+<p>glances 可以分析系统的：</p>
+<ul>
+<li>CPU 使用率</li>
+<li>内存使用率</li>
+<li>内核统计信息和运行队列信息</li>
+<li>磁盘 I/O 速度、传输和读/写比率</li>
+<li>磁盘适配器</li>
+<li>网络 I/O 速度、传输和读/写比率</li>
+<li>页面监控</li>
+<li>进程监控-消耗资源最多的进程</li>
+<li>计算机信息和系统资源</li>
+</ul>
+<p>当然，也可以用一些专业的服务器监控平台，其包含的信息可能更详细。但是 glances 的一个重要优点是开箱即用，不用专门部署，具体安装方式和参数可参考<a href="https://github.com/nicolargo/glances" target="_blank" rel="noopener">官方 repo</a>，使用示例如下图所示：<br><img src="/operating-system-performance-testing/glances.jpeg" srcset="/img/loading.gif" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇博客简单介绍了网卡，CPU，内存和磁盘的一些理论知识和我个人认为写的比较好的博客，最后介绍了 Linux 下常用的性能测试工具 sysbench 的使用和性能监控工具 glances 的使用。</p>
 <p>本篇博客涉及了较多硬件和操作系统的知识，其实这些都可以挖的更深，由于水平和时间有限，暂不继续深挖，希望看完本博客之后能对大家的系统调优有所帮助。</p>
 
             </div>
@@ -795,7 +809,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "操作系统硬件介绍和性能评测&nbsp;",
+        "操作系统硬件介绍和性能测试与监控&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
