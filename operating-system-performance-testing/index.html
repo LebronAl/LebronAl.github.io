@@ -217,7 +217,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期四, 一月 28日 2021, 1:40 下午
+                  本文最后更新于：星期五, 二月 26日 2021, 2:10 下午
                 
               </p>
             
@@ -305,8 +305,15 @@
 <p>有关文件系统的区别（xfs or ext4），可以参考此<a href="https://segmentfault.com/a/1190000008481493" target="_blank" rel="noopener">博客</a>。至于具体性能，由于上层应用不同，其在不同文件系统上的表现也不同，建议实际测试一下才能知道真实场景下哪个更优秀，一般情况下选择 xfs 就够用了。</p>
 <p>有关磁盘 IO 的理论细节可以参考美团技术团队的<a href="https://tech.meituan.com/2017/05/19/about-desk-io.html" target="_blank" rel="noopener">博客</a>，十分详细。</p>
 <h3 id="补充-2"><a href="#补充-2" class="headerlink" title="补充"></a>补充</h3><ul>
+<li>吞吐量<ul>
 <li>对于顺序读写，普通的 HDD 的吞吐量一般在 100 MB/s 左右，某些企业级 HDD 能够达到 200 MB/s 左右。对于随机读写，HDD 的性能表现很差，一般是几十兆每秒。</li>
 <li>对于顺序读写，普通的 SSD 的吞吐量一般在 300~500MB/s 左右，某些企业级 SSD（例如适配 PCIE 3.0 接口）甚至能够达到 2GB/s。对于随机读写，SSD 的性能相比顺序读写下降较少，一般也是几百兆每秒。 </li>
+</ul>
+</li>
+<li>时延<ul>
+<li>图胜千言<br><img src="/operating-system-performance-testing/latency.jpg" srcset="/img/loading.gif" alt></li>
+</ul>
+</li>
 </ul>
 <h2 id="sysbench-测试工具"><a href="#sysbench-测试工具" class="headerlink" title="sysbench 测试工具"></a>sysbench 测试工具</h2><p>sysbench 是一款开源的多线程性能测试工具，可以执行 CPU/内存/线程/IO/数据库等方面的性能测试。<br>sysbench 支持以下几种测试模式 ：</p>
 <ol>
