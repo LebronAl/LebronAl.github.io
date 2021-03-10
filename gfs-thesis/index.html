@@ -153,8 +153,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-09 21:59" pubdate>
-        星期二, 三月 9日 2021, 9:59 晚上
+      <time datetime="2021-03-07 21:59" pubdate>
+        星期日, 三月 7日 2021, 9:59 晚上
       </time>
     </span>
   
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      1.2k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      12
        分钟
     </span>
   
@@ -217,12 +217,13 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期三, 三月 10日 2021, 12:25 凌晨
+                  本文最后更新于：星期四, 三月 11日 2021, 12:34 凌晨
                 
               </p>
             
             <div class="markdown-body" id="post-body">
               <h2 id="相关背景"><a href="#相关背景" class="headerlink" title="相关背景"></a>相关背景</h2><p>单机文件系统我们见得已经很多，像 xfs，ext4 等等都已经是很出名的单机文件系统。然而，单机文件系统的容量始终是有限的，随着数据量的不断增大，就算对单机不断的 scale up 也会逐渐达到上限。因此，支持 scale out 的分布式文件系统是技术的必然。作为世界上数据量可能最多的公司，Google 在 21 世纪初就已经遇到了这个挑战，随之其开发了 GFS 这个创时代的分布式文件系统并将该成果发表在了 2003 年的 SOSP 会议上，之后随着 MapReduce 和 BigTable 论文的发表，Google 的三架马车整整齐齐，掀开了大数据时代的帷幕，引领工业界开始了辉煌的 NoSQL 运动。</p>
+<p>之后，MapReduce 和 BigTable 或多或少都被新时代的大数据技术栈替代和压榨，只有 GFS 在大规模分布式文件系统领域鲜有敌手，只有某些针对不同场景的优化竞品而已，例如针对海量小文件做了优化的 haystack。总之，即使在 2021 年的今天，学习 GFS 的设计思想也是十分有意义的。</p>
 <h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><p>实现一个高可用，可扩展，高性能，低成本，可容错的大规模分布式文件系统，同时为用户提供近可能简单的文件读写接口并屏蔽底层的复杂实现细节。</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本来打算好好的写一篇博客总结一下自己时隔两年后再读 GFS 的理解，但是偶然看到了一篇写的很详细且有作者想法的<a href="https://spongecaptain.cool/post/paper/googlefilesystem/" target="_blank" rel="noopener">博客</a>，因此就没必要浪费时间自己再写一遍了，感兴趣的可以去详读这篇博客。</p>
 <p>对于博客中所述，有一处有关 chunk version 的地方我个人不太认同，原文如下：</p>
@@ -237,11 +238,12 @@
 <p>因此我认为，Master 维护 chunk version 的步骤应该是先递增当前 chunk 的 chunk version 并通知 Primary，得到确切回复后再本地持久化，这样一旦 Master 在期间挂了，其恢复之后会发现 chunkserver 心跳上来的消息中，该 chunk 的 chunk version 大于本地磁盘恢复的 chunk version，从而认为 chunkserver 的 chunk version 最新并更新且持久化本地的 chunk version，进而能够提供服务，这样就与论文中的描述自恰了。</p>
 <p>除以上一点外，其他的细节个人觉得博客都讲的很正确很 make sense 了~</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>越优秀的设计越简单</li>
-<li>设计系统时要充分平衡不同资源间的 trade-off，避免出现太多资源浪费的情况</li>
-<li>经典的东西必有经典的道理</li>
+<li>优秀的设计往往很简单</li>
+<li>很难设计出一个满足所有业务场景的系统，针对不同的场景会有不同的解决方案</li>
+<li>设计系统时就需要考虑到系统的瓶颈在何处（磁盘，网络，CPU）</li>
+<li>单节点的性能即使不高也没什么问题，扩展性更重要</li>
 </ul>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/gfs-sosp2003.pdf" target="_blank" rel="noopener">论文</a></p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://pdos.csail.mit.edu/6.824/notes/l-gfs.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="https://www.bilibili.com/video/BV1R7411t71W?p=3" target="_blank" rel="noopener">6.824 双语视频</a><br><a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/gfs-sosp2003.pdf" target="_blank" rel="noopener">论文</a></p>
 
             </div>
             <hr>
