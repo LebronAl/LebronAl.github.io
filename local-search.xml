@@ -4,7 +4,7 @@
   
   
   <entry>
-    <title>vm-ft 论文阅读</title>
+    <title>VM-FT 论文阅读</title>
     <link href="/vm-ft-thesis/"/>
     <url>/vm-ft-thesis/</url>
     
@@ -14,9 +14,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
