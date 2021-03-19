@@ -217,14 +217,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期五, 二月 26日 2021, 2:10 下午
+                  本文最后更新于：星期五, 三月 19日 2021, 11:59 晚上
                 
               </p>
             
             <div class="markdown-body" id="post-body">
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在测试数据库的性能时，往往需要通过从网卡，CPU，内存，磁盘，代码等方面出发进行性能调优，这期间可能会纵向扩展机器以获得更好的性能。然而，在不同的硬件机器上测试时，有时的结果可能与预期相差较多，单从软件方面进行猜想可能并不靠谱。因此，需要对机器硬件进行一定的了解和对应的测试，这样就能够在调优分析时利用底层的硬件信息来支撑瓶颈分析，从而更可能做出正确的判断。本篇博客将从网卡，CPU，内存，磁盘出发来介绍一些基本的知识和性能评测方式，最后也会介绍 Linux 下常用的性能测试工具 sysbench 的使用和性能监控工具 glances 的使用。</p>
 <h2 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>网卡，即网络接口卡（network interface card），也叫 NIC 卡，是一种允许网络连接的计算机硬件设备。网卡应用广泛，市场上有许多不同种类，如 PCIe网卡，服务器网卡。</p>
-<p>基于不同的速度，网卡有 10Mbps，100Mbps， 10/100Mbps 自适应卡，1000Mbps、10Gbps、25Gbps、100Gbps 甚至更高速度的网卡。10Mbps、100Mbps 和 10/100Mbps 自适应网卡适用于小型局域网、家庭或办公室。1000Mbps 网卡可为快速以太网提供更高的带宽。10Gbps/25Gbps/100Gbps 网卡以及更高速度的网卡则受到大企业与数据中心的欢迎。</p>
+<p>基于不同的速度，网卡有 10Mbps，100Mbps， 10/100Mbps 自适应卡，1000Mbps、10Gbps、25Gbps、100Gbps 甚至更高速度的网卡。10Mbps、100Mbps 和 10/100Mbps 自适应网卡适用于小型局域网、家庭或办公室。1000Mbps 网卡可为快速以太网提供更高的带宽。10Gbps,25Gbps,100Gbps 网卡以及更高速度的网卡则受到大企业与数据中心的欢迎。</p>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>Linux 下要想得知本机的网卡速率。可以查也可以测。<br>对于查，可以使用 <code>ifconfig</code> 找到网卡对应的设备名，然后使用 <code>ethtool &lt;device&gt;</code> 来查看对应网卡设备的额定速率。如下图所示：<br><img src="/operating-system-performance-testing/ethtool.png" srcset="/img/loading.gif" alt><br>对于测，可以使用 iperf 或者 iperf3 来测量 tcp/udp 协议的吞吐量，进而测试网卡的性能。当然，由于连接参数（比如客户端连接数，包大小）的不同，测试时可能也跑不满理论带宽，因此对实际线上系统调优操作系统网络栈就是一个可以优化性能的方向。<br>iperf 和 iperf3 的具体使用方式可参考此<a href="https://www.cnblogs.com/cloudwas/p/13084815.html" target="_blank" rel="noopener">博客</a>。</p>
 <h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>市面上常说的千兆网卡速率是 1000Mbps，即 125MB/s；万兆网卡速率是 10000Mbps，即 1.22GB/s；十万兆网卡速率是 100000Mbps，即 12.21 GB/s。</p>
 <h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>中央处理器（CPU），是电子计算机的主要设备之一，电脑中的核心配件。其功能主要是解释计算机指令以及处理计算机软件中的数据。CPU 是计算机中负责读取指令，对指令译码并执行指令的核心部件。中央处理器主要包括两个部分，即控制器、运算器，其中还包括高速缓冲存储器及实现它们之间联系的数据、控制的总线。</p>
@@ -277,7 +277,7 @@
 <p>swap 意思是交换，顾名思义，当某进程向 OS 请求内存发现不足时，OS 会把内存中暂时不用的数据交换出去，放在 swap 分区中，这个过程称为 swap out。当某进程又需要这些数据且 OS 发现还有空闲物理内存时，又会把 swap 分区中的数据交换回物理内存中，这个过程称为 swap in。</p>
 <p>当然，swap 大小是有上限的，一旦 swap 使用完，操作系统会触发 OOM-Killer 机制，把消耗内存最多的进程 kill 掉以释放内存。</p>
 <p>有关数据库与 swap 的关系以及 swap 的细节机制可以参考此<a href="http://hbasefly.com/2017/05/24/hbase-linux/?lkfgjq=xbbdl2&amp;ekpqfu=awbp92" target="_blank" rel="noopener">博客</a>。</p>
-<h3 id="补充-1"><a href="#补充-1" class="headerlink" title="补充"></a>补充</h3><p>近年来常用的 DDR4 内存的吞吐量一般大于 10GB/s，其吞吐量往往不会成为瓶颈。当然，不同的语言对内存管理的方式不同，某些自动管理内存的语言（比如 Java）会出现 STW (Stop the world）的状况来调整内存空间，其会暂停所有用户线程，对性能影响很大。因此，基于业务负载和语言特性制定更好的 GC 策略能够更好地利用内存的吞吐量。</p>
+<h3 id="补充-1"><a href="#补充-1" class="headerlink" title="补充"></a>补充</h3><p>CPU 的处理速度一般约为 10GB /s，常用的 DDR4 内存到 CPU 的吞吐一般约在 30GB/s ，所以内存的吞吐量往往不会成为瓶颈。当然，不同的语言对内存管理的方式不同，某些自动管理内存的语言（比如 Java）会出现 STW (Stop the world）的状况来调整内存空间，其会暂停所有用户线程，对性能影响很大。因此，基于业务负载和语言特性制定更好的 GC 策略能够更好地利用 CPU，从而进一步发掘内存的吞吐量。</p>
 <h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><p>磁盘是指利用磁记录技术存储数据的存储器。 磁盘是计算机主要的存储介质，可以存储大量的二进制数据，并且断电后也能保持数据不丢失。 早期计算机使用的磁盘是软磁盘（Floppy Disk，简称软盘），如今常用的磁盘是硬磁盘（Hard disk，简称硬盘）。</p>
 <p>目前常见的硬盘大可分为三类：机械硬盘（HDD）采用磁性碟片来存储，固态硬盘（SSD）采用闪存颗粒来存储，混合硬盘（HHD）是把磁性碟片和闪存集成到一起的一种硬盘。</p>
 <p>HDD 和 SSD 的区别主要如下：<br><img src="/operating-system-performance-testing/comparison.jpg" srcset="/img/loading.gif" alt></p>
