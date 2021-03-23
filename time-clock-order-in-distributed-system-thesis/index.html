@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>VM-FT 论文阅读 - 谭新宇的博客</title>
+  <title>Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -153,8 +153,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-13 10:47" pubdate>
-        星期六, 三月 13日 2021, 10:47 上午
+      <time datetime="2021-03-21 20:00" pubdate>
+        星期日, 三月 21日 2021, 8:00 晚上
       </time>
     </span>
   
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      960 字
+      1.3k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      14
        分钟
     </span>
   
@@ -213,34 +213,57 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">VM-FT 论文阅读</h1>
+            <h1 style="display: none">Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期一, 三月 22日 2021, 10:41 晚上
+                  本文最后更新于：星期二, 三月 23日 2021, 11:32 晚上
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>本论文主要介绍了一个用于提供容错虚拟机 (fault-tolerant virtual machine) 的企业级商业系统，该系统包含了两台位于不同物理机的虚拟机，其中一台为 primary，另一台为 backup，backup 备份了 primary 的所有执行。当 primary 出现故障时，backup 可以上线接管 primary 的工作，以此来提供容错。</p>
-<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>论文内容可以参考此<a href="https://www.cnblogs.com/brianleelxt/p/13245754.htmls" target="_blank" rel="noopener">博客</a>。</p>
-<h2 id="分布式容错方案"><a href="#分布式容错方案" class="headerlink" title="分布式容错方案"></a>分布式容错方案</h2><p>分布式系统中需要对一份数据进行冗余存储才能提供容错性，因此问题是：</p>
-<blockquote>
-<p>如果有一份会随时变动的数据，如何确保它正确地存储于网络中的几台不同机器之上？</p>
-</blockquote>
-<p>对于 primary/backup 型的同步方式，可行的解决方案有两种：状态转移（State Transfer）和操作转移（Operation Transfer）。</p>
-<h3 id="状态转移"><a href="#状态转移" class="headerlink" title="状态转移"></a>状态转移</h3><p>对于状态转移，其方案是 primary 持续地将所有状态（包括 CPU、内存和 I/O 设备等或者整个状态机实例）变化发送给 backup，当然也可以有一些优化，比如只传送相比上次变化的数据等等，但总之这种方法所需带宽非常大，延迟较高，因此在工业界中应用不多。</p>
-<h3 id="操作转移"><a href="#操作转移" class="headerlink" title="操作转移"></a>操作转移</h3><p>操作转移能够运行的前提是状态机，其特性是：</p>
-<blockquote>
-<p>任何初始状态一样的状态机，如果执行的命令序列一样，则最终达到的状态也一样。如果将此特性应用在多参与者进行协商共识上，可以理解为系统中存在多个具有完全相同的状态机（参与者），这些状态机能最终保持一致的关键就是起始状态完全一致和执行命令序列完全一致。</p>
-</blockquote>
-<p>操作转移一般有两种复制级别：</p>
+              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这篇文章是 Leslie Lamport 于 1978 年发表的，并在 2007 年被选入 SOSP 的名人堂，被誉为第一篇真正的”分布式系统”论文，该论文曾一度成为计算机科学史上被引用最多的文章（截止 2021 年 3 月 22 日已达到 12497 次）。文章的作者 Lamport 享有分布式计算原理之父的美誉，并且因其对分布式系统研究作出的卓越贡献，于 2013 年被授予了图灵奖。</p>
+<p>在分布式系统中的时间同步是一个非常难的问题，因为分布式系统是使用消息进行通信的，若使用物理时钟来进行同步，一方面是不同进程的时钟有差异，另一方面是时间的计算也有一定的误差，这样若有两个时间相同的事件，则无法区分它们谁前谁后了。因此目前通用的解决方案是通过逻辑时钟来同步时间从而确定偏序关系。</p>
+<p>本论文中首先介绍了分布式系统中的偏序关系，接着又提出了一个算法，可以基于 Happened Before 这种偏序关系（因果一致性）来扩展出强一致性的全序关系。</p>
+<h2 id="内容概要"><a href="#内容概要" class="headerlink" title="内容概要"></a>内容概要</h2><p>可参考此<a href="https://zhuanlan.zhihu.com/p/34057588" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><h3 id="偏序"><a href="#偏序" class="headerlink" title="偏序"></a>偏序</h3><p><img src="/time-clock-order-in-distributed-system-thesis/order.png" srcset="/img/loading.gif" alt></p>
+<p>对于上图中的的进程 P 和进程 Q，进程 P 在某时刻发生了事件 p1，经过一段时间后，发生事件 p2，可以说：p1 发生在 p2 前面。进程 P 向进程 Q 发送消息，进程 P 发送消息时记为事件 p1，进程 Q 接收到进程 P 发送的消息记为事件 q2，可以说：p1 发生在 q2 前面。以上两个例子表明了一种偏序的关系。之所以说明这两个例子所代表的关系是偏序的，是因为：当需要判断下图中的 p3 和 q3 这两个事件谁先谁后时，在偏序关系下是无法判断的。即偏序只能为系统中的部分事件定义先后顺序。这里的部分其实是有因果关系的事件。</p>
+<p>偏序的定义：（偏序以符号 -&gt; 表示）</p>
 <ul>
-<li>机器级别：按序复制 CPU 指令，中断，客户端请求等等来保证不同节点间状态一致，这也就是本文的解决方案。这种方案需要解决若干问题，比如多节点间如何处理不明确性命令（获取当前时间），如果避免脑裂等等。看了论文之后，个人感觉论文中的做法不是很优雅，而且很多关键点并没有纰漏实现细节，此外该解决方案与虚拟机过于耦合，较难扩展，可能逐渐会被云原生时代淘汰。</li>
-<li>应用级别：按序复制明确性的操作来保证不同节点间的状态一致。比如 MySQL Cluster 的主从全同步复制需要保证所有的从节点接受成功才能返回成功，这一定程度上会导致扩展性受限，即每增加一个 Slave 节点，都导致造成整个系统可用性风险增加一分。因此也出现了基于 Paxos，Raft 的 quorum 同步方案，即一旦系统中过半数的节点中完成了状态的转换，就认为数据的变化已经被正确地存储在系统当中，这样就可以容忍少数（通常是不超过半数）的节点失联，使得增加机器数量对系统整体的可用性变成是有益的，这也是目前大多数应用的容错方案。</li>
+<li>在同一个进程中有两个事件 a、b，如果 a 先发生，b 后发生，则表示为 a-&gt;b。</li>
+<li>在不同的两个进程中，若 a 为一个进程发消息的事件，b 为另一个进程接受消息的事件，则 a 先发生，b 后发生，表示为 a-&gt;b。</li>
+<li>如果 a-&gt;b，b-&gt;c，那么 a-&gt;c。</li>
+<li>若无法判断 a 和 b 谁先发生，则表示为并发的。</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为一篇 10 年前的论文，在那时 Raft 还没有出现，Paxos 还没有得到广泛的承认，该论文对于分布式容错方案提出了一种基于机器级别的操作转移方案，拓展了理论的边界并证明了工业界可用，可以说是比较划时代的贡献了。</p>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://icyfenix.cn/distribution/consensus/" target="_blank" rel="noopener">分布式共识算法讲解</a><br><a href="https://pdos.csail.mit.edu/6.824/notes/l-vm-ft.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="https://www.bilibili.com/video/BV1R7411t71W?p=4" target="_blank" rel="noopener">6.824 视频</a><br><a href="https://dl.acm.org/doi/pdf/10.1145/1899928.1899932" target="_blank" rel="noopener">论文</a></p>
+<p>Lamport 在论文中提出了一种利用逻辑时钟设计的偏序系统方法：</p>
+<ul>
+<li>每个进程存在独立的事件序列发生器，每次产生新的事件，该序列发生器自增 1，并将结果赋予该事件。</li>
+<li>如果进程的事件 E 需要向其他进程发送消息 M，那么在 M 中携带 E 的序列号。</li>
+<li>如果进程收到外部消息 M，获取 M 中携带的序列号，与自身的事件序列发生器取最大值，然后自增 1，赋给由于 M 而触发的新的外部事件。</li>
+</ul>
+<p>根据上面的定义，我们可以得到如下结论：</p>
+<ul>
+<li>进程内部的事件均可以比较先后顺序。</li>
+<li>进程之间的因果事件可以确定先后顺序，而进程之间的独立事件则无法比较先后顺序。</li>
+</ul>
+<h3 id="全序"><a href="#全序" class="headerlink" title="全序"></a>全序</h3><p>全序是指所有的事件都可以区分先后顺序。无论是真实或是虚拟世界，这都是受欢迎的。因为，所有的事件都有了一个统一的评判标准，我们一直欢迎统一而拒绝分裂。</p>
+<p>在偏序的基础上，Lamport 定义了一种全序方案，在偏序的基础上有所增强：每个事件表示为一个三元组：<E, c, p><br>其中：</E,></p>
+<ul>
+<li>E：代表事件。</li>
+<li>C：代表事件所发生的进程赋予该事件的序列号(逻辑时间)。</li>
+<li>P：代表事件所发生的进程的编号。</li>
+</ul>
+<p>有了该三元组后，定义事件先后的顺序就变成了：</p>
+<blockquote>
+<p>如果 C(i, a) &lt; C(j, b) 或者如果 C(i, a) = C(j, b) 并且 P(i) &lt; P(j)。</p>
+</blockquote>
+<p>作者通过对进程进行排序（arbitrary total ordering），当进程之间有并发的事件时，以进程的顺序来决定事件的顺序，这样就可以对所有的事件定义一个全序（全序以符号 =&gt; 表示）了，并解决了对分布式系统对事件进行排序的问题。</p>
+<p>论文中提到的全序的一个例子解析可以参考此<a href="https://zhuanlan.zhihu.com/p/27503041" target="_blank" rel="noopener">博客</a>。</p>
+<h3 id="物理时钟"><a href="#物理时钟" class="headerlink" title="物理时钟"></a>物理时钟</h3><p>过于晦涩，没看懂。</p>
+<h3 id="并发事件与-Vector-clock"><a href="#并发事件与-Vector-clock" class="headerlink" title="并发事件与 Vector clock"></a>并发事件与 Vector clock</h3><p>参考此<a href="https://blog.csdn.net/paxhujing/article/details/51612105" target="_blank" rel="noopener">博客</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>记住一点：在分布式系统和现实世界中，事件发生的顺序都是偏序来定义的。</p>
+<p>个人感受：Lamport 大佬的论文还是照常晦涩难懂，这篇分布式系统的开山论文看下来也只能说似懂非懂吧，希望以后能有真的懂了的一天。</p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://www.cnblogs.com/hzmark/p/Time_Clocks_Ordering.html" target="_blank" rel="noopener">论文翻译</a><br><a href="https://lamport.azurewebsites.net/pubs/time-clocks.pdf" target="_blank" rel="noopener">论文</a></p>
 
             </div>
             <hr>
@@ -266,18 +289,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/time-clock-order-in-distributed-system-thesis/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/gfs-thesis/">
-                        <span class="hidden-mobile">GFS 论文阅读</span>
+                      <a href="/vm-ft-thesis/">
+                        <span class="hidden-mobile">VM-FT 论文阅读</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -471,7 +488,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "VM-FT 论文阅读&nbsp;",
+        "Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
