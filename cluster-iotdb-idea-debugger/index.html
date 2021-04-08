@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>JProfile 远程配置 - 谭新宇的博客</title>
+  <title>利用 IDEA 对分布式 IoTDB 进行调试 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -153,8 +153,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-10-05 17:48" pubdate>
-        星期一, 十月 5日 2020, 5:48 下午
+      <time datetime="2021-04-07 22:44" pubdate>
+        星期三, 四月 7日 2021, 10:44 晚上
       </time>
     </span>
   
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      12
+      11
        分钟
     </span>
   
@@ -213,45 +213,56 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">JProfile 远程配置</h1>
+            <h1 style="display: none">利用 IDEA 对分布式 IoTDB 进行调试</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期四, 四月 8日 2021, 11:42 中午
+                  本文最后更新于：星期四, 四月 8日 2021, 10:09 上午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JProfile 是 Java 常用的性能分析工具，常被用来查看内存占用，CPU 时间消耗等数据。本地配置 JProfile 较为简单，可以参考此<a href="https://www.javatt.com/p/48237" target="_blank" rel="noopener">博客</a>。在一些情况下，监控的 Java 服务跑在服务器上，因此不能使用本地的 JProfile 来监控。不过 JProfile 能够支持远程连接监控，只不过需要一些额外的配置。此博客的内容就是介绍如何使用 JProfile 监控远程的 Java 应用。</p>
-<h2 id="配置方案一：ssh-免密连接"><a href="#配置方案一：ssh-免密连接" class="headerlink" title="配置方案一：ssh 免密连接"></a>配置方案一：ssh 免密连接</h2><ol>
-<li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>Setup Executable</code> 的可执行脚本。</li>
-<li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li>
-<li>服务端执行 <code>sh ./jprofiler_linux_11_1_4.sh</code> 来安装 JProfile，无脑同意 OK 和 Enter 就能够让其正确安装并且后台运行起来。</li>
-<li>服务端启动要监控的应用程序，如 IoTDB。</li>
-<li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li>
-<li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>SSH tunnel</code>，然后点击 <code>Edit</code> 开始配置服务器 ip, host, ssh 秘钥等信息。<br><img src="/jprofile-remote/jprofile_3.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_4.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_5.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_6.png" srcset="/img/loading.gif" alt></li>
-<li>配置完后点击 finish 再点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li>
-<li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li>
-<li><p>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></p>
-</li>
-<li><p>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></p>
-</li>
-<li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在单机数据库中，寻找 bug 相对较为简单。因为一旦可以复现 bug，那我们可以利用 IDE 在服务端打断点一步步执行并跟踪查看堆栈信息来判断代码出错的位置从而最终找到问题。</p>
+<p>在分布式数据库中，找 bug 就变得相对困难了。一方面是因为分布式数据库较难利用 IDE 打断点，其往往通过打 log 的方式来记录错误情况，另一方面是一条客户端请求过来后往往伴随着若干并行和跨节点的 rpc，因此如果通过查 log 的方式来寻找 bug，往往很耗费时间和精力。</p>
+<p>在生产环境中，线上 debug 显然是一个不可取（<del>被运维打死</del>）的行为，因此业务只能通过完善日志调用链路的方式来追踪一个请求在分布式系统中的行为，这种方式一方面需要各个项目能够支持对同一 requestId 请求的追踪，另一方面也需要各个应用能够打出合理数量的日志，不能太影响性能但也不能遇到问题无法定位，此外还需要支持海量日志收集（类似于 Flume + Kafka ）和全文检索（ES 或 Spark/MR）的应用，总之这是一套相对较重的框架。就分布式追踪而言，目前较火的项目有 Skywalking，Zipkin 等等，可以参考这篇<a href="https://icyfenix.cn/distribution/observability/" target="_blank" rel="noopener">博客</a>的介绍。</p>
+<p>在测试环境中，尽管我们也可以采用生产环境的 debug 方式，但显然我们希望能够找到效率更高的方式。万幸的是，Jetbrains 全家桶为我们提供分布式系统的 debug 方式。比如对于 Java 应用而言，IDEA 就提供了远程 debug 和本地多进程 debug 的方式。对于远程 debug，可以参考这篇<a href="https://www.cnblogs.com/aligege/p/7308180.html" target="_blank" rel="noopener">博客</a>介绍的方式对远程的应用进行 debug；对于本地多进程 debug，本篇博客将介绍如何利用 IDEA 对分布式 IoTDB 进行调试。</p>
+<p>有关 Apache IoTDB 可以参考<a href="https://iotdb.apache.org/" target="_blank" rel="noopener">官方网站</a>。</p>
+<h2 id="本地多进程-debug-调试"><a href="#本地多进程-debug-调试" class="headerlink" title="本地多进程 debug 调试"></a>本地多进程 debug 调试</h2><p>对于 IoTDB 集群的搭建示例，可以参照<a href="https://github.com/apache/iotdb/blob/master/docs/zh/UserGuide/Cluster/Cluster-Setup.md" target="_blank" rel="noopener">官方文档</a>，其分布式模块的启动主类为 <a href="https://github.com/apache/iotdb/blob/master/cluster/src/main/java/org/apache/iotdb/cluster/ClusterMain.java" target="_blank" rel="noopener">ClusterMain.java</a>，其默认的三节点分布式配置参数文件夹可以参考<a href="https://github.com/apache/iotdb/tree/master/cluster/src/test/resources" target="_blank" rel="noopener">这里</a>。</p>
+<pre><code class="hljs JAVA"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+  <span class="hljs-keyword">if</span> (args.length &lt; <span class="hljs-number">1</span>) &#123;
+    logger.error(
+        <span class="hljs-string">"Usage: &lt;-s|-a|-r&gt; "</span>
+            + <span class="hljs-string">"[-D&#123;&#125; &lt;configure folder&gt;] \n"</span>
+            + <span class="hljs-string">"-s: start the node as a seed\n"</span>
+            + <span class="hljs-string">"-a: start the node as a new node\n"</span>
+            + <span class="hljs-string">"-r: remove the node out of the cluster\n"</span>,
+        IoTDBConstant.IOTDB_CONF);
+
+    <span class="hljs-keyword">return</span>;
+  &#125;
+  ...
+
+&#125;</code></pre>
+<p>可以看到其按照 seednodes 启动时指定 -s 即可，此外其也支持通过 <code>-D{}</code> 的方式来覆盖参数，因此我们可以利用 IDEA 分别指定不同的配置文件夹并用 debug 模式来启动三个 clusterMain 进程，这样即可达到本地多进程 debug 调试的理想效果。</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><ol>
+<li>点击 <code>Edit Configurations...</code><br><img src="/cluster-iotdb-idea-debugger/step1.png" srcset="/img/loading.gif" alt></li>
+<li>点击 <code>Add new Configuration</code><br><img src="/cluster-iotdb-idea-debugger/step2.png" srcset="/img/loading.gif" alt></li>
+<li>点击 <code>Application</code><br><img src="/cluster-iotdb-idea-debugger/step3.png" srcset="/img/loading.gif" alt></li>
+<li>编辑好红框的五个部分，指定配置名称，jdk 版本，启动模块，启动主类和启动参数 <code>-s</code>，然后点击绿框。<br><img src="/cluster-iotdb-idea-debugger/step4.png" srcset="/img/loading.gif" alt></li>
+<li>点击 <code>Add VM options</code><br><img src="/cluster-iotdb-idea-debugger/step5.png" srcset="/img/loading.gif" alt></li>
+<li>添加 <code>-D{}</code> 环境变量，例如我填的就是<code>-DIOTDB_CONF=/Users/txy/Study/incubator-iotdb/cluster/src/test/resources/node1conf</code><br><img src="/cluster-iotdb-idea-debugger/step6.png" srcset="/img/loading.gif" alt></li>
+<li>复制两份 node1 的配置<br><img src="/cluster-iotdb-idea-debugger/step7.png" srcset="/img/loading.gif" alt></li>
+<li>编辑好 node2 的名称和配置文件<br><img src="/cluster-iotdb-idea-debugger/step8.png" srcset="/img/loading.gif" alt></li>
+<li>编辑好 node3 的名称和配置文件<br><img src="/cluster-iotdb-idea-debugger/step9.png" srcset="/img/loading.gif" alt></li>
+<li>以 debug 模式分别启动 node1，node2 和 node3<br><img src="/cluster-iotdb-idea-debugger/step10.png" srcset="/img/loading.gif" alt></li>
+<li>可以执行对应的请求来触发 bug，从而开始 debug 调试（此时相当于 idea 用 debug 模式启动了三个进程，构成了一个可以 debug 的三节点伪分布式 IoTDB）<br><img src="/cluster-iotdb-idea-debugger/step11.png" srcset="/img/loading.gif" alt></li>
 </ol>
-<h2 id="配置方案二：http-端口连接"><a href="#配置方案二：http-端口连接" class="headerlink" title="配置方案二：http 端口连接"></a>配置方案二：http 端口连接</h2><ol>
-<li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>TAR.GZ Archive</code> 的压缩包。</li>
-<li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li>
-<li>服务端启动要监控的应用程序，如 IoTDB。</li>
-<li>服务端执行<code>tar -zxvf jprofiler_linux_11_1_4.tar.gz</code>解压压缩包，然后执行 <code>jprofiler11.1.4/bin/jpenable -p 10000</code> 手动指定 10000 端口来启动 JProfile。（注，必须有运行的 JVM 才可以启动，并且程序一旦关闭重启服务端的 jprofile 也需要重新启动。）</li>
-<li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li>
-<li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>Directly connection to</code>，配置好 host 并指定 <code>Profiling port</code> 为服务端手动指定的端口 10000。<br><img src="/jprofile-remote/jprofile_15.png" srcset="/img/loading.gif" alt></li>
-<li>配置完后点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li>
-<li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li>
-<li>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></li>
-<li>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></li>
-<li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本博客傻瓜式介绍了使用 JProfile 来对远程服务器上运行的 Java 服务进行监控分析的两种方式。其中 ssh 免密连接方式更方便，其启动时不需要有启动的 JVM 且能够自动检测随后启动的 JVM 让客户端在连接时再挑选。 http 连接方式在监控的 JVM 关闭重启后服务端的 jprofile 也需要手动重启，较为麻烦。因此建议大家都使用第一种连接方式。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本片博客简单介绍了如何使用 IDEA 调试分布式 IoTDB，希望能对大家 debug 分布式系统有所帮助。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://mp.weixin.qq.com/s/ra0aMHmmzst03v0rBdOVfQ" target="_blank" rel="noopener">手摸手教你阅读和调试大型开源项目 ZooKeeper</a></li>
+<li><a href="https://iotdb.apache.org/" target="_blank" rel="noopener">IoTDB 官网</a></li>
+<li><a href="https://github.com/apache/iotdb/tree/master" target="_blank" rel="noopener">IoTDB 代码库</a> </li>
+</ul>
 
             </div>
             <hr>
@@ -277,18 +288,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/maxcompute-yugong-thesis/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MaxCompute 跨域流量优化论文阅读</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/base-theory/">
-                        <span class="hidden-mobile">BASE 定理介绍</span>
+                      <a href="/flp-theory/">
+                        <span class="hidden-mobile">FLP 不可能定理介绍</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -482,7 +487,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "JProfile 远程配置&nbsp;",
+        "利用 IDEA 对分布式 IoTDB 进行调试&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

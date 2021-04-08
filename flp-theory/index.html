@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>JProfile 远程配置 - 谭新宇的博客</title>
+  <title>FLP 不可能定理介绍 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -153,8 +153,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-10-05 17:48" pubdate>
-        星期一, 十月 5日 2020, 5:48 下午
+      <time datetime="2021-03-28 11:44" pubdate>
+        星期日, 三月 28日 2021, 11:44 中午
       </time>
     </span>
   
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1.9k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      12
+      20
        分钟
     </span>
   
@@ -213,45 +213,49 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">JProfile 远程配置</h1>
+            <h1 style="display: none">FLP 不可能定理介绍</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期四, 四月 8日 2021, 11:42 中午
+                  本文最后更新于：星期四, 四月 8日 2021, 12:31 下午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JProfile 是 Java 常用的性能分析工具，常被用来查看内存占用，CPU 时间消耗等数据。本地配置 JProfile 较为简单，可以参考此<a href="https://www.javatt.com/p/48237" target="_blank" rel="noopener">博客</a>。在一些情况下，监控的 Java 服务跑在服务器上，因此不能使用本地的 JProfile 来监控。不过 JProfile 能够支持远程连接监控，只不过需要一些额外的配置。此博客的内容就是介绍如何使用 JProfile 监控远程的 Java 应用。</p>
-<h2 id="配置方案一：ssh-免密连接"><a href="#配置方案一：ssh-免密连接" class="headerlink" title="配置方案一：ssh 免密连接"></a>配置方案一：ssh 免密连接</h2><ol>
-<li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>Setup Executable</code> 的可执行脚本。</li>
-<li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li>
-<li>服务端执行 <code>sh ./jprofiler_linux_11_1_4.sh</code> 来安装 JProfile，无脑同意 OK 和 Enter 就能够让其正确安装并且后台运行起来。</li>
-<li>服务端启动要监控的应用程序，如 IoTDB。</li>
-<li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li>
-<li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>SSH tunnel</code>，然后点击 <code>Edit</code> 开始配置服务器 ip, host, ssh 秘钥等信息。<br><img src="/jprofile-remote/jprofile_3.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_4.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_5.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_6.png" srcset="/img/loading.gif" alt></li>
-<li>配置完后点击 finish 再点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li>
-<li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li>
-<li><p>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></p>
-</li>
-<li><p>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></p>
-</li>
-<li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li>
-</ol>
-<h2 id="配置方案二：http-端口连接"><a href="#配置方案二：http-端口连接" class="headerlink" title="配置方案二：http 端口连接"></a>配置方案二：http 端口连接</h2><ol>
-<li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>TAR.GZ Archive</code> 的压缩包。</li>
-<li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li>
-<li>服务端启动要监控的应用程序，如 IoTDB。</li>
-<li>服务端执行<code>tar -zxvf jprofiler_linux_11_1_4.tar.gz</code>解压压缩包，然后执行 <code>jprofiler11.1.4/bin/jpenable -p 10000</code> 手动指定 10000 端口来启动 JProfile。（注，必须有运行的 JVM 才可以启动，并且程序一旦关闭重启服务端的 jprofile 也需要重新启动。）</li>
-<li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li>
-<li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>Directly connection to</code>，配置好 host 并指定 <code>Profiling port</code> 为服务端手动指定的端口 10000。<br><img src="/jprofile-remote/jprofile_15.png" srcset="/img/loading.gif" alt></li>
-<li>配置完后点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li>
-<li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li>
-<li>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></li>
-<li>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></li>
-<li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本博客傻瓜式介绍了使用 JProfile 来对远程服务器上运行的 Java 服务进行监控分析的两种方式。其中 ssh 免密连接方式更方便，其启动时不需要有启动的 JVM 且能够自动检测随后启动的 JVM 让客户端在连接时再挑选。 http 连接方式在监控的 JVM 关闭重启后服务端的 jprofile 也需要手动重启，较为麻烦。因此建议大家都使用第一种连接方式。</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>FLP 不可能定理与 CAP，BASE 定理等一样，都是分布式系统的基本理论，因此我们有必要了解该理论。</p>
+<p>本博客摘抄了此<a href="https://mp.weixin.qq.com/s/LOUDWn7evcePCPGWar8vEA" target="_blank" rel="noopener">博客</a>中对 FLP 不可能定理的部分描述。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>1985 年，Fisher、Lynch、Paterson 三位科学家就发表了关于分布式一致性问题的不可能定理：在完全异步的分布式网络中，故障容错问题无法被解决。（ <code>We have shown that a natural and important problem of fault-tolerant cooperative computing cannot be solved in a totally asynchronous model of computation</code>）</p>
+<p>说得更直白点：在异步网络中，不可能存在能够容忍节点故障的一致性算法，哪怕只有一个节点故障。并且这里并没有考虑拜占庭错误，而是假设网络非常稳定、所有的消息都能被正确传递、并且仅被传递一次，即便如此都不可能找到能容忍哪怕只有一个节点失效的一致性协议，可见该结论有多强。（ <code>In this paper, we show the surprising result that no completely asynchronous consensus protocol can tolerate even a single unannounced process death. We do not consider Byzantine failures, and we assume that the message system is reliableit delivers all messages correctly and exactly once</code>）</p>
+<p>现实生活中的系统往往都是异步系统。因为系统中各个节点之间的延时，是否宕机等等都是不确定的。那么，在最小化异步模型系统中，是否存在一个可以解决一致性问题的确定性共识算法？</p>
+<p>FLP 不可能定理的最大适用前提是异步网络模型。何为同步、异步模型呢？</p>
+<ul>
+<li>所谓异步模型，是说从一个节点到另一个节点的消息延迟是有限的，但可能是无界的（finite but can be unbounded）。这就意味着如果一个节点没有收到消息，它无法判断消息到底是丢失了，还是只是延迟了。也就是说，我们无法通过超时时间来判断某个节点是否故障。</li>
+<li>所谓同步模型，是说消息传递的延迟是有限的，且是有界的。这就意味着我们可以通过经验或采样精确估算消息的最大可能延迟，从而可以通过超时时间来确定消息是否丢失、节点是否故障。</li>
+</ul>
+<p>所幸的是，我们所处于的真实的网络世界更接近同步模型，在很多场景上，我们都可以通过经验或采样确定最大超时时间。举个通俗点的例子：你给朋友快递了一本书，朋友过了 3 天还没收到，此时朋友很难判断到底是快递延迟了，还是快递出问题送丢了。但是如果过了一个月，朋友仍没收到书，基本就可以断定快递送丢了。而背后的推论就是基于经验或统计：通常快递都能在 1-2 周内送达。显然，异步模型其实是反映了节点间通讯的最差情况、极端情况，异步模型包含了同步模型，即能在异步模型上有效的一致性协议，在同步模型上也同样有效。而同步模型是对异步模型做了修正和约束，从而使得更接近真实世界，也使得在实践中一致性问题有可能得到有效解。</p>
+<p>另外，即便是在异步网络模型下，FLP 也并不意味着一致性永远无法达成，只是说无法保证在有界的时间（in bounded time）内达成。在实践上，如果放宽对 bounded time 的限制，仍然是有可能找到实践中的解法的。</p>
+<p>根据 DLS 的<a href="http://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf" target="_blank" rel="noopener">研究</a>，一致性算法按照网络模型可以分为三大类：</p>
+<ul>
+<li>部分同步网络模型（partially synchronous model）中的一致性协议可以容忍最多 1/3 的任意错误。这里的部分同步模型是指网络延迟是有界的，但是我们无法提前得知。这里的容错也包含了拜占庭类错误。</li>
+<li>异步网络模型（asynchronous model）中的确定性协议无法容忍错误。这里的异步模型即是前文所说的网络延迟是无界的。该结论其实就是 FLP 不可能定理的含义，在完全异步网络中的确定性协议不能容忍哪怕只有一个节点的错误。</li>
+<li>同步网络模型（synchronous model）可以达到惊人的 100% 容错，虽然对错误节点超过 1/2 时的节点行为有限制。这里的同步模型是指网络延迟一定是有界的，即小于某个已知的常数。</li>
+</ul>
+<p>从另一个角度来理解，FLP实际上考虑了分布式系统的3个属性：安全(safety)、活性（liveness)、容错：</p>
+<ul>
+<li>安全是说系统内各个节点达成的值是一致的、有效的。safety 其实是保证系统一致性运行的最低要求，其核心是 cannot do something bad，即不能干坏事、不能做错事。</li>
+<li>活性是说系统内各个节点最终（在有限时间内）必须能够达成一致，即系统必须能够向前推进，不能永远处于达不成一致的状态。liveness 其实是更高要求，意味着不能只是不干坏事，也不能一直不干事，you must do something good，即必须使得整个系统能良好运转下去。</li>
+<li>容错是说该协议在有节点故障的情况下也必须能有效。</li>
+</ul>
+<p>FLP 不可能定理其实意味着在异步网络中，不可能存在同时满足这三者的分布式一致性协议。因为分布式环境中，节点故障几乎是必然的，因此容错是必须要考虑的因素，所以FLP不可能定理就意味着一致性协议在能做到容错的情况下，没办法同时做到安全性与系统活性。通常在实践中，我们可以做出部分牺牲，比如牺牲一部分安全性，意味着系统总能很快达成结论，但结论的可靠性不足；或者牺牲一部分系统活性，意味着系统达成的结论非常可靠，但可能长时间、甚至永远都在争论中，无法达成结论。所幸的是，很多时候现实世界的鲁棒性很强，使一致性协议失效的倒霉事件发生的概率也很可能极低。例如分布式共识协议 Paxos 和 Raft 都是保证了容错性和 safety，然后通过随机超时时间来规避 liveness 的问题。</p>
+<p><img src="/flp-theory/flp.png" srcset="/img/loading.gif" alt></p>
+<p>FLP 不可能定理的推导和应用可以参考此<a href="https://www.daimajiaoliu.com/daima/479430766100400" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="与-CAP-定理的区别"><a href="#与-CAP-定理的区别" class="headerlink" title="与 CAP 定理的区别"></a>与 CAP 定理的区别</h2><p>CAP 与 FLP 看起来有相似之处，其实二者并不尽相同，二者是从不同的维度思考问题，另外即使是很相似的概念，内涵也并不完全一样。比如：</p>
+<ul>
+<li>FLP 面对的是分布式一致性问题，而 CAP 面对的是分布式网络中的数据同步与复制。</li>
+<li>FLP 是说在异步网络模型中，三者不可能同时实现；而 CAP 是说在所有场景下，三者都不可能同时实现。</li>
+<li>FLP 中的 liveness 强调的是一致性算法的内在属性；而 CAP 中的 availability 强调的是一致性算法对外呈现的外在属性。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇博客摘抄了部分优质博客对 FLP 不可能定理的介绍，以做学习记录和索引。</p>
 
             </div>
             <hr>
@@ -262,9 +266,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/">开发工具配置</a>
-                    
-                      <a class="hover-with-bg" href="/tags/IoTDB/">IoTDB</a>
+                      <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
                     
                   </div>
                 
@@ -277,9 +279,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/maxcompute-yugong-thesis/">
+                      <a href="/cluster-iotdb-idea-debugger/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MaxCompute 跨域流量优化论文阅读</span>
+                        <span class="hidden-mobile">利用 IDEA 对分布式 IoTDB 进行调试</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -287,8 +289,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/base-theory/">
-                        <span class="hidden-mobile">BASE 定理介绍</span>
+                      <a href="/time-clock-order-in-distributed-system-thesis/">
+                        <span class="hidden-mobile">Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -482,7 +484,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "JProfile 远程配置&nbsp;",
+        "FLP 不可能定理介绍&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
