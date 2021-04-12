@@ -217,14 +217,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期一, 四月 12日 2021, 1:13 下午
+                  本文最后更新于：星期一, 四月 12日 2021, 2:23 下午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Zookeeper 作为一个划时代的分布式协调服务，是 Hadoop 技术栈的重要组件。</p>
 <p>本篇博客将讨论一些 zk 论文的知识点。</p>
-<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>最近比较忙，没多少时间总结了，论文内容概要可以参考这篇<a href="https://keys961.github.io/2019/04/01/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ZooKeeper/" target="_blank" rel="noopener">博客</a>，常用业务场景可以参考这篇<a href="https://www.cnblogs.com/wade-luffy/p/5767811.html#_label2" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>最近比较忙，没多少时间总结了，论文内容概要可以参考这篇<a href="https://keys961.github.io/2019/04/01/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ZooKeeper/" target="_blank" rel="noopener">博客</a>，更详细的细节可以参考这篇<a href="https://mp.weixin.qq.com/s/DwyPt5YZgqE0O0HYEC1ZMQ" target="_blank" rel="noopener">博客</a>。</p>
 <h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><h3 id="zk-or-etcd"><a href="#zk-or-etcd" class="headerlink" title="zk or etcd?"></a>zk or etcd?</h3><p>同为分布式协调服务和元数据存储服务的产品：老大哥 zk 伴随 NoSQL 运动崛起，坐拥 hadoop 技术栈孤独求败；后起之秀 etcd 拥抱云原生，相伴 k8s 来势汹汹。所以一个很直接的问题就出现了：zk or etcd？</p>
 <p>网上有很多对两者优缺点的分析，例如该<a href="https://juejin.cn/post/6844904147779600391" target="_blank" rel="noopener">博客</a>。</p>
 <p>个人对这两个系统的具体了解没有很深入，仅仅从 zab 和 raft 算法出发谈谈自己的想法。</p>
