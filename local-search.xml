@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>Chain Replication 论文阅读</title>
+    <link href="/chain-replication-thesis/"/>
+    <url>/chain-replication-thesis/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于 raft、paxos 这类共识算法，leader 节点需要将客户端的写请求编号并发送给所有 follower 以期望达成共识，这一定程度上导致写性能无法随节点个数线性增长，因为 leader 同步的数据量会随着节点数的增长而增长，从而使得主节点承载着更大的压力，往往成为了瓶颈。</p><p>2004 年，Chain Replication （之后简称 cr）方案被提出，其也能够保证多副本间的线性一致性。具体思路是每个节点只负责向后续节点进行备份，从而将压力分摊到整个链上。因为其与上述的共识协议相比，其每个节点的写入负载几乎一致，从而不存在单节点负载很高影响性能的问题。</p><p>以上都是论文中的吹的说法，我个人持怀疑态度：首先 raft 的 leader 向所有 follower 发送是并行的，而 cr 是串行的，因此就性能上，个人不觉得后者会更快；其次随着节点数增多，虽然 raft 的 leader 负载会更大可能增大延迟，但是 cr 一定会增加延迟（多一轮 RTT），因此就写扩展性上，我也没看到 cr 有什么明显的优势。至于说什么拆分读写负载，只能说 raft 早就提出 follower read 的解决方案了，cr 做的也不过是把读放到了另一个节点上，并无扩展性，craq 才相对做到了一定程度的读性能的可扩展性。 </p><p>但不论如何，很多顶级产品比如 Ceph，Parameter Server 等都用到了 cr，所以了解一下 cr 还是有必要的，其能够拓宽我们对共识协议的了解边界。毕竟其实现线性一致性的方式还是比较巧妙的，而且设计也比较简单，没 raft 那么多 corner case。</p><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>有关 CR，可以参考此<a href="https://zhuanlan.zhihu.com/p/344522347" target="_blank" rel="noopener">博客</a>。<br>有关 CRAQ，可以参考此<a href="https://www.cnblogs.com/brianleelxt/p/13275647.html" target="_blank" rel="noopener">博客</a>和此<a href="https://zhuanlan.zhihu.com/p/344808961" target="_blank" rel="noopener">博客</a>。</p><p>CR 能够以很简单的设计实现多副本的线性一致性，不过其不能自己处理脑裂和分区的问题，因而还需要另一个高可用的配置服务器集群来协作提供高可用服务。</p><p>CRAQ 相比 CR 做了读性能优化，使得读性能可以线性扩展且保证线性一致性。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单记录了 cr 和 craq 的工作原理。</p><h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><ul><li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-craq.txt" target="_blank" rel="noopener">6.824 讲义</a></li><li><a href="http://nil.csail.mit.edu/6.824/2020/video/9.html" target="_blank" rel="noopener">6.824 视频</a></li><li><a href="https://www.cs.cornell.edu/home/rvr/papers/OSDI04.pdf" target="_blank" rel="noopener">CR 论文</a></li><li><a href="http://nil.csail.mit.edu/6.824/2020/papers/craq.pdf" target="_blank" rel="noopener">CRAQ 论文</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
+      
+      <tag>共识算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Zookeeper 论文阅读</title>
     <link href="/zookeeper-thesis/"/>
     <url>/zookeeper-thesis/</url>
@@ -14,9 +37,9 @@
     
     <tags>
       
-      <tag>分布式系统理论</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
       
@@ -98,9 +121,9 @@
     
     <tags>
       
-      <tag>分布式系统理论</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
       
     </tags>
     
@@ -119,9 +142,9 @@
     
     <tags>
       
-      <tag>分布式系统理论</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
       
     </tags>
     
