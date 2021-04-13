@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>归档 - 谭新宇的博客</title>
+  <title>标签 - 论文阅读 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -155,25 +155,31 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 25 篇文章</p>
+  <p class="h4">共计 11 篇文章</p>
   <hr>
   
     
       
       <p class="h5">2020</p>
     
-    <a href="/spark-thesis/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Spark 论文阅读</span>
-      <time style="float: right;">11-26</time>
-    </a>
-  
-    
-    <a href="/git-or-svn/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">为什么选择 git 来作为代码版本控制系统</span>
-      <time style="float: right;">11-09</time>
+    <a href="/monarch/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Monarch 论文阅读</span>
+      <time style="float: right;">09-17</time>
     </a>
   
 </div>
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
@@ -289,7 +295,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "标签 - 论文阅读&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

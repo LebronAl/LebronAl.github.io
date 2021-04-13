@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>Frangipani 论文阅读</title>
+    <link href="/frangipani-thesis/"/>
+    <url>/frangipani-thesis/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Frangipani 是一篇很古老的分布式存储论文，其设计思想在今天看来有很多已经过时了，但也有一定的参考意义。</p><p>该论文主要介绍了三个方面的工作：</p><ul><li>cache coherence</li><li>distributed transactions</li><li>distributed crash recovery</li></ul><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>具体内容可以参考此<a href="https://www.jianshu.com/p/b4cbfca809ae" target="_blank" rel="noopener">博客</a>和 6.824 课程的<a href="http://nil.csail.mit.edu/6.824/2020/notes/l-frangipani.txt" target="_blank" rel="noopener">讲义</a>，后者较为详细。</p><p>有关后两个工作可以直接参考以上博客的介绍，有关 cache coherence 可以进一步参考 CPU 缓存的<a href="https://mp.weixin.qq.com/s/HvgaXjHgD4_nVz81ipmbhg" target="_blank" rel="noopener">实现方式</a>。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单记录一下 Frangipani 论文的主要思想并记录一些相关博客。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul><li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-frangipani.txt" target="_blank" rel="noopener">6.824 讲义</a></li><li><a href="http://nil.csail.mit.edu/6.824/2020/video/11.html" target="_blank" rel="noopener">6.824 视频</a></li><li><a href="http://nil.csail.mit.edu/6.824/2020/papers/thekkath-frangipani.pdf" target="_blank" rel="noopener">论文</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>论文阅读</tag>
+      
+      <tag>分布式存储</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Chain Replication 论文阅读</title>
     <link href="/chain-replication-thesis/"/>
     <url>/chain-replication-thesis/</url>
@@ -14,11 +35,11 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -37,11 +58,11 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -121,9 +142,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -142,9 +163,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
