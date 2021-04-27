@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      814 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      9
        分钟
     </span>
   
@@ -217,7 +217,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期四, 四月 8日 2021, 12:18 中午
+                  本文最后更新于：星期二, 四月 27日 2021, 10:18 晚上
                 
               </p>
             
@@ -237,10 +237,7 @@
 <p>此外，很多同学会纠结单机系统到底是 CA 系统还是 CP 系统，个人觉得纠结这个问题没有任何意义，注意 CAP 定律的完整表述：<code>Any networked shared-data system can have at most two of the three desired properties</code>，也就是说 CAP 定理并不针对单机系统做限定，因此将这个不属于单机的概念强加在单机系统上并无意义。</p>
 <h2 id="定义-amp-证明"><a href="#定义-amp-证明" class="headerlink" title="定义 &amp; 证明"></a>定义 &amp; 证明</h2><p>其实 CAP 定理已经被大家讲烂了，网上一搜都会出现很多附带个人解读且不一定正确的博客，我自己之前也写过一版，后面也觉得太烂了。</p>
 <p>幸运的是我找到了一篇<a href="https://zhuanlan.zhihu.com/p/338835258" target="_blank" rel="noopener">博客</a>，这篇博客的后半部分（ <code>对 CAP 的常见误解</code> 章节， <code>CAP 理论的一些疑问</code> 章节和 <code>CAP 的不足</code> 章节）总结的很清晰中肯，在这里分享给大家，我之前写的垃圾就删了吧。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于多数大型互联网应用的场景，主机众多、部署分散，而且现在的集群规模越来越大，所以节点故障、网络故障是常态，因此分区容错性也就成为了一个分布式系统必然要面对的问题，那么就只能在 C 和 A 之间进行取舍。</p>
-<p>对于某些安全性要求极高的项目，比如银行的转账系统，涉及到金钱的对于数据一致性不能做出一丝的让步，C 必须保证，出现网络故障的话，宁可停止服务，也不能冒着出错误的风险继续提供服务。</p>
-<p>对于网站，DNS 服务等，其内容的实时性不是特别严格，则可以牺牲一定的一致性，保证最高的可用性是最好的选择。</p>
-<p>个人认为，CAP 定理的核心在于，在网络分区的情况下，我们需要对 C 和 A 做出相应的妥协，我们不可能完全满足 CA，但是我们可以合理控制 C 和 A 之间的比例让我们的应用/中间件正常提供服务，同时也尽量提升基础设施的稳定性来保障 P。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>个人认为，CAP 定理的核心在于，在网络分区的情况下，我们需要对 C 和 A 做出相应的妥协，我们不可能完全满足 CA，但是我们可以合理控制 C 和 A 之间的比例让我们的应用/中间件正常提供服务，同时也尽量提升基础设施的稳定性来保障 P。</p>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>《Spanner，真时，CAP 理论》是 Google VP，CAP 理论之父在情人节当天撰写的，主要介绍了 Google 的 Spanner 数据库的真时（TrueTime）服务和 CA 特性，以及结合 CAP 理论的一些思考，建议阅读，阅读 Spanner 论文后阅读更佳。</p>
 <ul>
 <li><p><a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/45855.pdf" target="_blank" rel="noopener">《Spanner，真时，CAP 理论》</a></p>
