@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      816 字
+      839 字
     </span>
   
 
@@ -217,7 +217,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期五, 五月 7日 2021, 3:23 下午
+                  本文最后更新于：星期五, 五月 7日 2021, 3:33 下午
                 
               </p>
             
@@ -230,7 +230,7 @@
 <p>个人对这两个系统的具体了解没有很深入，仅仅从 zab 和 raft 算法出发谈谈自己的想法。</p>
 <p>前面的<a href="https://tanxinyu.work/consistency-and-consensus/#%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">博客</a>已经介绍过了，zab 保证的是顺序一致性语义，raft 保证的则是线性一致性语义。尽管他们都可以算强一致性，但顺序一致性并无时间维度的约束，所以可能并不满足现实世界的时序。也就是说，在现实世界中，顺序一致性是可能返回旧数据的。对于一个分布式协调服务，可能返回旧数据实际上是比较坑爹的一件事，尽管 zk 保证了单客户端 FIFO 的顺序，但有些场景还是有一些受限的。因此在这一点上，我认为 etcd 保证的线性一致性是更好的，zk 的顺序一致性有时候会有坑，这一点 PingCAP 的 CTO 也在知乎的”分布式之美”圆桌会谈上吐槽过。</p>
 <p>当然，zk 既然有这么多的用户在用，就算有坑那一定也不是大坑，大部分情况下应该都是没有问题的。至于选谁更好，答案一定不是唯一的，根据自己的业务和理解有自己的判断就好。</p>
-<h3 id="zk-为何默认支持顺序一致性？"><a href="#zk-为何默认支持顺序一致性？" class="headerlink" title="zk 为何默认支持顺序一致性？"></a>zk 为何默认支持顺序一致性？</h3><p>很多人可能会觉得既然 zk 支持线性一致性写，那么也可以通过 sync + read 来支持线性一致性读，理论上这样是可以支持线性一致性读的，但在 zk 真正的实现中是不能严格满足线性一致性的，具体可以参照 jepsen 中的<a href="https://github.com/jepsen-io/jepsen/issues/399" target="_blank" rel="noopener">讨论</a>。不能严格满足线性一致性的根据原因就是 zk 在实现过程中并没有将 sync 当做一个空写日志去执行，而是直接让 leader 返回一个 zxid 给 follower，然而此时的 leader 并没有像 raft 那样通过 read index 发起一轮心跳或 lease read 的方式来确保自己一定是 leader，从而可能在网络分区脑裂的 corner case 下返回旧数据，因此无法在严格意义上满足线性一致性。当然，如果直接采用 read 的方式那就更不可能满足线性一致性了。</p>
+<h3 id="zk-是否能够保证线性一致性？"><a href="#zk-是否能够保证线性一致性？" class="headerlink" title="zk 是否能够保证线性一致性？"></a>zk 是否能够保证线性一致性？</h3><p>很多人可能会觉得既然 zk 支持线性一致性写，那么也可以通过 sync + read 来支持线性一致性读，理论上这样是可以支持线性一致性读的，但在 zk 真正的实现中是不能严格满足线性一致性的，具体可以参照 jepsen 中的<a href="https://github.com/jepsen-io/jepsen/issues/399" target="_blank" rel="noopener">讨论</a>。不能严格满足线性一致性的根据原因就是 zk 在实现过程中并没有将 sync 当做一个空写日志去执行，而是直接让 leader 返回一个 zxid 给 follower，然而此时的 leader 并没有像 raft 那样通过 read index 发起一轮心跳或 lease read 的方式来确保自己一定是 leader，从而可能在网络分区脑裂的 corner case 下返回旧数据，因此无法在严格意义上满足线性一致性。当然，这种 corner case 在实际中很少见，而且也应该可以修复，所以从技术上来讲，zk 应该是可以用 sync + read 来支持线性一致性读的。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇博客对 zk 论文的内容进行了简单的记录，最后进行了一些讨论。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-zookeeper.txt" target="_blank" rel="noopener">6.824 讲义</a></li>
@@ -248,11 +248,11 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
-                    
                       <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
                     
                       <a class="hover-with-bg" href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">共识算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
                     
                   </div>
                 
