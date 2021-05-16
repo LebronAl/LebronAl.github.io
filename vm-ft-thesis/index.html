@@ -217,7 +217,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期一, 四月 12日 2021, 8:52 晚上
+                  本文最后更新于：星期日, 五月 16日 2021, 8:54 晚上
                 
               </p>
             
@@ -240,7 +240,7 @@
 <li>应用级别：按序复制明确性的操作来保证不同节点间的状态一致。比如 MySQL Cluster 的主从全同步复制需要保证所有的从节点接受成功才能返回成功，这一定程度上会导致扩展性受限，即每增加一个 Slave 节点，都导致造成整个系统可用性风险增加一分。因此也出现了基于 Paxos，Raft 的 quorum 同步方案，即一旦系统中过半数的节点中完成了状态的转换，就认为数据的变化已经被正确地存储在系统当中，这样就可以容忍少数（通常是不超过半数）的节点失联，使得增加机器数量对系统整体的可用性变成是有益的，这也是目前大多数应用的容错方案。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为一篇 10 年前的论文，在那时 Raft 还没有出现，Paxos 还没有得到广泛的承认，该论文对于分布式容错方案提出了一种基于机器级别的操作转移方案，拓展了理论的边界并证明了工业界可用，可以说是比较划时代的贡献了。</p>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://icyfenix.cn/distribution/consensus/" target="_blank" rel="noopener">分布式共识算法讲解</a><br><a href="https://pdos.csail.mit.edu/6.824/notes/l-vm-ft.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="https://www.bilibili.com/video/BV1R7411t71W?p=4" target="_blank" rel="noopener">6.824 视频</a><br><a href="https://dl.acm.org/doi/pdf/10.1145/1899928.1899932" target="_blank" rel="noopener">论文</a></p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://icyfenix.cn/distribution/consensus/" target="_blank" rel="noopener">分布式共识算法讲解</a><br><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-vm-ft.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="http://nil.csail.mit.edu/6.824/2020/video/4.html" target="_blank" rel="noopener">6.824 视频</a><br><a href="https://dl.acm.org/doi/pdf/10.1145/1899928.1899932" target="_blank" rel="noopener">论文</a></p>
 
             </div>
             <hr>
