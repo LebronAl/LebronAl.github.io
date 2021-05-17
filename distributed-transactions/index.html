@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读 - 谭新宇的博客</title>
+  <title>分布式事务简介 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -153,8 +153,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-21 20:00" pubdate>
-        星期日, 三月 21日 2021, 8:00 晚上
+      <time datetime="2021-04-29 13:46" pubdate>
+        星期四, 四月 29日 2021, 1:46 下午
       </time>
     </span>
   
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.6k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      16
        分钟
     </span>
   
@@ -213,28 +213,50 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读</h1>
+            <h1 style="display: none">分布式事务简介</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期三, 四月 28日 2021, 12:06 凌晨
+                  本文最后更新于：星期一, 五月 17日 2021, 11:12 上午
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这篇文章是 Leslie Lamport 于 1978 年发表的，并在 2007 年被选入 SOSP 的名人堂，被誉为第一篇真正的”分布式系统”论文，该论文曾一度成为计算机科学史上被引用最多的文章（截止 2021 年 3 月 22 日已达到 12497 次）。文章的作者 Lamport 享有分布式计算原理之父的美誉，并且因其对分布式系统研究作出的卓越贡献，于 2013 年被授予了图灵奖。</p>
-<p>这篇论文之所以经典，是因为它揭示了分布式系统的某些深层本质，深深地影响了人们对于分布式系统的思考方式。</p>
-<p>当然，这篇论文除了理论意义和历史价值之外，它与业界一些重要的分布式系统实践也都有紧密的联系。比如，在大规模的分布式环境下产生单调递增的时间戳，是个很难的问题，而谷歌的全球级分布式数据库 Spanner 就解决了这个问题，甚至能够在跨越遍布全球的多个数据中心之间高效地产生单调递增的时间戳。做到这一点，靠的是一种称为 TrueTime 的机制，而这种机制的理论基础就是 Lamport 这篇论文中的物理时钟算法（两者之间有千丝万缕的联系）。再比如，这篇论文中定义的「Happened Before」关系，不仅在分布式系统设计中成为考虑不同事件之间关系的基础，而且在多线程编程模型中也是重要的概念。另外，还有让很多人忽视的一点是，利用分布式状态机来实现数据复制的通用方法（Replication State Machine，简称 RSM），其实也是这篇论文首创的。</p>
-<p>总之，如果在整个分布式的技术领域中，你只有精力阅读一篇论文，那一定要选这一篇了。只有理解了这篇论文中揭示的这些涉及时间、时钟和排序的概念，我们才能真正在面对分布式系统的设计问题时游刃有余。</p>
-<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>本来想写点什么，但是又感觉写的都是垃圾。因此只能强推这篇<a href="https://mp.weixin.qq.com/s/FZnJLPeTh-bV0amLO5CnoQ" target="_blank" rel="noopener">博客</a>，将这篇论文讲的十分透彻，我跪了。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇论文首先介绍了应该如何认识时间，时钟和排序，接着引入了偏序关系，全序关系，逻辑时钟，物理时钟等概念，最后给出了现实世界中一种可行的为所有事件排序的方案。</p>
-<p>对于为分布式系统中的所有事件进行排序这个问题，Lamport 首先指出简单的物理时钟是不可行的，因为一方面物理时钟很难绝对准确，另一方面不同进程的物理时钟也一定会有误差，因此需要先从逻辑时钟入手。</p>
-<p>为此，Lamport 利用逻辑时钟定义了偏序关系：偏序关系能够为进程内部的事件和进程之间的因果事件排序，对于进程之间的独立事件无法排序。其实从系统内部的视角来看，对进程之间的独立事件进行排序本无意义。</p>
-<p>因此，Lamport 在偏序关系的基础上又定义了全序关系：即通过一些人为规定的方式，可以把进程之间的独立事件进行排序，这样再结合偏序关系即可达到排序所有事件的理想效果。</p>
-<p>然而，这样人为规定的全序方案在系统外部来看可能违背因果一致性，产生这个现象的根本原因是逻辑时钟没有和真实的物理时钟绑定。即对于两个进程间的独立事件，系统无法感知到这两个事件实际上在物理时间上有先后关系，所以可能给时间上发生更晚的事件指定更小的逻辑时间。因此我们得出结论：要想为分布式系统的所有事件排序，仅仅使用逻辑时钟是不行的，还是需要使用物理时钟才行。</p>
-<p>因此，Lamport 又结合相对论的知识介绍了我们所在的现实世界就是一种时空偏序关系，并进一步证明：如果物理时钟的误差能够限定到一个范围内，则前面提到的异常情况就不会出现，即我们便可以为分布式系统中的所有事件排序。简单来讲：根据相对论，任何信息传递的速度，最快就是光速。而一个事件要想对另一个事件产生影响，至少要在那个事件发生之前传递一定的信息到达所在的空间位置。对于两个进程间的独立事件，如果他们在物理世界中存在时空偏序关系，那信息的传递也需要一定的时间。只要系统能够保证：系统内部的时间误差不会超过两个外部事件产生因果关系的时间，则就能够正确的为所有事件排序。这也是 Google TrueTime 正确性的理论支撑。</p>
-<h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>Lamport 大佬牛逼。</p>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://mp.weixin.qq.com/s/FZnJLPeTh-bV0amLO5CnoQ" target="_blank" rel="noopener">分布式领域最重要的一篇论文，到底讲了什么？</a><br><a href="https://www.cnblogs.com/hzmark/p/Time_Clocks_Ordering.html" target="_blank" rel="noopener">论文翻译</a><br><a href="https://lamport.azurewebsites.net/pubs/time-clocks.pdf" target="_blank" rel="noopener">论文</a></p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>事务是作为单个逻辑工作单元执行的一系列操作。一个逻辑工作单元必须有四个属性，称为原子性、一致性、隔离性和持久性 (ACID) 属性。分布式事务则是尝试在多节点的环境下实现这些语义。</p>
+<p>分布式事务涉及的知识内容较多，本篇博客并没有将其彻底整理清楚，只是简单记录了一下 6.824 课程所学。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>对于分布式事务，可以将其细化为并发控制和原子提交两个子问题。前者是在说如何保证并发事务的串行隔离性，后者是在说当数据分片分布在不同的节点上时，如何保证事务在不同节点上提交与否的原子性。</p>
+<h3 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h3><p>对于事务的并发控制模型，一般有两个方向：悲观事务和乐观事务。前者适合于数据竞争严重且重试代价大的场景，后者适用于数据竞争不严重且重试代价不大的场景。</p>
+<h4 id="悲观事务"><a href="#悲观事务" class="headerlink" title="悲观事务"></a>悲观事务</h4><p>在事务执行过程中对事务所用到的数据都上锁。这里的锁从事务中第一次用到对应数据时开始，直到事务结束时才释放。</p>
+<p>2PL（2-Phase-Lock）就是一种典型的悲观事务方法，但并不是到事务结束时才释放所有锁，而是事务过程中一旦不再使用某对象即可释放该对象的锁。因此，6.824 课程中介绍的 2PL 严格来说是 S2PL（Strict-2-Phase-Lock），即所有锁都是在事务结束的同时才释放的。S2PL 相比 2PL 的性能更差，但能够避免级联终止的发生，具体可以参考此<a href="https://niceaz.com/2019/03/24/isolation-2pl-mvcc/" target="_blank" rel="noopener">博客</a>。</p>
+<p>不论是 2PL 还是 S2PL，都有可能导致死锁，因此一般要从两个方面入手来避免死锁：死锁检测、死锁预防</p>
+<ul>
+<li>死锁检测：为相互等待的事务之间维护一张 graph， 检测 graph 中是否有环。如果检测到优化，则根据一定的策略选择终止一个事务，打破循环等待。</li>
+<li>死锁预防：按照一定顺序进行加锁，锁超时则终止等。</li>
+</ul>
+<p>S2PL 严格意义上不能解决幻读的问题，因为其加的都是行锁，所以其并不能实现串行隔离性，这一点与 6.824 课程中的介绍似乎有些许出入，等到之后有时间再认真研究一番。</p>
+<h4 id="乐观事务"><a href="#乐观事务" class="headerlink" title="乐观事务"></a>乐观事务</h4><p>在事务执行过程中获取事务所用到的数据时并不上锁，直到计算完毕提交时才加锁对数据进行验证，若无变化则提交，否则 abort 或重新获取最新数据并计算。</p>
+<p>由于分布式乐观事务在提交之前获取数据进行计算时并不需要加锁，因此一般也可以通过结合 RDMA 等技术来显著提升性能。</p>
+<h3 id="原子提交"><a href="#原子提交" class="headerlink" title="原子提交"></a>原子提交</h3><p>在分布式事务中，参与事务的所有节点必须全部执行 Commit 操作或全部执行 Abort 操作，即他们需要在”执行 Commit 还是 Abort”这一点上达成一致（其实就是共识）。理论上有许多原子提交协议：2PC 和 3PC 等等。</p>
+<p>原子提交协议和共识协议：</p>
+<ul>
+<li>目的相同：<ul>
+<li>共识问题：解决的是如何在分布式系统中的多个节点之间就某个提议达成共识。</li>
+<li>原子提交问题：解决的是参与分布式事务的所有节点在”执行 Commit 还是 Abort”这一点上达成共识。</li>
+</ul>
+</li>
+<li>范围不同：前者要求所有节点达成共识，后者要求大多数未故障的节点达成共识。</li>
+</ul>
+<p>有关 2PC, 3PC, TCC, SAGA 等原子提交协议的具体内容，可以参考此<a href="https://mp.weixin.qq.com/s/MbPRpBudXtdfl8o4hlqNlQ" target="_blank" rel="noopener">博客</a>。</p>
+<p>对于业务上的分布式事务，还有 Seata 和基于 MQ 的分布式事务实现等等，花样很多，但实现各异。他们不是本文的重点，感兴趣自行谷歌即可。</p>
+<p>对于数据库内核中的分布式事务实现，一般都是通过 2PC 的方式。为什么不用 3PC 呢？2PC 严格来说是保证了 safety 但牺牲了较多的 liveness（部分场景下资源会被永远锁定），而且正常工作时需要发两轮 RPC 来提交一个事务，其性能是被很多人诟病的一点；3PC 虽然提高了 liveness（资源锁定一定会在有限时间内被解除），但其是以牺牲 safety 为代价的，同时正常工作时需要发三轮 RPC 来提交一个事务，性能更差，因此很多人认为使用 3PC 是实现分布式事务的一条歪路，工业界也几乎很少有人使用 3PC，这一点 PingCAP 的 CTO 在分布式之美论坛上也提到过。</p>
+<p>事实上，不论是 Spanner 还是 TiDB，他们的方式都是通过将协调者和参与者都分别组成共识组的方式来避免单点故障，从而在保证 safety 的基础上提升liveness（由于协调者节点的单点故障被共识组规避掉，参与者的资源锁定一定会在有限时间内被解除），当然，由于每一个操作和决定都需要在共识组中进行同步，不可避免的其性能也会更差，但相比 3PC，其至少没有牺牲 safety，这一点非常关键，因为只要保证了 safety，至少我们可以通过 scale out 的方式来提升性能。</p>
+<p>对于 2PC，业界和学术界针对不同的数据模型也有一些特定的优化，比如针对 KV 模型的 Percolator 算法等，它可以将 2PC 在部分场景下优化为 1PC 并结合 Async Commit 的方式来提升性能，这里之后有时间再进行研究吧。</p>
+<p>业界也有一些替换 2PC 的声音，可以参考此<a href="https://www.jdon.com/51588" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇博客简单记录了 6.824 课程中分布式事务的内容，同时进行了一点点分析和拓宽，以做记录。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-2pc.txt" target="_blank" rel="noopener">6.824 讲义</a></li>
+<li><a href="http://nil.csail.mit.edu/6.824/2020/video/12.html" target="_blank" rel="noopener">6.824 视频</a></li>
+</ul>
 
             </div>
             <hr>
@@ -244,8 +266,6 @@
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
                     
                       <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
                     
@@ -260,18 +280,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/flp-theory/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">FLP 不可能定理介绍</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/vm-ft-thesis/">
-                        <span class="hidden-mobile">VM-FT 论文阅读</span>
+                      <a href="/frangipani-thesis/">
+                        <span class="hidden-mobile">Frangipani 论文阅读</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -465,7 +479,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读&nbsp;",
+        "分布式事务简介&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
