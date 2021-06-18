@@ -56,9 +56,9 @@
       
       <tag>分布式系统理论</tag>
       
-      <tag>共识算法</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>共识算法</tag>
       
     </tags>
     
@@ -79,9 +79,9 @@
       
       <tag>分布式系统理论</tag>
       
-      <tag>共识算法</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>共识算法</tag>
       
     </tags>
     
@@ -176,7 +176,7 @@
     <link href="/vm-ft-thesis/"/>
     <url>/vm-ft-thesis/</url>
     
-    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>本论文主要介绍了一个用于提供容错虚拟机 (fault-tolerant virtual machine) 的企业级商业系统，该系统包含了两台位于不同物理机的虚拟机，其中一台为 primary，另一台为 backup，backup 备份了 primary 的所有执行。当 primary 出现故障时，backup 可以上线接管 primary 的工作，以此来提供容错。</p><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>论文内容可以参考此<a href="https://www.cnblogs.com/brianleelxt/p/13245754.htmls" target="_blank" rel="noopener">博客</a>。</p><h2 id="分布式容错方案"><a href="#分布式容错方案" class="headerlink" title="分布式容错方案"></a>分布式容错方案</h2><p>分布式系统中需要对一份数据进行冗余存储才能提供容错性，因此问题是：</p><blockquote><p>如果有一份会随时变动的数据，如何确保它正确地存储于网络中的几台不同机器之上？</p></blockquote><p>对于 primary/backup 型的同步方式，可行的解决方案有两种：状态转移（State Transfer）和操作转移（Operation Transfer）。</p><h3 id="状态转移"><a href="#状态转移" class="headerlink" title="状态转移"></a>状态转移</h3><p>对于状态转移，其方案是 primary 持续地将所有状态（包括 CPU、内存和 I/O 设备等或者整个状态机实例）变化发送给 backup，backup 不需要耗费太多 CPU 资源就可以达到跟 leader 相同的状态，这也导致传输的数据量往往会大很多。当然也可以有一些优化，比如只传送相比上次变化的数据等等，但总之这种方法所需带宽非常大，延迟较高，因此在工业界中应用不多。</p><h3 id="操作转移"><a href="#操作转移" class="headerlink" title="操作转移"></a>操作转移</h3><p>操作转移能够运行的前提是状态机，其特性是：</p><blockquote><p>任何初始状态一样的状态机，如果执行的命令序列一样，则最终达到的状态也一样。如果将此特性应用在多参与者进行协商共识上，可以理解为系统中存在多个具有完全相同的状态机（参与者），这些状态机能最终保持一致的关键就是起始状态完全一致和执行命令序列完全一致。</p></blockquote><p>操作转移一般有两种复制级别：</p><ul><li>机器级别：按序复制 CPU 指令，中断，客户端请求等等来保证不同节点间状态一致，这也就是本文的解决方案。这种方案需要解决若干问题，比如多节点间如何处理不明确性命令（获取当前时间），如果避免脑裂等等。看了论文之后，个人感觉论文中的做法不是很优雅，而且很多关键点并没有纰漏实现细节，此外该解决方案与虚拟机过于耦合，较难扩展，可能逐渐会被云原生时代淘汰。</li><li>应用级别：按序复制明确性的操作来保证不同节点间的状态一致。比如 MySQL Cluster 的主从全同步复制需要保证所有的从节点接受成功才能返回成功，这一定程度上会导致扩展性受限，即每增加一个 Slave 节点，都导致造成整个系统可用性风险增加一分。因此也出现了基于 Paxos，Raft 的 quorum 同步方案，即一旦系统中过半数的节点中完成了状态的转换，就认为数据的变化已经被正确地存储在系统当中，这样就可以容忍少数（通常是不超过半数）的节点失联，使得增加机器数量对系统整体的可用性变成是有益的，这也是目前大多数应用的容错方案。</li></ul><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为一篇 10 年前的论文，在那时 Raft 还没有出现，Paxos 还没有得到广泛的承认，该论文对于分布式容错方案提出了一种基于机器级别的操作转移方案，拓展了理论的边界并证明了工业界可用，可以说是比较划时代的贡献了。</p><h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://icyfenix.cn/distribution/consensus/" target="_blank" rel="noopener">分布式共识算法讲解</a><br><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-vm-ft.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="http://nil.csail.mit.edu/6.824/2020/video/4.html" target="_blank" rel="noopener">6.824 视频</a><br><a href="https://dl.acm.org/doi/pdf/10.1145/1899928.1899932" target="_blank" rel="noopener">论文</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>本论文主要介绍了一个用于提供容错虚拟机 (fault-tolerant virtual machine) 的企业级商业系统，该系统包含了两台位于不同物理机的虚拟机，其中一台为 primary，另一台为 backup，backup 备份了 primary 的所有执行。当 primary 出现故障时，backup 可以上线接管 primary 的工作，以此来提供容错。</p><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>论文内容可以参考此<a href="https://www.cnblogs.com/brianleelxt/p/13245754.htmls" target="_blank" rel="noopener">博客</a>。</p><h2 id="分布式容错方案"><a href="#分布式容错方案" class="headerlink" title="分布式容错方案"></a>分布式容错方案</h2><p>分布式系统中需要对一份数据进行冗余存储才能提供容错性，因此问题是：</p><blockquote><p>如果有一份会随时变动的数据，如何确保它正确地存储于网络中的几台不同机器之上？</p></blockquote><p>对于 primary/backup 型的同步方式，可行的解决方案有两种：状态转移（State Transfer）和操作转移（Operation Transfer）。</p><h3 id="状态转移"><a href="#状态转移" class="headerlink" title="状态转移"></a>状态转移</h3><p>对于状态转移，其方案是 primary 持续地将所有状态（包括 CPU、内存和 I/O 设备等或者整个状态机实例）变化发送给 backup，backup 不需要耗费太多 CPU 资源就可以达到跟 leader 相同的状态，这也导致传输的数据量往往会大很多。当然也可以有一些优化，比如只传送相比上次变化的数据等等，但总之这种方法所需带宽非常大，延迟较高，因此在工业界中应用不多。</p><h3 id="操作转移"><a href="#操作转移" class="headerlink" title="操作转移"></a>操作转移</h3><p>操作转移能够运行的前提是状态机，其特性是：</p><blockquote><p>任何初始状态一样的状态机，如果执行的命令序列一样，则最终达到的状态也一样。如果将此特性应用在多参与者进行协商共识上，可以理解为系统中存在多个具有完全相同的状态机（参与者），这些状态机能最终保持一致的关键就是起始状态完全一致和执行命令序列完全一致。</p></blockquote><p>操作转移一般有两种复制级别：</p><ul><li>机器级别：按序复制 CPU 指令，中断，客户端请求等等来保证不同节点间状态一致，这也就是本文的解决方案。这种方案需要解决若干问题，比如多节点间如何处理不明确性命令（获取当前时间），如果避免脑裂等等。看了论文之后，感觉很多关键点在论文中并没有纰漏实现细节，比如 disk server，test-and-set 等。</li><li>应用级别：按序复制明确性的操作来保证不同节点间的状态一致。比如 MySQL Cluster 的主从全同步复制需要保证所有的从节点接受成功才能返回成功，这一定程度上会导致扩展性受限，即每增加一个 Slave 节点，都导致造成整个系统可用性风险增加一分。因此也出现了基于 Paxos，Raft 的 quorum 同步方案，即一旦系统中过半数的节点中完成了状态的转换，就认为数据的变化已经被正确地存储在系统当中，这样就可以容忍少数（通常是不超过半数）的节点失联，使得增加机器数量对系统整体的可用性变成是有益的，这也是目前大多数应用的容错方案。</li></ul><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为一篇 10 年前的论文，在那时 Raft 还没有出现，Paxos 还没有得到广泛的承认，该论文对于分布式容错方案提出了一种基于机器级别的操作转移方案，拓展了理论的边界并证明了工业界可用，可以说是比较划时代的贡献了。</p><h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://icyfenix.cn/distribution/consensus/" target="_blank" rel="noopener">分布式共识算法讲解</a><br><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-vm-ft.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="http://nil.csail.mit.edu/6.824/2020/video/4.html" target="_blank" rel="noopener">6.824 视频</a><br><a href="https://dl.acm.org/doi/pdf/10.1145/1899928.1899932" target="_blank" rel="noopener">论文</a></p>]]></content>
     
     
     
