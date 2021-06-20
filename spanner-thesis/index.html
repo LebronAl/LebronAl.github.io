@@ -217,7 +217,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期日, 六月 20日 2021, 2:31 凌晨
+                  本文最后更新于：星期日, 六月 20日 2021, 10:28 上午
                 
               </p>
             
@@ -230,7 +230,13 @@
 <li>支持 ACID 的全球型 NewSQL 数据库。</li>
 </ul>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>暂仅搬运一些资料，之后有时间再补。</p>
-<p><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-spanner.txt" target="_blank" rel="noopener">6.824 讲义</a><br><a href="http://nil.csail.mit.edu/6.824/2020/video/13.html" target="_blank" rel="noopener">6.824 视频</a><br><a href="http://nil.csail.mit.edu/6.824/2020/papers/spanner.pdf" target="_blank" rel="noopener">论文</a><br><a href="https://cloud.google.com/spanner/docs/whitepapers?hl=zh-cn" target="_blank" rel="noopener">Spanner 白皮书</a><br><a href="https://toutiao.io/posts/zdqrx0/preview" target="_blank" rel="noopener">Spanner，True Time 和 CAP</a></p>
+<ul>
+<li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-spanner.txt" target="_blank" rel="noopener">6.824 讲义</a></li>
+<li><a href="http://nil.csail.mit.edu/6.824/2020/video/13.html" target="_blank" rel="noopener">6.824 视频</a></li>
+<li><a href="http://nil.csail.mit.edu/6.824/2020/papers/spanner.pdf" target="_blank" rel="noopener">论文</a></li>
+<li><a href="https://cloud.google.com/spanner/docs/whitepapers?hl=zh-cn" target="_blank" rel="noopener">Spanner 白皮书</a></li>
+<li><a href="https://toutiao.io/posts/zdqrx0/preview" target="_blank" rel="noopener">Spanner，True Time 和 CAP</a></li>
+</ul>
 <h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><ol>
 <li>在 Spanner 中，只读事务可以从本地数据中心读取数据，以提高性能。但是，如果只读事务向少数副本发出请求，它可能得到过时的数据。这种行为可能会破坏严格的可序列化保证。那么 Spanner 如何应对这种情况以保持其正确性条件呢?</li>
 </ol>
@@ -273,8 +279,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/distributed-transactions/">
-                        <span class="hidden-mobile">分布式事务简介</span>
+                      <a href="/farm-thesis/">
+                        <span class="hidden-mobile">Farm 论文阅读</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

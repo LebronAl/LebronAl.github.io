@@ -188,7 +188,12 @@ GPS 原子钟同步技术以支持快速的只读事务。
 支持 ACID 的全球型 NewSQL 数据库。
 
 介绍暂仅搬运一些资料，之后有时间再补。
-6.824 讲义6.824 视频论文Spanner 白皮书Spanner，Tr
+
+6.824 讲义
+6.824 视频
+论文
+Spanner 白皮书
+Spann
         </a>
       </p>
 
@@ -211,6 +216,59 @@ GPS 原子钟同步技术以支持快速的只读事务。
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/">分布式存储</a>
             
               <a href="/tags/Google/">Google</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/farm-thesis/" target="_self">
+          <img src="/./farm-thesis/2pc.png" srcset="/img/loading.gif" alt="Farm 论文阅读">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/farm-thesis/">Farm 论文阅读</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/farm-thesis/">
+          
+          
+            
+          
+          相关背景Fram 结合了乐观事务和硬件优势，在保证可串行化的基础上实现了高性能的分布式事务框架。虽然其系统仅是一个原型系统，但其思想十分具有指导意义。
+其主要利用了三点硬件特性：
+
+NV RAM：减少磁盘 IO 对性能的影响。（一次 RAM 写大致需要 200ns，一次 SSD 写大致需要 100us，一次 HDD 写大致需要 100ms）
+Kernal Bypass：本地应用直接与网卡交互，无系
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-10 09:31" pubdate>
+              2021-05-10
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
             
           </div>
         
@@ -364,9 +422,9 @@ distributed crash recovery
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
-            
               <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
             
               <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">共识算法</a>
             
@@ -418,9 +476,9 @@ distributed crash recovery
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
-            
               <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
             
               <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">共识算法</a>
             
@@ -621,59 +679,9 @@ distributed crash recovery
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
-            
               <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/vm-ft-thesis/" target="_self">
-          <img src="/./vm-ft-thesis/architecture.png" srcset="/img/loading.gif" alt="VM-FT 论文阅读">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/vm-ft-thesis/">VM-FT 论文阅读</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/vm-ft-thesis/">
-          
-          
-            
-          
-          背景本论文主要介绍了一个用于提供容错虚拟机 (fault-tolerant virtual machine) 的企业级商业系统，该系统包含了两台位于不同物理机的虚拟机，其中一台为 primary，另一台为 backup，backup 备份了 primary 的所有执行。当 primary 出现故障时，backup 可以上线接管 primary 的工作，以此来提供容错。
-内容论文内容可以参考此博客和
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-13 10:47" pubdate>
-              2021-03-13
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
               <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
-            
-              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
             
           </div>
         
