@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>6.824 lab 简述</title>
+    <link href="/6-824/"/>
+    <url>/6-824/</url>
+    
+    <content type="html"><![CDATA[<p>今天总算刷完了 6.824 的 lab 并整理完了文档，发篇博客庆祝一下！！！</p><p>目前能够稳定通过 6.824 lab 所有的测试，并尽可能的提升了代码可读性。</p><p>不保证绝对的 bug-free，但每个 lab 均测试 500 次以上，无一 fail。</p><p>具体代码和文档可移步到 <a href="https://github.com/LebronAl/MIT6.824-2021" target="_blank" rel="noopener">repo</a>。</p><p>配合 <a href="https://github.com/LebronAl/raft-thesis-zh_cn" target="_blank" rel="noopener">raft 博士论文翻译</a>和 <a href="https://tanxinyu.work/raft/" target="_blank" rel="noopener">raft 算法介绍</a>阅读效果更佳。</p><p>如有收获，希望点个 star 以表支持。十分感谢！</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>分布式系统理论</tag>
+      
+      <tag>共识算法</tag>
+      
+      <tag>分布式存储</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Spanner 论文阅读</title>
     <link href="/spanner-thesis/"/>
     <url>/spanner-thesis/</url>
@@ -37,9 +60,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -98,11 +121,11 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -121,11 +144,11 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -205,9 +228,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     
@@ -226,9 +249,9 @@
     
     <tags>
       
-      <tag>论文阅读</tag>
-      
       <tag>分布式系统理论</tag>
+      
+      <tag>论文阅读</tag>
       
     </tags>
     

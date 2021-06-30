@@ -17,7 +17,7 @@
   <meta name="description" content="分享记录自己对于生活，学习与工作的见闻">
   <meta name="author" content="谭新宇">
   <meta name="keywords" content="">
-  <title>Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读 - 谭新宇的博客</title>
+  <title>6.824 lab 简述 - 谭新宇的博客</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -153,8 +153,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-21 20:00" pubdate>
-        星期日, 三月 21日 2021, 8:00 晚上
+      <time datetime="2021-06-30 21:59" pubdate>
+        星期三, 六月 30日 2021, 9:59 晚上
       </time>
     </span>
   
@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      127 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      1
        分钟
     </span>
   
@@ -213,28 +213,21 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto" id="post">
             <!-- SEO header -->
-            <h1 style="display: none">Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读</h1>
+            <h1 style="display: none">6.824 lab 简述</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期三, 四月 28日 2021, 12:06 凌晨
+                  本文最后更新于：星期三, 六月 30日 2021, 10:10 晚上
                 
               </p>
             
             <div class="markdown-body" id="post-body">
-              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这篇文章是 Leslie Lamport 于 1978 年发表的，并在 2007 年被选入 SOSP 的名人堂，被誉为第一篇真正的”分布式系统”论文，该论文曾一度成为计算机科学史上被引用最多的文章（截止 2021 年 3 月 22 日已达到 12497 次）。文章的作者 Lamport 享有分布式计算原理之父的美誉，并且因其对分布式系统研究作出的卓越贡献，于 2013 年被授予了图灵奖。</p>
-<p>这篇论文之所以经典，是因为它揭示了分布式系统的某些深层本质，深深地影响了人们对于分布式系统的思考方式。</p>
-<p>当然，这篇论文除了理论意义和历史价值之外，它与业界一些重要的分布式系统实践也都有紧密的联系。比如，在大规模的分布式环境下产生单调递增的时间戳，是个很难的问题，而谷歌的全球级分布式数据库 Spanner 就解决了这个问题，甚至能够在跨越遍布全球的多个数据中心之间高效地产生单调递增的时间戳。做到这一点，靠的是一种称为 TrueTime 的机制，而这种机制的理论基础就是 Lamport 这篇论文中的物理时钟算法（两者之间有千丝万缕的联系）。再比如，这篇论文中定义的「Happened Before」关系，不仅在分布式系统设计中成为考虑不同事件之间关系的基础，而且在多线程编程模型中也是重要的概念。另外，还有让很多人忽视的一点是，利用分布式状态机来实现数据复制的通用方法（Replication State Machine，简称 RSM），其实也是这篇论文首创的。</p>
-<p>总之，如果在整个分布式的技术领域中，你只有精力阅读一篇论文，那一定要选这一篇了。只有理解了这篇论文中揭示的这些涉及时间、时钟和排序的概念，我们才能真正在面对分布式系统的设计问题时游刃有余。</p>
-<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>本来想写点什么，但是又感觉写的都是垃圾。因此只能强推这篇<a href="https://mp.weixin.qq.com/s/FZnJLPeTh-bV0amLO5CnoQ" target="_blank" rel="noopener">博客</a>，将这篇论文讲的十分透彻，我跪了。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇论文首先介绍了应该如何认识时间，时钟和排序，接着引入了偏序关系，全序关系，逻辑时钟，物理时钟等概念，最后给出了现实世界中一种可行的为所有事件排序的方案。</p>
-<p>对于为分布式系统中的所有事件进行排序这个问题，Lamport 首先指出简单的物理时钟是不可行的，因为一方面物理时钟很难绝对准确，另一方面不同进程的物理时钟也一定会有误差，因此需要先从逻辑时钟入手。</p>
-<p>为此，Lamport 利用逻辑时钟定义了偏序关系：偏序关系能够为进程内部的事件和进程之间的因果事件排序，对于进程之间的独立事件无法排序。其实从系统内部的视角来看，对进程之间的独立事件进行排序本无意义。</p>
-<p>因此，Lamport 在偏序关系的基础上又定义了全序关系：即通过一些人为规定的方式，可以把进程之间的独立事件进行排序，这样再结合偏序关系即可达到排序所有事件的理想效果。</p>
-<p>然而，这样人为规定的全序方案在系统外部来看可能违背因果一致性，产生这个现象的根本原因是逻辑时钟没有和真实的物理时钟绑定。即对于两个进程间的独立事件，系统无法感知到这两个事件实际上在物理时间上有先后关系，所以可能给时间上发生更晚的事件指定更小的逻辑时间。因此我们得出结论：要想为分布式系统的所有事件排序，仅仅使用逻辑时钟是不行的，还是需要使用物理时钟才行。</p>
-<p>因此，Lamport 又结合相对论的知识介绍了我们所在的现实世界就是一种时空偏序关系，并进一步证明：如果物理时钟的误差能够限定到一个范围内，则前面提到的异常情况就不会出现，即我们便可以为分布式系统中的所有事件排序。简单来讲：根据相对论，任何信息传递的速度，最快就是光速。而一个事件要想对另一个事件产生影响，至少要在那个事件发生之前传递一定的信息到达所在的空间位置。对于两个进程间的独立事件，如果他们在物理世界中存在时空偏序关系，那信息的传递也需要一定的时间。只要系统能够保证：系统内部的时间误差不会超过两个外部事件产生因果关系的时间，则就能够正确的为所有事件排序。这也是 Google TrueTime 正确性的理论支撑。</p>
-<h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>Lamport 大佬牛逼。</p>
-<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a href="https://mp.weixin.qq.com/s/FZnJLPeTh-bV0amLO5CnoQ" target="_blank" rel="noopener">分布式领域最重要的一篇论文，到底讲了什么？</a><br><a href="https://www.cnblogs.com/hzmark/p/Time_Clocks_Ordering.html" target="_blank" rel="noopener">论文翻译</a><br><a href="https://lamport.azurewebsites.net/pubs/time-clocks.pdf" target="_blank" rel="noopener">论文</a></p>
+              <p>今天总算刷完了 6.824 的 lab 并整理完了文档，发篇博客庆祝一下！！！</p>
+<p>目前能够稳定通过 6.824 lab 所有的测试，并尽可能的提升了代码可读性。</p>
+<p>不保证绝对的 bug-free，但每个 lab 均测试 500 次以上，无一 fail。</p>
+<p>具体代码和文档可移步到 <a href="https://github.com/LebronAl/MIT6.824-2021" target="_blank" rel="noopener">repo</a>。</p>
+<p>配合 <a href="https://github.com/LebronAl/raft-thesis-zh_cn" target="_blank" rel="noopener">raft 博士论文翻译</a>和 <a href="https://tanxinyu.work/raft/" target="_blank" rel="noopener">raft 算法介绍</a>阅读效果更佳。</p>
+<p>如有收获，希望点个 star 以表支持。十分感谢！</p>
 
             </div>
             <hr>
@@ -247,7 +240,9 @@
                     
                       <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
                     
-                      <a class="hover-with-bg" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a>
+                      <a class="hover-with-bg" href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">共识算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/">分布式存储</a>
                     
                   </div>
                 
@@ -260,18 +255,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/flp-theory/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">FLP 不可能定理介绍</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/vm-ft-thesis/">
-                        <span class="hidden-mobile">VM-FT 论文阅读</span>
+                      <a href="/spanner-thesis/">
+                        <span class="hidden-mobile">Spanner 论文阅读</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -465,7 +454,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Time, Clocks, and the Ordering of Events in a Distributed System 论文阅读&nbsp;",
+        "6.824 lab 简述&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
