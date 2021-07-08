@@ -14,11 +14,11 @@
     
     <tags>
       
+      <tag>分布式存储</tag>
+      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
-      
-      <tag>分布式存储</tag>
       
     </tags>
     
@@ -60,9 +60,9 @@
     
     <tags>
       
-      <tag>分布式系统理论</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
       
     </tags>
     
@@ -121,11 +121,11 @@
     
     <tags>
       
+      <tag>论文阅读</tag>
+      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
-      
-      <tag>论文阅读</tag>
       
     </tags>
     
@@ -144,11 +144,11 @@
     
     <tags>
       
+      <tag>论文阅读</tag>
+      
       <tag>分布式系统理论</tag>
       
       <tag>共识算法</tag>
-      
-      <tag>论文阅读</tag>
       
     </tags>
     
@@ -228,9 +228,9 @@
     
     <tags>
       
-      <tag>分布式系统理论</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
       
     </tags>
     
@@ -249,9 +249,9 @@
     
     <tags>
       
-      <tag>分布式系统理论</tag>
-      
       <tag>论文阅读</tag>
+      
+      <tag>分布式系统理论</tag>
       
     </tags>
     
@@ -451,7 +451,7 @@
     <link href="/jprofile-remote/"/>
     <url>/jprofile-remote/</url>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JProfile 是 Java 常用的性能分析工具，常被用来查看内存占用，CPU 时间消耗等数据。本地配置 JProfile 较为简单，可以参考此<a href="https://www.javatt.com/p/48237" target="_blank" rel="noopener">博客</a>。在一些情况下，监控的 Java 服务跑在服务器上，因此不能使用本地的 JProfile 来监控。不过 JProfile 能够支持远程连接监控，只不过需要一些额外的配置。此博客的内容就是介绍如何使用 JProfile 监控远程的 Java 应用。</p><h2 id="配置方案一：ssh-免密连接"><a href="#配置方案一：ssh-免密连接" class="headerlink" title="配置方案一：ssh 免密连接"></a>配置方案一：ssh 免密连接</h2><ol><li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>Setup Executable</code> 的可执行脚本。</li><li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li><li>服务端执行 <code>sh ./jprofiler_linux_11_1_4.sh</code> 来安装 JProfile，无脑同意 OK 和 Enter 就能够让其正确安装并且后台运行起来。</li><li>服务端启动要监控的应用程序，如 IoTDB。</li><li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li><li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>SSH tunnel</code>，然后点击 <code>Edit</code> 开始配置服务器 ip, host, ssh 秘钥等信息。<br><img src="/jprofile-remote/jprofile_3.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_4.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_5.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_6.png" srcset="/img/loading.gif" alt></li><li>配置完后点击 finish 再点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li><li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li><li><p>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></p></li><li><p>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></p></li><li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li></ol><h2 id="配置方案二：http-端口连接"><a href="#配置方案二：http-端口连接" class="headerlink" title="配置方案二：http 端口连接"></a>配置方案二：http 端口连接</h2><ol><li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>TAR.GZ Archive</code> 的压缩包。</li><li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li><li>服务端启动要监控的应用程序，如 IoTDB。</li><li>服务端执行<code>tar -zxvf jprofiler_linux_11_1_4.tar.gz</code>解压压缩包，然后执行 <code>jprofiler11.1.4/bin/jpenable -p 10000</code> 手动指定 10000 端口来启动 JProfile。（注，必须有运行的 JVM 才可以启动，并且程序一旦关闭重启服务端的 jprofile 也需要重新启动。）</li><li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li><li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>Directly connection to</code>，配置好 host 并指定 <code>Profiling port</code> 为服务端手动指定的端口 10000。<br><img src="/jprofile-remote/jprofile_15.png" srcset="/img/loading.gif" alt></li><li>配置完后点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li><li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li><li>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></li><li>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></li><li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本博客傻瓜式介绍了使用 JProfile 来对远程服务器上运行的 Java 服务进行监控分析的两种方式。其中 ssh 免密连接方式更方便，其启动时不需要有启动的 JVM 且能够自动检测随后启动的 JVM 让客户端在连接时再挑选。 http 连接方式在监控的 JVM 关闭重启后服务端的 jprofile 也需要手动重启，较为麻烦。因此建议大家都使用第一种连接方式。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JProfile 是 Java 常用的性能分析工具，常被用来查看内存占用，CPU 时间消耗等数据。本地配置 JProfile 较为简单，可以参考此<a href="https://www.javatt.com/p/48237" target="_blank" rel="noopener">博客</a>。在一些情况下，监控的 Java 服务跑在服务器上，因此不能使用本地的 JProfile 来监控。不过 JProfile 能够支持远程连接监控，只不过需要一些额外的配置。此博客的内容就是介绍如何使用 JProfile 监控远程的 Java 应用。</p><h2 id="配置方案一：ssh-免密连接"><a href="#配置方案一：ssh-免密连接" class="headerlink" title="配置方案一：ssh 免密连接"></a>配置方案一：ssh 免密连接</h2><ol><li>配置与服务器的免密登陆，可参考此<a href="https://blog.csdn.net/jeikerxiao/article/details/84105529" target="_blank" rel="noopener">博客</a>。</li><li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>Setup Executable</code> 的可执行脚本。</li><li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li><li>服务端执行 <code>sh ./jprofiler_linux_11_1_4.sh</code> 来安装 JProfile，无脑同意 OK 和 Enter 就能够让其正确安装并且后台运行起来。</li><li>服务端启动要监控的应用程序，如 IoTDB。</li><li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li><li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>SSH tunnel</code>，然后点击 <code>Edit</code> 开始配置服务器 ip, host, ssh 秘钥等信息。<br><img src="/jprofile-remote/jprofile_3.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_4.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_5.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_6.png" srcset="/img/loading.gif" alt></li><li>配置完后点击 finish 再点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li><li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li><li>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></li><li>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></li><li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li></ol><h2 id="配置方案二：http-端口连接"><a href="#配置方案二：http-端口连接" class="headerlink" title="配置方案二：http 端口连接"></a>配置方案二：http 端口连接</h2><ol><li>从<a href="https://www.ej-technologies.com/download/jprofiler/files" target="_blank" rel="noopener">官方网站</a>上根据操作系统下载对应本地和服务器的 JProfile（需要确保两者版本一致）。注意服务端选择下载 <code>TAR.GZ Archive</code> 的压缩包。</li><li>客户端安装配置好本地的 JProfile， 然后将服务器的 JProfile 利用 scp 等工具传到服务器上去（也可在上述网页中直接复制链接在服务器上 wget 或者 curl -O 下载）。</li><li>服务端启动要监控的应用程序，如 IoTDB。</li><li>服务端执行<code>tar -zxvf jprofiler_linux_11_1_4.tar.gz</code>解压压缩包，然后执行 <code>jprofiler11.1.4/bin/jpenable -p 10000</code> 手动指定 10000 端口来启动 JProfile。（注，必须有运行的 JVM 才可以启动，并且程序一旦关闭重启服务端的 jprofile 也需要重新启动。）</li><li>客户端打开 JProfile，点击 <code>Profile a demo session or a saved session</code>，选择 <code>New Session</code> 栏的 <code>New Session</code> 手动创建一个远程连接。<br><img src="/jprofile-remote/jprofile_0.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_1.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_2.png" srcset="/img/loading.gif" alt></li><li>填好 <code>Session name</code>，<code>Attach type</code> 选择 <code>Attach to remote JVM</code>，连接方式选择 <code>Directly connection to</code>，配置好 host 并指定 <code>Profiling port</code> 为服务端手动指定的端口 10000。<br><img src="/jprofile-remote/jprofile_15.png" srcset="/img/loading.gif" alt></li><li>配置完后点击 ok 即可连接到远程的 JProfile，接着选择对应要监控的 Java 应用程序。<br><img src="/jprofile-remote/jprofile_7.png" srcset="/img/loading.gif" alt></li><li>配置监控模式，一般选择 <code>Async sampling</code>，该模式对性能影响最小。<br><img src="/jprofile-remote/jprofile_8.png" srcset="/img/loading.gif" alt></li><li>配置调用树的过滤器，该参数一般用来指示 jprofile 来记录 cpu view 时的函数耗时统计。加上要统计的包的前缀即可，比如 <code>org.apache.iotdb</code>。<br><img src="/jprofile-remote/jprofile_9.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_10.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_11.png" srcset="/img/loading.gif" alt><br><img src="/jprofile-remote/jprofile_12.png" srcset="/img/loading.gif" alt></li><li>可以开始监控分析了！<br><img src="/jprofile-remote/jprofile_13.png" srcset="/img/loading.gif" alt></li><li>之后每次远程连接都可以直接到 <code>Open Session</code> 栏选择这次建好的 session 即可，不用再进行配置了。<br><img src="/jprofile-remote/jprofile_14.png" srcset="/img/loading.gif" alt></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本博客傻瓜式介绍了使用 JProfile 来对远程服务器上运行的 Java 服务进行监控分析的两种方式。其中 ssh 免密连接方式更方便，其启动时不需要有启动的 JVM 且能够自动检测随后启动的 JVM 让客户端在连接时再挑选。 http 连接方式在监控的 JVM 关闭重启后服务端的 jprofile 也需要手动重启，较为麻烦。因此建议大家都使用第一种连接方式。</p>]]></content>
     
     
     
