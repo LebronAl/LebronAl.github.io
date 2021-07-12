@@ -165,7 +165,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.4k 字
     </span>
   
 
@@ -175,7 +175,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      15
        分钟
     </span>
   
@@ -217,7 +217,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：星期一, 七月 12日 2021, 8:40 晚上
+                  本文最后更新于：星期一, 七月 12日 2021, 8:53 晚上
                 
               </p>
             
@@ -259,8 +259,9 @@
 <li>quorum 写：采用了 2+2+2 的三中心六副本部署方案。写只需要四个副本返回 ack 即可，这样即可满足上述对容错能力和性能的需求。</li>
 <li>减少数据同步流量：使存储服务器具备将日志应用到 page 的能力，这样即可只同步物理日志而不同步脏页，从而减少大量的数据同步流量。</li>
 </ul>
-<p>对于 Aurora 的读写流程和一致模型，可以参考此<a href="https://zhuanlan.zhihu.com/p/319806107" target="_blank" rel="noopener">博客</a>。</p>
-<p>总结一下：Aurora 通过对 IO 链路的优化和 quorum 写相比 RDS 版的 MYSQL 性能提升了 35 倍，但其本质上仍然是一个单机数据库。对于大数据量，读写都不能无线扩展，依然还是要分库分表，所以 Aurora 可以被定性为一款云上的高性能单机关系数据库。</p>
+<p>对于 Aurora 的读写流程和一致模型，可以参考此<a href="https://zhuanlan.zhihu.com/p/319806107" target="_blank" rel="noopener">博客</a>和此<a href="https://zhuanlan.zhihu.com/p/338582762" target="_blank" rel="noopener">博客</a>。</p>
+<p>值得一提的是：为了存储层可扩展，Aurora 会将数据库文件切分成 10GB 大小的 segment，每个 segment 可以保存在不同的 6 个副本上，这保证了存储层的可扩展。然而由于只会有一个可写实例，所以其计算层并无法扩展，因此对于大数据量的场景，还是需要分库分表。</p>
+<p>总结一下：Aurora 通过对 IO 链路的优化和 quorum 写相比 RDS 版的 MYSQL 性能提升了 35 倍，但其本质上仍然是一个单机数据库。Aurora 可以被定性为一款云上的高性能单机关系数据库。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本博客沿着 6.824 课程的思路，对 Aurora 的由来，设计思路，具体架构进行了简单的介绍。</p>
 <h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><ul>
 <li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-aurora.txt" target="_blank" rel="noopener">6.824 讲义</a></li>
