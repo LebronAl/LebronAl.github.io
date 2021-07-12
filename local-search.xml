@@ -27,25 +27,6 @@
   
   
   <entry>
-    <title>比特币概述</title>
-    <link href="/bitcoin/"/>
-    <url>/bitcoin/</url>
-    
-    <content type="html"><![CDATA[<h2 id="相关背景"><a href="#相关背景" class="headerlink" title="相关背景"></a>相关背景</h2><p>Fram 结合了乐观事务和硬件优势，在保证可串行化的基础上实现了高性能的分布式事务框架。虽然其系统仅是一个原型系统，但其思想十分具有指导意义。</p><p>其主要利用了三点硬件特性：</p><ul><li>NV RAM：减少磁盘 IO 对性能的影响。（一次 RAM 写大致需要 200ns，一次 SSD 写大致需要 100us，一次 HDD 写大致需要 100ms）</li><li>Kernal Bypass：本地应用直接与网卡交互，无系统调用，无 CPU 参与。消除 Linux 内核网络栈对性能的影响，类似于 <a href="https://www.dpdk.org/" target="_blank" rel="noopener">dpdk</a>。</li><li>RDMA：跟远程节点交互时不需要远程节点的 CPU 参与，直接读对应内存，无系统调用，无 CPU 参与。消除 Linux 内核网络栈对性能的影响。</li></ul><p>其主要有一个特点：</p><ul><li>快：在 90 台数据分片过的机器上，可以达到 100 万事务/s，比 Spanner 快 100 倍。</li></ul><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>暂仅搬运一些资料，之后有时间再补。</p><ul><li><a href="http://nil.csail.mit.edu/6.824/2020/notes/l-bitcoin.txt" target="_blank" rel="noopener">6.824 讲义</a></li><li><a href="http://nil.csail.mit.edu/6.824/2020/video/19.html" target="_blank" rel="noopener">6.824 视频</a></li><li><a href="http://nil.csail.mit.edu/6.824/2020/papers/bitcoin.pdf" target="_blank" rel="noopener">论文</a></li></ul><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单记录一下 6.824 课程对比特币所学。</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>分布式存储</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Spanner 论文阅读</title>
     <link href="/spanner-thesis/"/>
     <url>/spanner-thesis/</url>

@@ -219,57 +219,6 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/bitcoin/" target="_self">
-          <img src="/./bitcoin/bitcoin.jpeg" srcset="/img/loading.gif" alt="比特币概述">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/bitcoin/">比特币概述</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/bitcoin/">
-          
-          
-            
-          
-          相关背景Fram 结合了乐观事务和硬件优势，在保证可串行化的基础上实现了高性能的分布式事务框架。虽然其系统仅是一个原型系统，但其思想十分具有指导意义。
-其主要利用了三点硬件特性：
-
-NV RAM：减少磁盘 IO 对性能的影响。（一次 RAM 写大致需要 200ns，一次 SSD 写大致需要 100us，一次 HDD 写大致需要 100ms）
-Kernal Bypass：本地应用直接与网卡交互，无系
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-25 16:14" pubdate>
-              2021-05-25
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/">分布式存储</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/spanner-thesis/" target="_self">
           <img src="/./spanner-thesis/google-spanner-logo.png" srcset="/img/loading.gif" alt="Spanner 论文阅读">
         </a>
@@ -696,11 +645,63 @@ distributed crash recovery
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/consistency-and-consensus/" target="_self">
+          <img src="/./consistency-and-consensus/background.png" srcset="/img/loading.gif" alt="一致性模型与共识算法">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/consistency-and-consensus/">一致性模型与共识算法</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/consistency-and-consensus/">
+          
+          
+            
+          
+          前言有关一致性模型和共识算法的一致性模型这两个问题，最近阅读了一些优质博客，学到了一些新的东西，同时感觉一些定义比较混乱，特此记录一下自己的理解。
+一致性模型一致性问题是分布式领域最为基础也是最重要的问题，具体来历可以参考此博客。
+一般来讲，分布式系统中的一致性按照对一致性要求的不同，主要分为强一致性，弱一致性这两大类，前者是基于 safety 的概念，后者是基于 liveness 的概念。
+强一
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-02 16:37" pubdate>
+              2021-04-02
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%90%86%E8%AE%BA/">分布式系统理论</a>
+            
+              <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">共识算法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
